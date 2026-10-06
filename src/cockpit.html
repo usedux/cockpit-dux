@@ -2287,7 +2287,31 @@
       return html;
     }
 
+    // Normaliza um registro vindo do banco (campos fora do padrão não podem derrubar a lista inteira).
+    function safeDoc(d){
+      var o = Object.assign({}, d || {});
+      ['titulo','descricao','area','frequencia','escopo','texto','reportadoPor','nome','descritivo','submittedAt','submittedById'].forEach(function(k){
+        if (o[k] != null && typeof o[k] !== 'string' && !Array.isArray(o[k])) o[k] = String(o[k]);
+      });
+      return o;
+    }
+    async function renderInnovations(items){
+      try { await renderInnovationsInner((items || []).map(safeDoc)); }
+      catch(e){
+        console.error('[cockpit] falha ao montar a lista de inovações', e);
+        var b = $('reportedInnovationsBody');
+        if (b) b.innerHTML = '<div class="reported-empty">Não foi possível montar a lista de inovações (' + escapeHtml((e && e.message) || e) + '). Os registros estão salvos — veja na aba Admin.</div>';
+      }
+    }
     async function renderReported(items){
+      try { await renderReportedInner((items || []).map(safeDoc)); }
+      catch(e){
+        console.error('[cockpit] falha ao montar a lista de ferramentas', e);
+        var b = $('reportedToolsBody');
+        if (b) b.innerHTML = '<div class="reported-empty">Não foi possível montar a lista de ferramentas (' + escapeHtml((e && e.message) || e) + '). Os registros estão salvos — veja na aba Admin.</div>';
+      }
+    }
+    async function renderReportedInner(items){
       var mySeq = ++toolsRenderSeq;
       var body = $('reportedToolsBody');
       if (!items || !items.length) {
@@ -2515,7 +2539,7 @@
       return html;
     }
 
-    async function renderInnovations(items){
+    async function renderInnovationsInner(items){
       var mySeq = ++innovRenderSeq; // só a renderização mais recente vale (evita um snapshot antigo sobrescrever o completo)
       var body = $('reportedInnovationsBody');
       if (!items || !items.length) {
