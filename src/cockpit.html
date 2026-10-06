@@ -2594,6 +2594,17 @@
         });
         html += '</tbody></table></div></details>';
       });
+      if (!html) {
+        // Rede de segurança: se nenhum grupo de frequência casou, lista tudo em um grupo único em vez de deixar o corpo vazio.
+        try { console.warn('[cockpit] inovações sem grupo de frequência', items.length, items.map(function(i){ return i._freqBucket; })); } catch(e){}
+        html += '<details class="reported-area" open><summary class="reported-area-head">Todas<span class="count">' + items.length + '</span></summary>';
+        html += '<div class="tools-table-wrap"><table class="tools-table"><thead><tr><th>Descrição</th><th>Responsável</th><th>Área</th><th></th></tr></thead><tbody>';
+        items.forEach(function(it, idx){
+          html += '<tr><td class="tool-desc">' + escapeHtml(it.descricao || it.titulo || '—') + '</td><td class="tool-who">' + escapeHtml(whoOf(it)) + '</td><td><span class="status-pill construcao">' + escapeHtml(it.area || 'Outro') + '</span></td>' +
+            '<td class="col-eye"><button type="button" class="icon-eye-btn" data-detail-innov-idx="' + idx + '" title="Ver detalhes"><span class="icon-eye-dot"></span></button></td></tr>';
+        });
+        html += '</tbody></table></div></details>';
+      }
       body.innerHTML = html;
 
       Array.prototype.slice.call(body.querySelectorAll('[data-detail-innov-idx]')).forEach(function(btn){
