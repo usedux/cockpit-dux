@@ -1,0 +1,22 @@
+{
+  "ambiente": "Local",
+  "area": [
+    "Comercial"
+  ],
+  "atualizacaoDados": "Manual",
+  "dataUltimaAtualizacao": "2026-10-02",
+  "descritivo": "JBP (Joint Business Plan): método de planejamento de negócio feito em conjunto com cada cliente chave. Tem duas peças: a Base Analítica (uso interno) reúne o resultado de cada cliente (volume, faturamento, frequência de operação e concentração de pagadores), sinaliza quem saiu do próprio ritmo e é atualizada a partir dos relatórios e dashboards internos. O plano por cliente parte desse histórico para organizar as linhas e produtos a desenvolver: antecipação, risco sacado, capital de giro e indicação. Os números são acompanhados mensalmente junto com o cliente, sem meta imposta. Os clientes segmentados como \"núcleo\" serão os pilotos.",
+  "desenvolvidoPor": "Luma",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Não",
+  "frequenciaUso": "Médio (cerca de 1x por semana)",
+  "linkAcesso": null,
+  "linkGithub": null,
+  "nome": "JBP",
+  "prints": [],
+  "responsavel": "Luma",
+  "submittedAt": "2026-10-02T20:01:22.804Z",
+  "submittedById": "u_3a6pxsG0hrBw11kJoH1SLw",
+  "videoAsset": null,
+  "videoLink": "https://drive.google.com/drive/folders/1IsKmfPUXS_WVHlxPBn0SyShT2a2PuwRb?usp=sharing"
+}

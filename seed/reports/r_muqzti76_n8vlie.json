@@ -1,0 +1,29 @@
+{
+  "ambiente": "Produção",
+  "area": [
+    "Operacional"
+  ],
+  "atualizacaoDados": "Manual",
+  "dataUltimaAtualizacao": "2026-09-28",
+  "descritivo": "Gerador de propostas a partir de lastros (NFs, contratos, POs, NDs, etc) e gerador de contratos de cessão (que nosso cliente assina) a partir de propostas.",
+  "desenvolvidoPor": "João Pena",
+  "disponibilizarOutrasAreas": "Não",
+  "disponivelGithub": "Sim",
+  "frequenciaUso": "Muito (quase diariamente)",
+  "linkAcesso": "https://portal.wearedux.com/admin/gerador-documentos",
+  "linkGithub": null,
+  "nome": "Gerador de Propostas e Contratos",
+  "prints": [
+    {
+      "id": "641fca4ee1983327f28b9ded8829a919"
+    },
+    {
+      "id": "e2796c1f796189d6bbde2a04039d3786"
+    }
+  ],
+  "responsavel": "Guilherme Zaidan",
+  "submittedAt": "2026-10-02T13:22:43.938Z",
+  "submittedById": "u_rTiq1npakbx23u6VwH1glQ",
+  "videoAsset": null,
+  "videoLink": null
+}

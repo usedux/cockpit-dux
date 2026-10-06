@@ -1,0 +1,10 @@
+{
+  "area": "Operacional",
+  "descricao": "Ferramenta desenvolvida com o Claude que gera propostas a partir dos lastros da operação (NFs, POs, NDs e contratos) e, a partir das propostas, os contratos de cessão. Os documentos saem prontos em PDF para envio ao cliente, e o próprio gerador dispara os contratos para assinatura via D4Sign. Substituiu uma automação simples em planilha e permite processar lotes de 40 a 50 propostas em segundos, em vez de horas.",
+  "escopo": "Essencial",
+  "frequencia": "Diariamente (várias vezes ao dia)",
+  "submittedAt": "2026-10-02T13:34:58.082Z",
+  "submittedById": "u_rTiq1npakbx23u6VwH1glQ",
+  "texto": "Descrição do fluxo:\nGera propostas a partir dos lastros da operação (notas fiscais, pedidos de compra, notas de débito e contratos).\nGera os contratos de cessão a partir das propostas já geradas.\nEntrega os documentos prontos em PDF para compartilhar com o cliente.\nEnvia os contratos para assinatura via D4Sign diretamente pelo gerador.\nAntes, os documentos eram gerados manualmente com apoio de uma pequena automação em planilha.\nO volume de operações escalou muito. Hoje um lote de 40/50 propostas é gerado em segundos, quando antes levaria horas.\nGeração de ferramenta: sim, o fluxo virou uma ferramenta (gerador desenvolvido com o Claude no Cowork).\nRelevância para outras pessoas da DUX: no momento, outras áreas não precisam acessar a ferramenta.\nFerramentas de IA e funcionamento:\nIA utilizada: apenas o Claude (no Cowork), usado no desenvolvimento do gerador.\nPasso a passo:\nInserir os lastros da operação no gerador.\nO gerador lê os dados.\nConferir as informações.\nGerar as propostas em PDF.\nGerar os contratos de cessão a partir das propostas.\nEnviar os contratos para assinatura via D4Sign.\nFrequência de uso: diariamente, várias vezes ao dia.\nEscopo de uso: essencial para o trabalho.\nDados sensíveis: sim. O fluxo envolve valores das operações, CNPJs e CPFs.",
+  "titulo": "Gerador de propostas e contratos de cessão com assinatura via D4Sign, desenvolvido com Claude"
+}

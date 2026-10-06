@@ -1,0 +1,10 @@
+{
+  "area": "Desenvolvimento",
+  "descricao": "Agentes de IA implementam as funcionalidades em paralelo e uma sessão líder revisa, testa e prepara o PR para merge humano.",
+  "escopo": "Essencial",
+  "frequencia": "Diariamente",
+  "submittedAt": "2026-10-01T20:36:34.436Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "texto": "- Fluxo: cada demanda vira um plano com etapas e contrato fixo; agentes de IA implementam em cópias isoladas do repositório (um por agente), uma sessão de IA revisora confere código, testes e segurança, e o merge e qualquer ação em produção ficam com uma pessoa.\n- Ferramentas geradas: Painel do Core (Data Core), MCP de Dados, DUX LLM Router, ANTI Backoffice e boa parte do ANTI Core.\n- Vale outras pessoas conhecerem: sim, para os times de desenvolvimento e para quem faz \"citizen dev\".\n- IA envolvida: Claude (Claude Code), com modelos diferentes para implementar e revisar; GitHub (PRs, CI).\n- Frequência: diariamente.\n- Escopo: essencial para o trabalho.\n- Dados sensíveis: os sistemas tocam dados financeiros de clientes, mas os agentes não escrevem em produção (bloqueio técnico); leitura limitada a ambientes de desenvolvimento e espelhos somente leitura.",
+  "titulo": "Desenvolvimento de software com agentes de IA"
+}

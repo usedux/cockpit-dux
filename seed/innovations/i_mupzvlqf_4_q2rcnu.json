@@ -1,0 +1,10 @@
+{
+  "area": "Desenvolvimento",
+  "descricao": "A IA varre repositórios, PRs, tickets e anotações e gera um resumo datado do que foi entregue e do que vem a seguir.",
+  "escopo": "Otimização de tempo",
+  "frequencia": "Semanalmente",
+  "submittedAt": "2026-10-01T20:36:34.436Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "texto": "- Fluxo: um comando dispara a IA, que lê os commits de todos os repositórios, os PRs do GitHub, os tickets do Linear e os registros de sessão do período e escreve um recap denso por projeto; outro comando mostra um painel de status no terminal.\n- Ferramenta gerada: comandos internos de recap semanal e de painel de status.\n- Vale outras pessoas conhecerem: sim, para quem precisa reportar progresso.\n- IA envolvida: Claude (Claude Code), integrações com GitHub e Linear.\n- Frequência: semanalmente.\n- Escopo: otimização de tempo.\n- Dados sensíveis: não lê dados de clientes; só metadados de trabalho (commits, tickets).",
+  "titulo": "Relatório semanal e status de projetos gerados por IA"
+}

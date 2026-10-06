@@ -1,0 +1,22 @@
+{
+  "ambiente": "Local",
+  "area": [
+    "Comercial"
+  ],
+  "atualizacaoDados": "Manual",
+  "dataUltimaAtualizacao": "2026-09-25",
+  "descritivo": "Apresentação comercial de Risco Sacado personalizada por cliente (Print, Eventesse e demais cliente do núcleo). Explica a mecânica, o limite global, proposta de redução de taxa, a BASE como premissa e o cronograma até a 1ª operação. É editável no navegador.",
+  "desenvolvidoPor": "Luma",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Não",
+  "frequenciaUso": "Muito (quase diariamente)",
+  "linkAcesso": null,
+  "linkGithub": null,
+  "nome": "Risco Sacado | Apresentação Comercial",
+  "prints": [],
+  "responsavel": "Luma",
+  "submittedAt": "2026-10-02T20:12:19.979Z",
+  "submittedById": "u_3a6pxsG0hrBw11kJoH1SLw",
+  "videoAsset": null,
+  "videoLink": "https://drive.google.com/drive/folders/1klv6Y6Z1TedJ1R5cU-bw4E-8YYApiqcW?usp=drive_link"
+}

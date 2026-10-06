@@ -1,0 +1,22 @@
+{
+  "ambiente": "Local",
+  "area": [
+    "Financeiro"
+  ],
+  "atualizacaoDados": "Manual",
+  "dataUltimaAtualizacao": "2026-09-29",
+  "descritivo": "DUX Finconomics é o nome que o ERP interno modular recebeu em agosto/26. Antes ele se chamava \"ERP Interno\". Está no ar em dux-erp.fredmorais.workers.dev.\n\nFunção principal: transformar o caixa e as operações em contabilidade, mês a mês, com prova.\n\nO sistema lê duas fontes: o extrato bancário (caixa) e as fichas de operação (antecipações, parcelas, cessões). Ele cruza uma com a outra e gera o razão em partidas dobradas. Nenhum mês é lacrado sem passar pelos gates de conferência:\n- débito igual a crédito;\n- cada operação batendo com a ficha;\n- saldo do banco igual ao extrato.\n\nO ponto forte é dar nome e valor ao que não bate. Exemplos de setembro: o PIX trocado entre as ops 1701 e 1703, e os \"sem título\", que no fim eram só o extrato um dia à frente da ficha.\n\nMódulos que sustentam isso:\n- Tesouro: lançamentos, conciliação bancária, contas a pagar e a receber, vencidos.\n- Operações: antecipações, parcela a parcela, com o desembolso confrontado contra o extrato.\n- Operações estruturadas: cessões para o Atlas e o FIDC, tratadas como captação e não como venda.\n- Mútuos e intercompany: empréstimos entre CNPJs.\n- Contabilização: razão e balancete (saldo anterior, débito, crédito e saldo), com geradores por tipo de fato e lacre por competência.\n\nEstado e próxima virada:\n- Meses carregados: jan e fev estão lacrados. De março a setembro os dados estão no banco, em fases diferentes do rito. Abril está travado e segura os meses seguintes no gate 0.1.\n- Go live em outubro, decidido por você em 24/09. A lógica se inverte: até 30/09 o razão é a fonte e o caixa serve de conferência. A partir de 01/10 o caixa passa a ser a fonte e o razão vira consequência. Tudo que vem depois dos lançamentos continua igual. O que muda é a ingestão.",
+  "desenvolvidoPor": "Fred",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Sim",
+  "frequenciaUso": "Muito (quase diariamente)",
+  "linkAcesso": null,
+  "linkGithub": null,
+  "nome": "FINCONOMICS",
+  "prints": [],
+  "responsavel": "Fred",
+  "submittedAt": "2026-10-02T19:23:35.166Z",
+  "submittedById": "u_oMjaROzVYjoQJwkROL1CwQ",
+  "videoAsset": null,
+  "videoLink": null
+}

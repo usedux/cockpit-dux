@@ -1,0 +1,23 @@
+{
+  "ambiente": "Local",
+  "area": [
+    "Financeiro",
+    "Outro"
+  ],
+  "atualizacaoDados": "Manual",
+  "dataUltimaAtualizacao": "2026-10-01",
+  "descritivo": "Dash Financeiro é o portal financeiro dos sócios Luiz, Thiago, Lucas e JP. Ele está no ar em dux-financeiro.pages.dev desde 30/09, publicado no Cloudflare Pages com Access. Por enquanto só o Fred tem acesso.\n\nFunção principal: mostrar o caixa da DUX em formato de DRE. É uma visão de caixa, não contábil, e os impostos ficam fora. O dash compara entradas e saídas mês a mês, e o mês corrente é aberto em realizado, a realizar, planejado e orçado. Ele também serve para educar os sócios: cada \"?\" na tela explica o número em linguagem simples, com textos que vêm de conhecimento/glossario.md.\n\nTelas que sustentam isso:\n- Resumo: KPIs do ano, fluxo mensal, DRE compacta, maiores saídas e estruturadas.\n- Caixa 2026: receita − custo de capital = resultado bruto − despesas = fluxo líquido, de jan a dez. Jan a ago vêm da visão_caixa, set do extrato e out a dez da projeção.\n- Mês corrente: realizado × planejado × orçado do mês.\n- Receita: o módulo Q4, com ponte, blacklist e risco, vencimentos, cessões e conciliação.\n- Despesas e Projeções: a composição por grupo e a projeção × orçado × ritmo realizado. Os números das Projeções ainda estão sendo validados por você.\n- Estruturadas e Veículos: a posição do FIDC e do Atlas, e a carteira parcela a parcela, com PDD = risco de recompra.\n- Leitura do resultado e assistente de IA: a leitura vem marcada como \"não revisada\". O assistente ainda não funciona na nuvem.",
+  "desenvolvidoPor": "Fred",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Não",
+  "frequenciaUso": "Médio (cerca de 1x por semana)",
+  "linkAcesso": null,
+  "linkGithub": null,
+  "nome": "Dash Financeiro",
+  "prints": [],
+  "responsavel": "Fred",
+  "submittedAt": "2026-10-02T19:25:57.331Z",
+  "submittedById": "u_oMjaROzVYjoQJwkROL1CwQ",
+  "videoAsset": null,
+  "videoLink": null
+}

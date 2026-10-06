@@ -1,0 +1,29 @@
+{
+  "lanes": [
+    {
+      "color": "#95A2B3",
+      "name": "1. Backlog de Ideias"
+    },
+    {
+      "color": "#4EA7FC",
+      "name": "2. Discovery"
+    },
+    {
+      "color": "#F2C94C",
+      "name": "3. Refinamento de Negócio"
+    },
+    {
+      "color": "#F2994A",
+      "name": "4. Refinamento Técnico"
+    },
+    {
+      "color": "#4CB782",
+      "name": "5. Prototipação"
+    }
+  ],
+  "projectName": "Upstream - Novos Projetos",
+  "projectStatus": "Backlog",
+  "projectUrl": "https://linear.app/wearedux/project/upstream-novos-projetos-e6787a72646c",
+  "source": "Linear · projeto Upstream - Novos Projetos (P-DUX-20)",
+  "syncedAt": "2026-10-06T20:10:00.000Z"
+}

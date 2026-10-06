@@ -1,0 +1,45 @@
+{
+ "_como_usar": "Preencha o e-mail @wearedux.com de cada pessoa abaixo e rode `npm run seed` de novo: os reports/inovações antigos passam a pertencer a essa conta (ela poderá editar o que reportou). Ids sem e-mail continuam aparecendo como 'Equipe DUX'.",
+ "u_LdOBLbU5A1tIZkrhDGjqNA": {
+  "nome": "Lucas Albino",
+  "email": "",
+  "reports": 0,
+  "inovacoes": 4
+ },
+ "u_AXUnhARS7ve63Y8JCyBTCw": {
+  "nome": "",
+  "email": "",
+  "reports": 6,
+  "inovacoes": 5
+ },
+ "u_3a6pxsG0hrBw11kJoH1SLw": {
+  "nome": "",
+  "email": "",
+  "reports": 3,
+  "inovacoes": 0
+ },
+ "u_biNQfdsKjrWXXN4959QvOA": {
+  "nome": "",
+  "email": "",
+  "reports": 2,
+  "inovacoes": 0
+ },
+ "u_oMjaROzVYjoQJwkROL1CwQ": {
+  "nome": "",
+  "email": "",
+  "reports": 2,
+  "inovacoes": 0
+ },
+ "u_rTiq1npakbx23u6VwH1glQ": {
+  "nome": "",
+  "email": "",
+  "reports": 1,
+  "inovacoes": 1
+ },
+ "u_jd_2va0ULIGAqYNzyOyUIQ": {
+  "nome": "",
+  "email": "",
+  "reports": 1,
+  "inovacoes": 0
+ }
+}

@@ -1,0 +1,8 @@
+{
+  "area": "Desenvolvimento",
+  "reportadoPor": "Lucas Albino",
+  "submittedAt": "2026-10-01T19:06:03.016Z",
+  "submittedById": "u_LdOBLbU5A1tIZkrhDGjqNA",
+  "texto": "- Descrição: agente de IA que funciona como processador de informação. Lê arquivos locais (planilhas e PDFs) recebidos de clientes, processa as informações e sobe o resultado para o banco de dados.\n- Ferramenta gerada: ainda não virou uma ferramenta formal; hoje funciona como um agente.\n- Vale outras pessoas da DUX conhecerem: sim.\n- Ferramentas de IA: Claude (principal) e Cursor (uso pontual).\n- Como funciona: abro o repositório e configuro o agente → o agente lê os arquivos locais (planilhas e PDFs) → processa as informações → sobe os dados no banco de dados.\n- Frequência de uso: diariamente.\n- Escopo: atividade manual.\n- Dados sensíveis de clientes: sim. Os dados recebidos dos clientes passam pelo agente, mas não ficam armazenados nele.",
+  "titulo": "Agente processador de arquivos para banco de dados"
+}

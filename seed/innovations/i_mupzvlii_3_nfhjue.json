@@ -1,0 +1,10 @@
+{
+  "area": "Desenvolvimento",
+  "descricao": "Uma base de conhecimento em markdown que a IA compila, atualiza e consulta a cada sessão de trabalho, guardando decisões, handoffs e contexto técnico.",
+  "escopo": "Essencial",
+  "frequencia": "Diariamente",
+  "submittedAt": "2026-10-01T20:36:34.436Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "texto": "- Fluxo: documentos brutos entram numa pasta imutável; a IA resume, cria páginas de entidades e conceitos, mantém índice e log; cada sessão termina com um registro e, em projetos longos, um handoff para a próxima sessão continuar sem perder contexto.\n- Ferramentas geradas: DUX Map (mapa da operação derivado dessa base), runbooks, propostas técnicas e relatórios.\n- Vale outras pessoas conhecerem: sim, o método é replicável por área.\n- IA envolvida: Claude (Claude Code); opcionalmente modelo local para ingestão em lote.\n- Frequência: diariamente.\n- Escopo: essencial para o trabalho.\n- Dados sensíveis: contém informação interna da DUX; fica local e em repositório privado.",
+  "titulo": "Base de conhecimento mantida por IA (segundo cérebro)"
+}

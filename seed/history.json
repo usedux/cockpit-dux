@@ -1,0 +1,40 @@
+[
+ {
+  "label": "21 — 25 SET 2026",
+  "open": false,
+  "report": {
+   "burndownSvg": "<svg viewBox='0 0 320 160' width='100%' height='160' role='img' aria-label='Itens em aberto por dia, 21 a 25 de setembro'><line x1='28' y1='142' x2='312' y2='142' stroke='var(--line-strong)' stroke-width='1'/><line x1='28' y1='88.4' x2='312' y2='88.4' stroke='var(--line)' stroke-width='1' stroke-dasharray='2,3'/><line x1='28' y1='34.8' x2='312' y2='34.8' stroke='var(--line)' stroke-width='1' stroke-dasharray='2,3'/><text x='24' y='145' font-size='8' fill='var(--ink-faint)' text-anchor='end'>0</text><text x='24' y='91' font-size='8' fill='var(--ink-faint)' text-anchor='end'>10</text><text x='24' y='38' font-size='8' fill='var(--ink-faint)' text-anchor='end'>20</text><polyline points='28,35 99,35 170,29.4 241,29.4 312,29.4' fill='none' stroke='var(--st-progress)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><polyline points='28,115.2 99,83.0 170,99.1 241,99.1 312,93.8' fill='none' stroke='var(--st-priorized)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><polyline points='28,136.6 99,88.4 170,34.8 241,24.1 312,13.4' fill='none' stroke='var(--blk-int)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><text x='28' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Seg</text><text x='99' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Ter</text><text x='170' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Qua</text><text x='241' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Qui</text><text x='312' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Sex</text></svg><div style='display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:10.5px;color:var(--ink-soft);'><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--st-progress);margin-right:4px;'></span>Anti Banking</span><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--st-priorized);margin-right:4px;'></span>Anti Sacado</span><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--blk-int);margin-right:4px;'></span>Decentral</span></div>",
+   "highlights": [
+    "Decentral saiu do zero: o board foi estruturado nesta semana, saltando de 1 para 24 itens abertos — mapeamento inicial de escopo concluído.",
+    "Anti Banking entregou 1 item em produção e manteve o backlog estável (20 → 21 itens abertos ao longo da semana).",
+    "Anti Sacado avançou 2 itens para produção e 2 para QA, reduzindo de 11 (pico de terça) para 9 itens abertos na sexta.",
+    "No total, os 3 projetos fecharam a semana com 54 itens em aberto, ante 26 na segunda-feira."
+   ],
+   "suggestions": [
+    "Decentral está com 17 tasks ainda como \"Outros\" em tipo — priorizar a reclassificação (Bug/Melhoria/Nova Funcionalidade) antes do próximo fechamento.",
+    "Anti Sacado segue sem nenhuma task marcada em Marketing ou Financeiro — validar se a área está sendo preenchida no Linear.",
+    "Começar a semana de 28/09 atacando o backlog do Anti Banking (9 itens ainda sem refinamento)."
+   ]
+  }
+ },
+ {
+  "label": "28 SET — 02 OUT 2026",
+  "open": false,
+  "report": {
+   "burndownSvg": "<svg viewBox='0 0 320 160' width='100%' height='160' role='img' aria-label='Itens em aberto por dia, 28 de setembro a 02 de outubro'><line x1='28' y1='142' x2='312' y2='142' stroke='var(--line-strong)' stroke-width='1'/><line x1='28' y1='88.4' x2='312' y2='88.4' stroke='var(--line)' stroke-width='1' stroke-dasharray='2,3'/><line x1='28' y1='34.8' x2='312' y2='34.8' stroke='var(--line)' stroke-width='1' stroke-dasharray='2,3'/><text x='24' y='145' font-size='8' fill='var(--ink-faint)' text-anchor='end'>0</text><text x='24' y='91' font-size='8' fill='var(--ink-faint)' text-anchor='end'>10</text><text x='24' y='38' font-size='8' fill='var(--ink-faint)' text-anchor='end'>20</text><polyline points='28,24.1 99,24.1 170,24.1 241,24.1 312,24.1' fill='none' stroke='var(--st-progress)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><polyline points='28,56.2 99,56.2 170,29.4 241,24.1 312,24.1' fill='none' stroke='var(--st-priorized)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><polyline points='28,8 99,8 170,8 241,8 312,8' fill='none' stroke='var(--blk-int)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><text x='28' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Seg</text><text x='99' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Ter</text><text x='170' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Qua</text><text x='241' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Qui</text><text x='312' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Sex</text></svg><div style='display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:10.5px;color:var(--ink-soft);'><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--st-progress);margin-right:4px;'></span>Anti Banking</span><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--st-priorized);margin-right:4px;'></span>Anti Sacado</span><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--blk-int);margin-right:4px;'></span>Decentral</span></div>",
+   "highlights": [
+    "Anti Sacado foi o único projeto com movimento na semana: 15 issues criadas e 3 concluídas (DUX-499, DUX-556, DUX-559) — Anti Banking e Decentral não tiveram nenhuma issue criada ou concluída.",
+    "Guilherme Zaidan liderou as entregas, concluindo 2 das 3 issues da semana (DUX-556, DUX-559); a terceira (DUX-499) foi concluída por Lucas Henning.",
+    "O milestone \"Piloto Risco Sacado- Cliente 1\" avançou de 33% para 49% (13 → 19 issues no milestone), com a meta já vencida em 28/09.",
+    "Itens em aberto no total subiram de 63 (segunda) para 69 (sexta), puxados pelo salto de novas issues no Anti Sacado em 30/09 e 01/10.",
+    "Nenhuma das 15 issues criadas nem das 3 concluídas na semana tinha label Marketing ou Financeiro — todas caíram em \"Outros\"."
+   ],
+   "suggestions": [
+    "Confirmar com André e Hyago se a ausência total de movimento em Anti Banking e Decentral nesta semana reflete o board real ou se há atualizações pendentes no Linear.",
+    "Anti Sacado segue sem nenhuma issue marcada em Marketing ou Financeiro — validar se a área está sendo preenchida pelo time.",
+    "Priorizar o refinamento das 15 issues novas do Anti Sacado (boa parte ainda em Backlog ou Em Revisão) antes do próximo fechamento.",
+    "Decentral segue com 14 das 25 issues em Backlog — considerar uma rodada de refinamento antes de represar ainda mais o board."
+   ]
+  }
+ }
+]

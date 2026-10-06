@@ -1,0 +1,10 @@
+{
+  "area": "Desenvolvimento",
+  "descricao": "Um agente de IA lê o código de cada ferramenta interna, documenta no registro central e audita segurança e vazamento de dados.",
+  "escopo": "Otimização de tempo",
+  "frequencia": "Mensalmente",
+  "submittedAt": "2026-10-01T20:36:34.436Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "texto": "- Fluxo: (1) \"onboard\": o agente copia os modelos para o repositório, lê o código e preenche a ficha da ferramenta (escopo, stack, pacotes, dados, exposição); (2) uma automação sincroniza a ficha no DUX Tool Registry, que roda varredura de vulnerabilidades e abre issues; (3) \"audit\": periodicamente o agente relê o código como um atacante (autenticação, segredos, vazamento, injeção), aponta onde a ficha ficou desatualizada e gera relatório só quando há achado real.\n- Ferramenta gerada: DUX Tool Registry; o fluxo já achou uma falha real de acesso a dados num portal interno, corrigida em seguida.\n- Vale outras pessoas conhecerem: sim, especialmente quem desenvolve ferramentas fora do time de tecnologia.\n- IA envolvida: Claude (Claude Code com skills próprias), GitHub Actions.\n- Frequência: mensalmente por ferramenta, ou sempre que surge ferramenta nova.\n- Escopo: otimização de tempo (e redução de risco).\n- Dados sensíveis: o agente lê código e configuração, não dados de clientes; os relatórios podem descrever falhas e ficam restritos.",
+  "titulo": "Documentação e auditoria de segurança de ferramentas com IA"
+}

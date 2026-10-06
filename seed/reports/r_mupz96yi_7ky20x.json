@@ -1,0 +1,33 @@
+{
+  "ambiente": "Produção",
+  "area": "Desenvolvimento",
+  "atualizacaoDados": "Integrada",
+  "dataUltimaAtualizacao": "2026-09-30",
+  "descritivo": "Espelho somente leitura da esteira de demandas e da planilha da CGO (e carga do ERP), atualizado de hora em hora num banco próprio (camadas bronze/silver/gold). O painel mostra os dados, as lacunas entre as origens, a paridade esteira × CGO e as leituras executiva (/exec) e operacional (/ops, liquidação, versões), com login Google SSO e acesso por perfil.",
+  "desenvolvidoPor": "André Terencio (Tecnologia)",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Sim",
+  "frequenciaUso": "Muito (quase diariamente)",
+  "linkAcesso": "https://core.wearedux.com",
+  "linkGithub": "https://github.com/usedux/dux-data-core",
+  "nome": "Painel do Core — DUX Data Core",
+  "prints": [
+    {
+      "id": "a59251b90f0872d3fac125ab5e565dd5"
+    },
+    {
+      "id": "334bde1c5566e432956fe72027827233"
+    },
+    {
+      "id": "bb1e4268b371d50f91a350227be025b2"
+    },
+    {
+      "id": "a9d20c45169557194164b252a62fa5a0"
+    }
+  ],
+  "responsavel": "André Terencio",
+  "submittedAt": "2026-10-01T20:19:10.074Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "videoAsset": null,
+  "videoLink": null
+}

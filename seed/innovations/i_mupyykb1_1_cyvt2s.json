@@ -1,0 +1,11 @@
+{
+  "area": "Comercial e Operacional",
+  "descricao": "o Claude lê os chamados do grupo de suporte no Telegram, classifica o caso, investiga direto na blockchain e escreve a resposta ao cliente na língua dele. Casos que antes dependiam de dev são resolvidos em minutos.",
+  "escopo": "essencial e otimização de tempo.",
+  "frequencia": "várias vezes por semana.",
+  "reportadoPor": "Lucas Albino",
+  "submittedAt": "2026-10-01T20:10:53.826Z",
+  "submittedById": "u_LdOBLbU5A1tIZkrhDGjqNA",
+  "texto": "- Descrição: o Claude lê os chamados do grupo de suporte no Telegram, classifica o caso, investiga direto na blockchain e escreve a resposta ao cliente na língua dele. Casos que antes dependiam de dev são resolvidos em minutos.\n- Já virou ferramenta: sim. Skill /decentral-support + playbook operacional + base de casos registrados. Próximo passo: transformar em tickets no Linear.\n- Vale outras pessoas conhecerem: sim. É o exemplo mais claro de atendimento técnico feito com IA.\n- Ferramentas e passo a passo: Claude Code + MCPs de Telegram, Blockscout e Slack.\n  1) Peço \"roda o suporte\".\n  2) O Claude lê as mensagens e os prints dos clientes.\n  3) Classifica o tipo de caso (yield retido, valor menor, depósito travado, trava de 60 dias etc.).\n  4) Investiga on-chain e calcula valores.\n  5) Escreve o rascunho da resposta, que eu aprovo antes do envio.\n  6) Quando precisa, encaminha no Slack para o técnico (André) ou para o financeiro (João Pena).\n- Frequência: várias vezes por semana.\n- Escopo: essencial e otimização de tempo.\n- Dados sensíveis de clientes: sim (carteiras, posições e valores), tratados com camada de segurança. Nada é enviado ao cliente sem aprovação humana.",
+  "titulo": "Suporte Decentral com IA (triagem + investigação on-chain)"
+}

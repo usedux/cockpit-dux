@@ -1,0 +1,11 @@
+{
+  "area": "Comercial e Operacional",
+  "descricao": "conecto a IA a ferramentas externas via MCP para buscar e cruzar informação em segundos. Os fluxos que se repetem viram skills reutilizáveis, e os dados de contexto ficam guardados ao lado, o que deixa cada processo mais inteligente a cada uso. O trabalho mudou por completo: a inovação é a velocidade de buscar e conectar informação.",
+  "escopo": "essencial para o trabalho e otimização de tempo.",
+  "frequencia": "diária, o tempo todo.",
+  "reportadoPor": "Lucas Albino",
+  "submittedAt": "2026-10-01T20:10:53.826Z",
+  "submittedById": "u_LdOBLbU5A1tIZkrhDGjqNA",
+  "texto": "- Descrição: conecto a IA a ferramentas externas via MCP para buscar e cruzar informação em segundos. Os fluxos que se repetem viram skills reutilizáveis, e os dados de contexto ficam guardados ao lado, o que deixa cada processo mais inteligente a cada uso. O trabalho mudou por completo: a inovação é a velocidade de buscar e conectar informação.\n- Já virou ferramenta: sim, várias skills (ex.: /hydration-otc, saldo e histórico de carteiras Decentral na Hydration) e agentes customizados.\n- Vale outras pessoas conhecerem: sim. Parte disso já foi levada ao time na capacitação em IA.\n- Ferramentas e passo a passo: Claude Code + agentes + skills, conectados via MCP a Playwright (automação de tela), Blockscout/Hydration (dados on-chain), Slack, Telegram e Google Workspace. Geração de imagem disponível, mas pouco usada.\n  1) Peço a tarefa ao Claude.\n  2) Ele busca nas ferramentas conectadas.\n  3) Cruza com os dados de contexto guardados.\n  4) Entrega o resultado.\n  5) Se o fluxo se repete, vira skill.\n- Frequência: diária, o tempo todo.\n- Escopo: essencial para o trabalho e otimização de tempo.\n- Dados sensíveis de clientes: sim, tratados com uma camada de segurança. Novos MCPs estão sendo construídos em conjunto com o André. Próximo passo: organizar melhor e expandir.",
+  "titulo": "Orquestração de MCPs que vira skill"
+}

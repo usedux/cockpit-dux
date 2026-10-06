@@ -1,0 +1,26 @@
+{
+  "ambiente": "Local",
+  "area": [
+    "Marketing"
+  ],
+  "atualizacaoDados": "Manual",
+  "dataUltimaAtualizacao": "2026-10-02",
+  "descritivo": "A **Moneypenny** transforma pedidos soltos do time de Marketing do Grupo DUX em tarefas organizadas no board \"Nossas Tarefas\" do Notion. Você escreve algo como \"anota aí: reunião com a FLVR amanhã\". Ela cria a tarefa com marca, status, prioridade, tipo, canal, datas e ponto de contato, e liga cada uma ao entregável `MKT_` certo. No final, confirma tudo numa tabelinha.",
+  "desenvolvidoPor": "João Pedro Novochadlo",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Não",
+  "frequenciaUso": "Muito (quase diariamente)",
+  "linkAcesso": null,
+  "linkGithub": null,
+  "nome": "Moneypenny",
+  "prints": [
+    {
+      "id": "963b45bae6f38b3cb73c192645fe3ce3"
+    }
+  ],
+  "responsavel": "João Pedro Novochadlo",
+  "submittedAt": "2026-10-02T14:45:11.608Z",
+  "submittedById": "u_biNQfdsKjrWXXN4959QvOA",
+  "videoAsset": null,
+  "videoLink": null
+}

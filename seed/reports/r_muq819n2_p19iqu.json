@@ -1,0 +1,53 @@
+{
+  "ambiente": "Local",
+  "area": [
+    "Operacional"
+  ],
+  "atualizacaoDados": "Integrada",
+  "dataUltimaAtualizacao": "2026-10-01",
+  "descritivo": "Hub de ferramentas utilizados nos controles e trabalhos de rotina do setor de cobranças, jurídico e operacional. Compõem o Hub de ferramentas, a Calculadora de contratos de prorrogação; o Dashboard de cobranças, onde é feito todo o acompanhamento e registro dos vencimento de operações; O Rating Dux, ferramenta que tem como objetivo classificar os clientes e sacados utilizando o histórico com a Dux e consultas externas via deps, a ferramenta conta com vasto banco de dados do historico operado por cada cliente; Juridico, controle de todos os casos judicializados e acompanhamento dessas demandas; Córtex operacional, ainda em fase embrionário tem sido desenvolvido com o objetivo de cruzar dados advindos do core e dados registrados pelos controles de cobranças e gerar analises e relatorios para as diferentes áreas dadux.",
+  "desenvolvidoPor": "Felipe Tiburcio | DUX",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Não",
+  "frequenciaUso": "Muito (quase diariamente)",
+  "linkAcesso": null,
+  "linkGithub": null,
+  "nome": "Dux Gestão de cobranças",
+  "prints": [
+    {
+      "id": "5ebfb60af93f9d58a79a213bf76d5ca0"
+    },
+    {
+      "id": "6e72eeb9b40da9d8aa78307de95be0d8"
+    },
+    {
+      "id": "91daac875bd9c2e18476c4bdf6fe47e1"
+    },
+    {
+      "id": "bd2ec9962e0b45c7b2b516f307f79378"
+    },
+    {
+      "id": "18eca3af0e451c90b57defc51a909134"
+    },
+    {
+      "id": "4577fafb31a6ddf0c78e68b09785d8b7"
+    },
+    {
+      "id": "1518231ff244f9941924eabc3487ef79"
+    },
+    {
+      "id": "8cef5e8a36b5fd6896989975e30b6b8b"
+    },
+    {
+      "id": "29974270b4488e77a49a63b67ab1e5f8"
+    },
+    {
+      "id": "a6fd3d4f1eda7363f9e2c05a3d7f2b4b"
+    }
+  ],
+  "responsavel": "Felipe Tiburcio | DUX",
+  "submittedAt": "2026-10-02T00:24:56.846Z",
+  "submittedById": "u_jd_2va0ULIGAqYNzyOyUIQ",
+  "videoAsset": null,
+  "videoLink": null
+}

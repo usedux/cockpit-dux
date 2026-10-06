@@ -1,0 +1,20 @@
+{
+  "ambiente": "Produção",
+  "area": "Outro",
+  "atualizacaoDados": "Integrada",
+  "dataUltimaAtualizacao": "2026-09-30",
+  "descritivo": "Conector que deixa pessoas não técnicas consultarem as operações da DUX (antecipações, cedentes, volumes, faturamento, liquidação) em linguagem natural por um assistente de IA. Somente leitura, sem dado pessoal, acesso por lista de e-mails, toda consulta fica registrada em trilha de auditoria.",
+  "desenvolvidoPor": "André Terencio (Tecnologia)",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Sim",
+  "frequenciaUso": "Muito (quase diariamente)",
+  "linkAcesso": "https://mcp.wearedux.com",
+  "linkGithub": "https://github.com/usedux/dux-data-mcp",
+  "nome": "MCP de Dados da DUX",
+  "prints": [],
+  "responsavel": "André Terencio",
+  "submittedAt": "2026-10-01T20:25:22.845Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "videoAsset": null,
+  "videoLink": null
+}

@@ -1,0 +1,8 @@
+{
+  "area": "Desenvolvimento",
+  "reportadoPor": "Lucas Albino",
+  "submittedAt": "2026-10-01T19:06:03.016Z",
+  "submittedById": "u_LdOBLbU5A1tIZkrhDGjqNA",
+  "texto": "- Descrição: fluxo de processamento de imagens de documentos (tipo OCR) que extrai as informações e preenche automaticamente um template/tabela.\n- Ferramenta gerada: ainda não virou uma ferramenta formal; hoje é uma automação de preenchimento de template.\n- Vale outras pessoas da DUX conhecerem: sim.\n- Ferramentas de IA: ChatGPT e Claude.\n- Como funciona: baixo a foto do documento do cliente → passo a imagem pela automação → ela preenche automaticamente outra tabela → o resultado é salvo na minha máquina/plataforma.\n- Frequência de uso: diariamente.\n- Escopo: substituição de atividades manuais.\n- Dados sensíveis de clientes: sim. Os dados são usados apenas para subir diretamente na minha plataforma.",
+  "titulo": "OCR de documentos para preenchimento de template"
+}

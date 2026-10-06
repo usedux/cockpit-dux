@@ -1,0 +1,24 @@
+{
+  "ambiente": "Local",
+  "area": "Desenvolvimento",
+  "atualizacaoDados": "Manual",
+  "dataUltimaAtualizacao": "2026-07-03",
+  "descritivo": "Mini-wiki navegável que mapeia a operação real da DUX: processos de originação, sistemas, glossário, diagramas de fluxo e de dados, lacunas e riscos.",
+  "desenvolvidoPor": "André Terencio (Tecnologia)",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Sim",
+  "frequenciaUso": "Pouco (cerca de 1x por mês)",
+  "linkAcesso": null,
+  "linkGithub": "https://github.com/usedux/dux-map",
+  "nome": "DUX Map",
+  "prints": [
+    {
+      "id": "38228485495a55b8fe83f156a0d2753b"
+    }
+  ],
+  "responsavel": "André Terencio",
+  "submittedAt": "2026-10-01T20:35:13.094Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "videoAsset": null,
+  "videoLink": null
+}

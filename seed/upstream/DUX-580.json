@@ -1,0 +1,15 @@
+{
+  "assignee": null,
+  "createdAt": "2026-10-06T18:46:49.591Z",
+  "createdBy": "Lucas Henning",
+  "identifier": "DUX-580",
+  "labels": [],
+  "lane": "1. Backlog de Ideias",
+  "laneSince": "2026-10-06T19:39:07.571Z",
+  "laneSinceApprox": true,
+  "status": "Backlog",
+  "statusType": "backlog",
+  "title": "Teste",
+  "updatedAt": "2026-10-06T19:39:07.571Z",
+  "url": "https://linear.app/wearedux/issue/DUX-580/teste"
+}

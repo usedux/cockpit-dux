@@ -1,0 +1,24 @@
+{
+  "ambiente": "Produção",
+  "area": "Operacional",
+  "atualizacaoDados": "Integrada",
+  "dataUltimaAtualizacao": "2026-09-11",
+  "descritivo": "Painel interno da operação ANTI: fila de aprovação de clientes e antecipações, conferência e pedido de reenvio de documentos, pendências de envio ao banco e desembolso. Login Google SSO restrito a operadores autorizados.",
+  "desenvolvidoPor": "André Terencio (Tecnologia)",
+  "disponibilizarOutrasAreas": "Sim",
+  "disponivelGithub": "Sim",
+  "frequenciaUso": "Pouco (cerca de 1x por mês)",
+  "linkAcesso": "https://anti-ops.wearedux.com/",
+  "linkGithub": "https://github.com/usedux/anti-backoffice",
+  "nome": "ANTI Backoffice",
+  "prints": [
+    {
+      "id": "6a1e8a5d39f572d8aa8bf3727f47faa2"
+    }
+  ],
+  "responsavel": "André Terencio",
+  "submittedAt": "2026-10-01T20:29:41.030Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "videoAsset": null,
+  "videoLink": null
+}

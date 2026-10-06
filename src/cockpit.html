@@ -1,4 +1,5 @@
 <title>Cockpit de Projetos DUX</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
 <style>
   :root{
     /* Brand DUX — brandbook.wearedux.com: Amarelo DUX #F8AB1A, Preto, Branco, Amarelo Apoio #FAF43F, Cinza Claro #F8F8F6 */
@@ -33,6 +34,8 @@
     --area-mkt-soft:#FBF1D2;
     --area-fin:#1B6E8C;
     --area-fin-soft:#DDEEF3;
+    --area-ops:#3F6F4A;
+    --area-ops-soft:#E1EFE3;
     --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 6px 20px -8px rgba(0,0,0,0.12);
     color-scheme: light;
   }
@@ -69,6 +72,8 @@
       --area-mkt-soft:#332C15;
       --area-fin:#7FCBE0;
       --area-fin-soft:#122B32;
+      --area-ops:#8FCB9B;
+      --area-ops-soft:#1C2B20;
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 24px -10px rgba(0,0,0,0.5);
     }
   }
@@ -275,6 +280,35 @@
   .milestone-bar div{height:100%; background:var(--accent-strong); border-radius:100px;}
   .milestone-count{font-size:11px; color:var(--ink-soft);}
 
+
+  /* ---- Milestones em destaque (v25) ---- */
+  .ms-wrap{display:flex; flex-direction:column; gap:14px; padding-top:14px; border-top:1px solid var(--line);}
+  .ms-wrap-head{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--ink-faint);}
+  .ms{background:var(--accent-soft); border-radius:12px; border-left:5px solid var(--accent); padding:16px 18px 14px; display:flex; flex-direction:column; gap:10px;}
+  .ms-top{display:flex; justify-content:space-between; align-items:flex-end; gap:12px;}
+  .ms-label{font-size:10px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:var(--accent-strong); margin-bottom:3px;}
+  .ms-name{font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:16px; font-weight:700; line-height:1.25; color:var(--ink);}
+  .ms-pct{font-family:"Roboto Mono",monospace; font-size:34px; font-weight:600; line-height:1; color:var(--accent-strong); white-space:nowrap;}
+  .ms-pct small{font-size:16px; margin-left:1px;}
+  .ms-bar{height:12px; border-radius:100px; background:var(--surface); overflow:hidden;}
+  .ms-bar div{height:100%; background:var(--accent); border-radius:100px;}
+  .ms-meta{display:flex; justify-content:space-between; align-items:baseline; gap:8px; font-size:11.5px; color:var(--ink-soft);}
+  .ms-meta .date{font-family:"Roboto Mono",monospace; font-size:10.5px; font-weight:600; color:var(--accent-strong); white-space:nowrap;}
+  .ms-board{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:2px;}
+  @media (max-width:620px){ .ms-board{grid-template-columns:1fr;} }
+  .ms-board .col{background:var(--surface);}
+  .ms-board .task{background:var(--surface-muted);}
+  .ms-board .col.todo .col-head{color:var(--ink-soft);}
+  .col-head .n{margin-left:auto; font-family:"Roboto Mono",monospace; font-size:11px; font-weight:600; color:var(--ink-faint);}
+  details.more{margin-top:1px;}
+  details.more > summary{cursor:pointer; font-size:11px; font-weight:600; color:var(--ink-soft); list-style:none; padding:2px 2px 4px;}
+  details.more > summary::-webkit-details-marker{display:none;}
+  details.more[open] > summary{margin-bottom:6px;}
+  details.more > .task{margin-bottom:7px;}
+  .ms-outside, .ms-outside-note{font-size:11.5px; color:var(--ink-soft);}
+  .ms-outside > summary{cursor:pointer; font-weight:600; padding:2px 0 8px;}
+  .ms-outside > .task{margin-bottom:7px; background:var(--surface-muted);}
+
   .blockers{display:flex; flex-direction:column; gap:7px; margin-top:2px; padding-top:12px; border-top:1px solid var(--line);}
   .blockers-head{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--ink-faint);}
   .blocker{display:flex; gap:8px; align-items:flex-start; font-size:12px; line-height:1.4;}
@@ -304,6 +338,44 @@
   .tchip.melhoria{border-color:var(--st-progress); color:var(--st-progress);}
   .tchip.feature{border-color:var(--st-done); color:var(--st-done);}
   .tchip.outros{border-color:var(--line-strong); color:var(--ink-faint);}
+
+
+  /* ---------- v33: legenda agrupada, milestones, próximos milestones ---------- */
+  .legend-groups{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:22px;}
+  @media (max-width:860px){ .legend-groups{grid-template-columns:1fr;} }
+  .lg-box{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 14px 12px; display:flex; flex-direction:column; gap:8px;}
+  .lg-head{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--ink-faint);}
+  .lg-items{display:flex; flex-wrap:wrap; gap:8px 14px; font-size:12px; color:var(--ink-soft); align-items:center;}
+  .lg-items > span{display:inline-flex; align-items:center; gap:6px;}
+  .lg-note{font-size:11px; color:var(--ink-faint);}
+  .chip.ops{background:var(--area-ops-soft); color:var(--area-ops);}
+  /* ---------- Grupos de projetos por status ---------- */
+  .grid-group{grid-column:1 / -1; display:flex; align-items:center; gap:9px; margin:6px 0 -6px;}
+  .grid-group:first-child{margin-top:0;}
+  .gg-dot{width:9px; height:9px; border-radius:50%; background:var(--ink-faint);}
+  .grid-group.blocked .gg-dot{background:var(--blk-ext);}
+  .grid-group.progress .gg-dot{background:var(--st-progress);}
+  .grid-group.build .gg-dot{background:var(--st-build);}
+  .gg-name{font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft);}
+  .gg-count{font-family:"Roboto Mono",monospace; font-size:10.5px; color:var(--ink-faint);}
+  .gg-line{flex:1; height:1px; background:var(--line);}
+  .pill.blocked{background:var(--blk-ext-soft); color:var(--blk-ext);}
+  .card.blocked{border-color:var(--blk-ext); box-shadow:0 0 0 1px var(--blk-ext) inset;}
+  .blockers.hl{background:var(--blk-ext-soft); border:1px solid var(--blk-ext); border-radius:10px; padding:11px 13px; margin-top:0;}
+  .blockers.hl .blockers-head{color:var(--blk-ext);}
+  .blocker-ref{display:block; margin-top:2px; font-size:10.5px; color:var(--ink-faint);}
+  .blocker-ref .mono{font-family:"Roboto Mono",monospace; font-weight:600; color:var(--ink-soft);}
+  .ms-empty{font-size:12px; color:var(--ink-faint); background:var(--surface-muted); border:1px dashed var(--line-strong); border-radius:9px; padding:10px 12px;}
+  .distro-empty{font-size:11.5px; color:var(--ink-faint);}
+  .next-ms{margin-top:10px; padding-top:12px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px;}
+  .next-ms-head{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--ink-faint);}
+  .next-ms-item{background:var(--surface-muted); border:1px solid var(--line); border-left:3px solid var(--line-strong); border-radius:9px; padding:9px 12px; display:flex; flex-direction:column; gap:3px;}
+  .next-ms-name{font-size:13px; font-weight:700; color:var(--ink);}
+  .next-ms-meta{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:11.5px; color:var(--ink-soft);}
+  .next-ms-meta .date{font-family:"Roboto Mono",monospace; font-size:10.5px; color:var(--ink-faint);}
+  .next-ms-state{font-size:11px; color:var(--ink-faint);}
+  .next-ms-empty{font-size:12px; color:var(--ink-faint); line-height:1.45;}
+  .closing-head .weekbox{margin-left:auto;}
 
   .footer{
     margin-top:30px; padding-top:14px; border-top:1px solid var(--line);
@@ -335,7 +407,7 @@
     display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
   }
   .site-nav-brand{display:flex; align-items:center; gap:9px; padding:10px 0;}
-  .site-nav-mark{width:18px; height:18px; border-radius:4px; background:var(--accent); flex:0 0 auto;}
+  .site-nav-mark{width:28px; height:28px; display:block; flex:0 0 auto;}
   .site-nav-word{
     font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-weight:700; font-size:15px;
     letter-spacing:.03em; color:#fff; text-transform:uppercase; white-space:nowrap;
@@ -349,9 +421,19 @@
     font-family:"Exo 2",inherit; font-size:13px; font-weight:600; padding:8px 16px; border-radius:8px;
     cursor:pointer; transition:background .15s ease, color .15s ease;
   }
+  .tab-wip{font-weight:700; opacity:.7; letter-spacing:.02em; margin-left:2px;}
   .tab-btn:hover{background:rgba(255,255,255,.08); color:#fff;}
   .tab-btn:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
   .tab-btn.active{background:var(--accent); color:#000;}
+  .admin-icon-btn{
+    width:30px; height:30px; margin-left:6px; border-radius:50%; border:1px solid transparent; background:transparent;
+    color:rgba(255,255,255,.35); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; align-self:center;
+    transition:color .15s ease, background .15s ease;
+  }
+  .admin-icon-btn[hidden]{display:none !important;}
+  .admin-icon-btn:hover{color:#fff; background:rgba(255,255,255,.1);}
+  .admin-icon-btn:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
+  .admin-icon-btn.active{color:#000; background:var(--accent);}
   .page[hidden]{display:none;}
 
   /* ---------- Levantamento de Ferramentas ---------- */
@@ -500,6 +582,23 @@
   .tools-action-btn.primary{background:var(--accent); border-color:var(--accent); color:#000;}
   .tools-action-btn.primary:hover{filter:brightness(0.95);}
 
+
+  /* ---------- Sub-abas do Levantamento de Ferramentas ---------- */
+  .subtabs-row{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; border-bottom:1px solid var(--line-strong); margin-bottom:18px;}
+  .subtabs{display:flex; gap:2px; flex-wrap:wrap;}
+  .subtab-btn{
+    background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px;
+    font-family:inherit; font-size:13px; font-weight:600; color:var(--ink-faint);
+    padding:10px 16px; cursor:pointer; transition:color .15s ease, border-color .15s ease;
+  }
+  .subtab-btn:hover{color:var(--ink);}
+  .subtab-btn:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
+  .subtab-btn.active{color:var(--ink); border-bottom-color:var(--accent);}
+  .subtab-btn .count{font-family:"Roboto Mono",monospace; font-size:10.5px; font-weight:600; color:var(--ink-faint); margin-left:6px;}
+  .subtabs-row .tools-actions{margin:0 0 8px; flex-wrap:nowrap;}
+  .subpanel[hidden]{display:none;}
+  @media (max-width:640px){ .subtabs-row .tools-actions{flex-wrap:wrap; margin-bottom:10px;} }
+
   /* ---------- Modais (Reportar Ferramenta / Reportar Inovação) ---------- */
   .modal-overlay{
     position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1000;
@@ -566,6 +665,7 @@
     white-space:nowrap; display:inline-flex; align-items:center; justify-content:center;
   }
   .icon-eye-btn:hover{background:var(--surface-muted); color:var(--ink); border-color:var(--ink-faint);}
+  .icon-eye-btn[data-core="sim"] .icon-eye-dot{color:var(--st-done);}
   .icon-eye-dot{display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor;}
 
   /* ---------- Toast de confirmação (sucesso ao enviar report/inovação) ---------- */
@@ -578,6 +678,70 @@
   .page-toast[hidden]{display:none;}
   @keyframes toast-in{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
   .tools-table td.col-eye{width:1%; text-align:right;}
+
+
+  /* ---------- Upstream · Novos Projetos (board espelhado do Linear — só admin) ---------- */
+  .up-board{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(222px, 1fr); gap:12px; overflow-x:auto; padding-bottom:12px; align-items:start;}
+  .up-col{background:var(--surface-muted); border-radius:12px; padding:12px 10px 10px; display:flex; flex-direction:column; gap:9px; min-height:140px;}
+  .up-col-head{display:flex; align-items:center; gap:8px; padding:0 4px 4px; font-size:11px; text-transform:uppercase; letter-spacing:.07em; font-weight:700; color:var(--ink);}
+  .up-col-head .dot{width:9px; height:9px; flex:0 0 auto;}
+  .up-col-head .n{margin-left:auto; font-family:"Roboto Mono",monospace; font-size:11px; font-weight:600; color:var(--ink-faint);}
+  .up-card{
+    display:flex; flex-direction:column; gap:8px; background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:11px 12px; text-decoration:none; color:inherit; box-shadow:0 1px 2px rgba(0,0,0,.04);
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .up-card:hover{border-color:var(--accent); transform:translateY(-1px);}
+  .up-card:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
+  .up-card-top{display:flex; justify-content:space-between; align-items:baseline; gap:8px;}
+  .up-card .id{color:var(--ink-faint); font-size:10.5px; letter-spacing:.02em;}
+  .up-card .go{font-size:11px; color:var(--ink-faint);}
+  .up-card:hover .go{color:var(--accent-strong);}
+  .up-card .title{font-size:13px; font-weight:600; line-height:1.35; color:var(--ink);}
+  .up-info{display:grid; grid-template-columns:auto 1fr; gap:4px 10px; font-size:11.5px; align-items:center;}
+  .up-info .k{color:var(--ink-faint); font-size:10px; text-transform:uppercase; letter-spacing:.06em; font-weight:700;}
+  .up-info .v{color:var(--ink-soft);}
+  .up-chips{display:flex; flex-wrap:wrap; gap:5px;}
+  .up-empty{font-size:11.5px; color:var(--ink-faint); font-style:italic; padding:4px;}
+
+  /* ---------- Área Admin (v27) ---------- */
+  .modal.wide{max-width:780px;}
+  .admin-stats{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px;}
+  .admin-stat{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 18px; box-shadow:var(--shadow); min-width:120px;}
+  .admin-stat .n{font-family:"Roboto Mono",monospace; font-size:22px; font-weight:600;}
+  .admin-stat .l{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin-top:2px;}
+  .admin-pad{padding:16px 18px;}
+  .admin-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+  .admin-input{
+    flex:1 1 240px; font-family:inherit; font-size:13px; color:var(--ink); background:var(--surface);
+    border:1px solid var(--line-strong); border-radius:8px; padding:9px 12px;
+  }
+  .admin-input:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+  .admin-note{font-size:12px; color:var(--ink-soft); line-height:1.5; margin:0 0 12px;}
+  .admin-note b{color:var(--ink);}
+  .admin-sep{border:none; border-top:1px solid var(--line); margin:0;}
+  a.tools-action-btn{text-decoration:none; display:inline-block;}
+  a.tools-action-btn[aria-disabled="true"]{opacity:.5; pointer-events:none;}
+  .person{display:flex; align-items:center; gap:12px; padding:10px 18px; border-bottom:1px solid var(--line);}
+  .person:last-child{border-bottom:none;}
+  .avatar{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%; background:var(--accent-soft); color:var(--accent-strong);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px;
+  }
+  .person-main{flex:1 1 auto; min-width:0;}
+  .person-name{font-weight:700; font-size:13px;}
+  .person-sub{font-size:11px; color:var(--ink-faint);}
+  .btn-danger{
+    border:1px solid var(--blk-ext); color:var(--blk-ext); background:transparent; font-family:inherit;
+    font-size:12.5px; font-weight:700; padding:9px 16px; border-radius:100px; cursor:pointer;
+  }
+  .btn-danger.armed{background:var(--blk-ext); color:#fff;}
+  .edit-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 16px;}
+  .edit-grid .field.full{grid-column:1 / -1;}
+  @media (max-width:620px){ .edit-grid{grid-template-columns:1fr;} }
+  .check-grid{display:flex; flex-wrap:wrap; gap:6px 14px;}
+  .check-grid label{font-weight:500; display:inline-flex; gap:6px; align-items:center; margin:0; font-size:12.5px;}
+  .tools-action-btn:disabled{opacity:.6; cursor:not-allowed;}
 </style>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Exo+2:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap">
@@ -585,12 +749,14 @@
 <div class="site-nav">
   <div class="site-nav-inner">
     <div class="site-nav-brand">
-      <span class="site-nav-mark" aria-hidden="true"></span>
+      <svg class="site-nav-mark" viewBox="0 0 48 48" role="img" aria-label="Cockpit DUX"><rect width="48" height="48" rx="9" fill="#F8AB1A"/><path d="M16.5 17a7.5 7.5 0 0 1 15.0 0" fill="none" stroke="#000" stroke-width="2.1" stroke-linecap="round"/><path d="M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82" stroke="#000" stroke-width="1.4" stroke-linecap="round"/><path d="M24 17L25.80 14.86" stroke="#000" stroke-width="2.2" stroke-linecap="round"/><path d="M27.25 13.13L24.61 13.86L26.99 15.85z" fill="#000" stroke="#000" stroke-width="0.6" stroke-linejoin="round"/><circle cx="24" cy="17" r="2" fill="#000"/><rect x="8" y="20.5" width="32" height="4" rx="2" fill="#000"/><g fill="#000"><rect x="11" y="30.5" width="10" height="10" rx="3"/><rect x="27" y="30.5" width="10" height="10" rx="3"/><rect x="13.5" y="26.7" width="5" height="3" rx="1.2"/><rect x="29.5" y="26.7" width="5" height="3" rx="1.2"/></g></svg>
       <span class="site-nav-word">DUX <b>·</b> Cockpit</span>
     </div>
     <div class="tabs">
       <button class="tab-btn active" data-page="projects" type="button">Painel de Projetos</button>
       <button class="tab-btn" data-page="tools" type="button">Levantamento de Ferramentas</button>
+      <button class="tab-btn" data-page="upstream" id="upstreamTabBtn" type="button" title="Em construção — ainda não está pronto" hidden>Upstream · Novos Projetos <span class="tab-wip" aria-label="em construção">**</span></button>
+      <button class="admin-icon-btn" id="adminTabBtn" type="button" title="Painel de administração" aria-label="Painel de administração" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.2" fill="currentColor"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.2" fill="currentColor"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="18" r="2.2" fill="currentColor"/></svg></button>
     </div>
   </div>
 </div>
@@ -607,40 +773,58 @@
 
 <div class="section-head">
   <h2>Principais Projetos</h2>
-  <div class="weekbox">
-    <div>
-      <div class="label">Semana</div>
-      <div class="value" id="weekValue">28 SET — 02 OUT 2026</div>
-    </div>
-    <div class="weeknav">
-      <button id="prevWeek" title="Semana anterior" aria-label="Semana anterior">‹</button>
-      <button id="nextWeek" title="Próxima semana" aria-label="Próxima semana">›</button>
-    </div>
-  </div>
 </div>
 
-<div class="legend">
-  <span><span class="dot" style="background:var(--st-progress)"></span>Em execução</span>
-  <span><span class="dot" style="background:var(--st-qa)"></span>QA</span>
-  <span><span class="dot" style="background:var(--st-done)"></span>Produção</span>
-  <span><span class="dot" style="background:var(--st-build)"></span>Em construção (fora do Linear ainda)</span>
-  <span><span class="blocker-tag interno" style="padding:1px 7px;">Interno</span>blocker da empresa</span>
-  <span><span class="blocker-tag externo" style="padding:1px 7px;">Externo</span>tecnologia/fornecedor</span>
-  <span><span class="chip mkt" style="padding:1px 7px;">Marketing</span></span>
-  <span><span class="chip fin" style="padding:1px 7px;">Financeiro</span></span>
-  <span>áreas envolvidas por label do Linear</span>
+<div class="legend-groups">
+  <div class="lg-box">
+    <div class="lg-head">Status</div>
+    <div class="lg-items">
+      <span><span class="dot" style="background:var(--blk-ext)"></span>Bloqueado</span>
+      <span><span class="dot" style="background:var(--st-progress)"></span>Em execução</span>
+      <span><span class="dot" style="background:var(--st-qa)"></span>Em teste</span>
+      <span><span class="dot" style="background:var(--st-done)"></span>Produção</span>
+      <span><span class="dot" style="background:var(--st-build)"></span>Em construção</span>
+    </div>
+    <div class="lg-note">Bloqueado = parado por um blocker (destacado no card). Em construção = projeto ainda não estruturado.</div>
+  </div>
+  <div class="lg-box">
+    <div class="lg-head">Blockers</div>
+    <div class="lg-items">
+      <span><span class="blocker-tag interno" style="padding:1px 7px;">Interno</span>da empresa</span>
+      <span><span class="blocker-tag externo" style="padding:1px 7px;">Externo</span>tecnologia/fornecedor</span>
+    </div>
+    <div class="lg-note">Só entram blockers ligados a tasks dos milestones.</div>
+  </div>
+  <div class="lg-box">
+    <div class="lg-head">Área</div>
+    <div class="lg-items">
+      <span class="chip mkt">Marketing</span>
+      <span class="chip fin">Financeiro</span>
+      <span class="chip ops">Operações</span>
+    </div>
+    <div class="lg-note">Pela label do Linear, nas tasks dos milestones.</div>
+  </div>
 </div>
 
 <div class="grid">
 
+  <div class="grid-group blocked"><span class="gg-dot"></span><span class="gg-name">Bloqueado</span><span class="gg-count">1</span><span class="gg-line"></span></div>
+
   <!-- ANTI BANKING / APP -->
-  <div class="card">
+  <div class="card blocked">
     <div class="card-head">
       <div class="card-title">
         <h2>Anti Banking</h2>
         <span class="platform">App · Anti App no Linear</span>
       </div>
-      <span class="pill progress">Em Andamento</span>
+      <span class="pill blocked">Bloqueado</span>
+    </div>
+
+    <div class="blockers hl">
+      <div class="blockers-head">⛔ O que está travando o avanço</div>
+      <!-- LIVE:anti-banking:blockers:start -->
+    <div class="blocker"><span class="blocker-tag externo">Externo</span><p>Aguardando resposta da Hiperbanco — testando a API de feedback de abertura de conta.<span class="blocker-ref"><span class="mono">DUX-523</span> · Abertura da Primeira Conta</span></p></div>
+    <!-- LIVE:anti-banking:blockers:end -->
     </div>
 
     <div class="people">
@@ -656,86 +840,220 @@
       <div class="goal-row"><span class="k">Próximo goal</span><p>Realizar a abertura de conta.</p></div>
     </div>
 
-    <div class="milestone">
-      <div class="milestone-head"><span>🎯 Marco · Abertura da Primeira Conta</span><span class="date">Sem meta definida</span></div>
-      <div class="milestone-bar"><!-- LIVE:anti-banking:milestone-bar:start -->
-<div style="width:0%"></div>
-<!-- LIVE:anti-banking:milestone-bar:end --></div>
-      <div class="milestone-count"><!-- LIVE:anti-banking:milestone-count:start -->
-0% concluído
-<!-- LIVE:anti-banking:milestone-count:end --></div>
-    </div>
+    <!-- LIVE:anti-banking:milestones:start -->
+    <div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms-empty">Nenhum milestone em execução no momento — veja os próximos mais abaixo.</div><div class="ms-outside-note">Fora de milestone · 21 tasks · 0 em execução · 0 em teste · 1 em produção · 20 no backlog/refino</div></div>
+    <!-- LIVE:anti-banking:milestones:end -->
 
-    <div class="board">
-      <div class="col progress">
-        <div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução</div>
-        <!-- LIVE:anti-banking:board-progress:start -->
-<div class="empty">Nenhuma task em execução</div>
-<!-- LIVE:anti-banking:board-progress:end -->
-      </div>
-      <div class="col qa">
-        <div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>QA</div>
-        <!-- LIVE:anti-banking:board-qa:start -->
-<div class="empty">Nenhuma task em QA</div>
-<!-- LIVE:anti-banking:board-qa:end -->
-      </div>
-      <div class="col done">
-        <div class="col-head"><span class="dot" style="background:var(--st-done)"></span>Produção (mais recente)</div>
-        <!-- LIVE:anti-banking:board-done:start -->
-<div class="task"><span class="id mono">DUX-454</span><span>Ajustar ícone do aplicativo<span class="who">Lucas Henning</span></span></div>
-<!-- LIVE:anti-banking:board-done:end -->
-      </div>
-    </div>
 
-    <div class="blockers">
-      <div class="blockers-head">Blockers</div>
-      <div class="blocker"><span class="blocker-tag externo">Externo</span><p>Aguardando resposta da Hiperbanco — testando a API de feedback de abertura de conta (DUX-523).</p></div>
-    </div>
-
-    <div class="metrics-head">Principais métricas</div>
-    <div class="distro" title="Distribuição das tasks abertas por etapa">
+    <div class="metrics-head">Principais métricas dos milestones</div>
+    <div class="distro" title="Distribuição das tasks dos milestones por etapa">
       <!-- LIVE:anti-banking:distro-bars:start -->
-<div style="width:42.9%"></div>
-<div style="width:28.6%"></div>
-<div style="width:14.3%"></div>
-<div style="width:14.3%"></div>
-<!-- LIVE:anti-banking:distro-bars:end -->
+    <div style="width:100.0%; background:var(--ink-faint)"></div>
+    <!-- LIVE:anti-banking:distro-bars:end -->
     </div>
     <div class="distro-legend">
       <!-- LIVE:anti-banking:distro-legend:start -->
-<span><span class="dot"></span>Backlog · 9</span>
-<span><span class="dot"></span>Product Refinement · 6</span>
-<span><span class="dot"></span>Priorized · 3</span>
-<span><span class="dot"></span>Ready To Dev · 3</span>
-<!-- LIVE:anti-banking:distro-legend:end -->
+    <span><span class="dot" style="background:var(--ink-faint)"></span>Backlog · 1</span>
+    <!-- LIVE:anti-banking:distro-legend:end -->
     </div>
     <div class="areas">
-      <div class="areas-head">Áreas envolvidas</div>
+      <div class="areas-head">Área</div>
       <div class="area-chips">
         <!-- LIVE:anti-banking:areas:start -->
-<span class="chip mkt">Marketing · 0</span>
+    <span class="chip mkt">Marketing · 0</span>
 <span class="chip fin">Financeiro · 0</span>
-<span class="chip other">Outros · 22</span>
-<!-- LIVE:anti-banking:areas:end -->
+<span class="chip ops">Operações · 0</span>
+<span class="chip other" title="Tasks sem label de área">Sem área · 1</span>
+    <!-- LIVE:anti-banking:areas:end -->
       </div>
     </div>
     <div class="types">
       <div class="types-head">Tipo de task</div>
       <div class="type-chips">
         <!-- LIVE:anti-banking:types:start -->
-        <span class="tchip bug">Bug · 5</span>
-        <span class="tchip melhoria">Melhoria · 2</span>
-        <span class="tchip feature">Nova Funcionalidade · 11</span>
-        <span class="tchip outros">Outros · 4</span>
-        <!-- LIVE:anti-banking:types:end -->
+    <span class="tchip bug">Bug · 0</span>
+<span class="tchip melhoria">Melhoria · 0</span>
+<span class="tchip feature">Nova Funcionalidade · 1</span>
+<span class="tchip outros">Outros · 0</span>
+    <!-- LIVE:anti-banking:types:end -->
       </div>
     </div>
-    <div class="kpis">
-      <div class="kpi"><div class="n">—</div><div class="l">Cadastros iniciados</div></div>
-      <div class="kpi"><div class="n">—</div><div class="l">Conclusão KYC</div></div>
-      <div class="kpi"><div class="n">—</div><div class="l">Tempo médio aprovação</div></div>
+    <div class="next-ms">
+      <div class="next-ms-head">Próximos milestones</div>
+      <!-- LIVE:anti-banking:next-milestones:start -->
+    <div class="next-ms-item"><div class="next-ms-name">Abertura da Primeira Conta</div><div class="next-ms-meta"><span>1 task mapeada · nenhuma pronta p/ dev ainda</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div>
+    <!-- LIVE:anti-banking:next-milestones:end -->
     </div>
   </div>
+
+  <div class="grid-group progress"><span class="gg-dot"></span><span class="gg-name">Em execução</span><span class="gg-count">2</span><span class="gg-line"></span></div>
+
+  <!-- ANTI SACADO / WEB SACADO -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">
+        <h2>Anti Sacado</h2>
+        <span class="platform">Web · ANTI – Web Sacado no Linear</span>
+      </div>
+      <span class="pill progress">Em execução</span>
+    </div>
+
+    <div class="people">
+      <div><span class="k">Tech Lead</span><b>Zaidan</b></div>
+      <div><span class="k">Business Owner</span><b>— —</b></div>
+    </div>
+
+    <div class="goals">
+      <div class="goal-row"><span class="k">Objetivo</span><ol class="goal-list">
+        <li><span class="rank">1</span><p>Viabilizar o piloto do fluxo self-service do sacado para o parceiro escolhido.</p></li>
+        <li><span class="rank">2</span><p>Implantar a régua de comunicação inicial.</p></li>
+      </ol></div>
+      <div class="goal-row"><span class="k">Próximo goal</span><p>Finalizar a implementação e iniciar os testes locais.</p></div>
+    </div>
+
+    <!-- LIVE:anti-sacado:milestones:start -->
+    <div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms"><div class="ms-top"><div><div class="ms-label">🎯 Milestone</div><div class="ms-name">Piloto Risco Sacado- Cliente 1</div></div><div class="ms-pct">67<small>%</small></div></div><div class="ms-bar"><div style="width:67%"></div></div><div class="ms-meta"><span>9 de 16 tasks em produção · 1 cancelada fora da conta</span><span class="date">Meta 28/09</span></div><div class="ms-board"><div class="col progress"><div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução / revisão<span class="n">7</span></div><div class="task"><span class="id mono">DUX-572</span><span class="title">Mapear fluxo operacional do Risco Sacado (cadastro de fornecedor até operação no dia a dia)</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-555</span><span class="title">Adicionar ícone de inbox/notificação de mudança de etapa para o fornecedor</span><span class="who">Zaidan · em review</span></div><div class="task"><span class="id mono">DUX-527</span><span class="title">Revisar remetente das réguas de comunicação</span><span class="who">Lucas H. · em andamento</span></div><details class="more"><summary>+4 mais</summary><div class="task"><span class="id mono">DUX-570</span><span class="title">Estrutura de política de privacidade, termos de uso e cookies validada</span><span class="who">Thiago · em andamento</span></div><div class="task"><span class="id mono">DUX-503</span><span class="title">Revisão do manual do produto (HTML) para o cliente</span><span class="who">Felipe · em review</span></div><div class="task"><span class="id mono">DUX-465</span><span class="title">Separar ambientes de produção e QA/desenvolvimento</span><span class="who">Zaidan · em andamento</span></div><div class="task"><span class="id mono">DUX-500</span><span class="title">Configurar suporte comercial via WhatsApp - Risco Sacado</span><span class="who">Luma · em review</span></div></details></div><div class="col qa"><div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>Em teste<span class="n">0</span></div><div class="empty">Nada em teste</div></div><div class="col done"><div class="col-head"><span class="dot" style="background:var(--st-done)"></span>Em produção<span class="n">9</span></div><div class="task"><span class="id mono">DUX-558</span><span class="title">Permitir que fornecedor edite cadastro de e-mail</span><span class="who">Zaidan · 05/10</span></div><div class="task"><span class="id mono">DUX-554</span><span class="title">Dar visibilidade ao fornecedor sobre pendências</span><span class="who">Zaidan · 05/10</span></div><div class="task"><span class="id mono">DUX-499</span><span class="title">Atualização do Figma com a jornada mais recente</span><span class="who">Lucas H. · 01/10</span></div><details class="more"><summary>+6 mais</summary><div class="task"><span class="id mono">DUX-556</span><span class="title">Melhorar visão do parceiro para gestão de operações</span><span class="who">Zaidan · 28/09</span></div><div class="task"><span class="id mono">DUX-559</span><span class="title">Criar visão do parceiro controle</span><span class="who">Zaidan · 28/09</span></div><div class="task"><span class="id mono">DUX-463</span><span class="title">Implementação da régua de comunicação transacional - Email (Risco Sacado)</span><span class="who">Zaidan · 25/09</span></div><div class="task"><span class="id mono">DUX-505</span><span class="title">Definir prazo de assinatura do contrato - D4Sign</span><span class="who">Lucas H. · 23/09</span></div><div class="task"><span class="id mono">DUX-501</span><span class="title">Liberar suporte@sejaanti.com.br para Luma</span><span class="who">Zaidan · 23/09</span></div><div class="task"><span class="id mono">DUX-462</span><span class="title">Concepção da régua de comunicação transacional - Email (Risco Sacado)</span><span class="who">Lucas H. · 23/09</span></div></details></div><div class="col todo"><div class="col-head"><span class="dot" style="background:var(--ink-faint)"></span>Faltam entregar<span class="n">0</span></div><div class="empty">Nada pendente</div></div></div></div><details class="ms-outside"><summary>Fora de milestone · 16 tasks · 1 em execução · 1 em teste · 0 em produção · 14 no backlog/refino</summary><div class="task"><span class="id mono">DUX-571</span><span class="title">Ata 01/ Outubro</span><span class="who">sem responsável · em review</span></div><div class="task"><span class="id mono">DUX-464</span><span class="title">Ajustar o fluxo de cadastro para ser feito em duas etapas</span><span class="who">Zaidan · em teste</span></div></details></div>
+    <!-- LIVE:anti-sacado:milestones:end -->
+
+    <div class="blockers">
+      <div class="blockers-head">Blockers</div>
+      <!-- LIVE:anti-sacado:blockers:start -->
+    <div class="empty">Nenhum blocker nos milestones no momento</div>
+    <!-- LIVE:anti-sacado:blockers:end -->
+    </div>
+
+    <div class="metrics-head">Principais métricas dos milestones</div>
+    <div class="distro" title="Distribuição das tasks dos milestones por etapa">
+      <!-- LIVE:anti-sacado:distro-bars:start -->
+    <div style="width:23.5%; background:var(--st-progress)"></div>
+<div style="width:17.6%; background:var(--blk-int)"></div>
+<div style="width:52.9%; background:var(--st-done)"></div>
+<div style="width:5.9%; background:var(--st-build)"></div>
+    <!-- LIVE:anti-sacado:distro-bars:end -->
+    </div>
+    <div class="distro-legend">
+      <!-- LIVE:anti-sacado:distro-legend:start -->
+    <span><span class="dot" style="background:var(--st-progress)"></span>Em execução · 4</span>
+<span><span class="dot" style="background:var(--blk-int)"></span>Em revisão · 3</span>
+<span><span class="dot" style="background:var(--st-done)"></span>Produção · 9</span>
+<span><span class="dot" style="background:var(--st-build)"></span>Cancelado · 1</span>
+    <!-- LIVE:anti-sacado:distro-legend:end -->
+    </div>
+    <div class="areas">
+      <div class="areas-head">Área</div>
+      <div class="area-chips">
+        <!-- LIVE:anti-sacado:areas:start -->
+    <span class="chip mkt">Marketing · 0</span>
+<span class="chip fin">Financeiro · 0</span>
+<span class="chip ops">Operações · 8</span>
+<span class="chip other" title="Tasks sem label de área">Sem área · 9</span>
+    <!-- LIVE:anti-sacado:areas:end -->
+      </div>
+    </div>
+    <div class="types">
+      <div class="types-head">Tipo de task</div>
+      <div class="type-chips">
+        <!-- LIVE:anti-sacado:types:start -->
+    <span class="tchip bug">Bug · 0</span>
+<span class="tchip melhoria">Melhoria · 3</span>
+<span class="tchip feature">Nova Funcionalidade · 13</span>
+<span class="tchip outros">Outros · 1</span>
+    <!-- LIVE:anti-sacado:types:end -->
+      </div>
+    </div>
+    <div class="next-ms">
+      <div class="next-ms-head">Próximos milestones</div>
+      <!-- LIVE:anti-sacado:next-milestones:start -->
+    <div class="next-ms-empty">Nenhum milestone mapeado além dos que já estão em execução. Quando um novo milestone for criado no Linear, ele aparece aqui.</div>
+    <!-- LIVE:anti-sacado:next-milestones:end -->
+    </div>
+  </div>
+  <!-- DECENTRAL NEW -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">
+        <h2>Decentral</h2>
+        <span class="platform">Web3 · Decentral no Linear</span>
+      </div>
+      <span class="pill progress">Em execução</span>
+    </div>
+
+    <div class="people">
+      <div><span class="k">Tech Lead</span><b>Hyago</b></div>
+      <div><span class="k">Business Owner</span><b>Lucas A.</b></div>
+    </div>
+
+    <div class="goals">
+      <div class="goal-row"><span class="k">Objetivo</span><ol class="goal-list">
+        <li><span class="rank">1</span><p class="draft">Rascunho — migrar as posições legadas (v1/v2) para o ledger da V3, com um calendário de pagamento por pool.</p></li>
+        <li><span class="rank">2</span><p class="draft">Rascunho — lançar as novas ofertas (10% em 90 dias e 14% em 180 dias) com KYC obrigatório.</p></li>
+      </ol></div>
+      <div class="goal-row"><span class="k">Próximo goal</span><p class="draft">Rascunho — concluir o milestone "Liberação V3".</p></div>
+    </div>
+
+    <!-- LIVE:decentral:milestones:start -->
+    <div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms"><div class="ms-top"><div><div class="ms-label">🎯 Milestone</div><div class="ms-name">Liberação V3 - Decentral</div></div><div class="ms-pct">25<small>%</small></div></div><div class="ms-bar"><div style="width:25%"></div></div><div class="ms-meta"><span>4 de 21 tasks em produção</span><span class="date">Sem meta definida</span></div><div class="ms-board"><div class="col progress"><div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução / revisão<span class="n">5</span></div><div class="task"><span class="id mono">DUX-513</span><span class="title">Relatório Fact Finance atualizado para o modelo V3</span><span class="who">Hyago · em andamento</span></div><div class="task"><span class="id mono">DUX-529</span><span class="title">Revisão dos termos de uso e aporte</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-524</span><span class="title">Criar painel de controle para acompanhar o desembolso</span><span class="who">Lucas A. · em andamento</span></div><details class="more"><summary>+2 mais</summary><div class="task"><span class="id mono">DUX-526</span><span class="title">Formalizar acordo com LP para recompra de Principal</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-509</span><span class="title">Script de migração legada + ajustes na aplicação</span><span class="who">Hyago · em andamento</span></div></details></div><div class="col qa"><div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>Em teste<span class="n">0</span></div><div class="empty">Nada em teste</div></div><div class="col done"><div class="col-head"><span class="dot" style="background:var(--st-done)"></span>Em produção<span class="n">4</span></div><div class="task"><span class="id mono">DUX-510</span><span class="title">Preço definido para a saída via suporte</span><span class="who">Lucas A. · 05/10</span></div><div class="task"><span class="id mono">DUX-518</span><span class="title">Issues Financeiro</span><span class="who">Lucas A. · 05/10</span></div><div class="task"><span class="id mono">DUX-516</span><span class="title">Issues MKT</span><span class="who">Hyago · 05/10</span></div><details class="more"><summary>+1 mais</summary><div class="task"><span class="id mono">DUX-506</span><span class="title">Estimativa de esforço da migração legada (v2 → v3)</span><span class="who">Hyago · 05/10</span></div></details></div><div class="col todo"><div class="col-head"><span class="dot" style="background:var(--ink-faint)"></span>Faltam entregar<span class="n">12</span></div><div class="task"><span class="id mono">DUX-517</span><span class="title">Benchmark de Melhoria de Design e Experiência</span><span class="who">Lucas A. · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-525</span><span class="title">Criar documentação/tutorial de como funciona a movimentação financeira</span><span class="who">Hyago · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-551</span><span class="title">Criação de Board de Migração de V2 para V3</span><span class="who">Hyago · Pronto p/ dev</span></div><details class="more"><summary>+9 mais</summary><div class="task"><span class="id mono">DUX-521</span><span class="title">Idealizar reuniões (AMA/Live) para grupos e indicações</span><span class="who">JP · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-507</span><span class="title">Contrato novo Hydration</span><span class="who">Hyago · Priorizado</span></div><div class="task"><span class="id mono">DUX-512</span><span class="title">Dados de controle financeiro da V3 por chain e consolidado</span><span class="who">Hyago · Priorizado</span></div><div class="task"><span class="id mono">DUX-520</span><span class="title">Estruturar comunicação para clientes da plataforma legacy (V2 → V3)</span><span class="who">JP · Refinamento</span></div><div class="task"><span class="id mono">DUX-519</span><span class="title">Atualizar site público da Decentral (usedecentral.com)</span><span class="who">JP · Refinamento</span></div><div class="task"><span class="id mono">DUX-528</span><span class="title">Rever experiência tela de transações para adicionar status, e botão retry de cada linha</span><span class="who">Hyago · Backlog</span></div><div class="task"><span class="id mono">DUX-515</span><span class="title">Corrigir falhas intermitentes na aprovação do depósito</span><span class="who">Hyago · Backlog</span></div><div class="task"><span class="id mono">DUX-508</span><span class="title">Revisão geral de UI/UX da aplicação</span><span class="who">Lucas H. · Backlog</span></div><div class="task"><span class="id mono">DUX-514</span><span class="title">Bloquear código de indicação próprio ou inválido</span><span class="who">Hyago · Backlog</span></div></details></div></div></div><div class="ms-outside-note">Fora de milestone · 4 tasks · 0 em execução · 0 em teste · 2 em produção · 2 no backlog/refino</div></div>
+    <!-- LIVE:decentral:milestones:end -->
+
+    <div class="blockers">
+      <div class="blockers-head">Blockers</div>
+      <!-- LIVE:decentral:blockers:start -->
+    <div class="blocker"><span class="blocker-tag interno">Interno</span><p>Contrato da pool Hydration (ciclo de 60 dias com votação) — decisão pendente com o Lucas.<span class="blocker-ref"><span class="mono">DUX-507</span> · Liberação V3 - Decentral</span></p></div>
+    <!-- LIVE:decentral:blockers:end -->
+    </div>
+
+    <div class="metrics-head">Principais métricas dos milestones</div>
+    <div class="distro" title="Distribuição das tasks dos milestones por etapa">
+      <!-- LIVE:decentral:distro-bars:start -->
+    <div style="width:19.0%; background:var(--ink-faint)"></div>
+<div style="width:9.5%; background:var(--ink-soft)"></div>
+<div style="width:9.5%; background:var(--st-priorized)"></div>
+<div style="width:19.0%; background:var(--st-progress-soft);outline:1px solid var(--ink-faint)"></div>
+<div style="width:23.8%; background:var(--st-progress)"></div>
+<div style="width:19.0%; background:var(--st-done)"></div>
+    <!-- LIVE:decentral:distro-bars:end -->
+    </div>
+    <div class="distro-legend">
+      <!-- LIVE:decentral:distro-legend:start -->
+    <span><span class="dot" style="background:var(--ink-faint)"></span>Backlog · 4</span>
+<span><span class="dot" style="background:var(--ink-soft)"></span>Refinamento · 2</span>
+<span><span class="dot" style="background:var(--st-priorized)"></span>Priorizado · 2</span>
+<span><span class="dot" style="background:var(--st-progress-soft);outline:1px solid var(--ink-faint)"></span>Pronto p/ dev · 4</span>
+<span><span class="dot" style="background:var(--st-progress)"></span>Em execução · 5</span>
+<span><span class="dot" style="background:var(--st-done)"></span>Produção · 4</span>
+    <!-- LIVE:decentral:distro-legend:end -->
+    </div>
+    <div class="areas">
+      <div class="areas-head">Área</div>
+      <div class="area-chips">
+        <!-- LIVE:decentral:areas:start -->
+    <span class="chip mkt">Marketing · 3</span>
+<span class="chip fin">Financeiro · 4</span>
+<span class="chip ops">Operações · 0</span>
+<span class="chip other" title="Tasks sem label de área">Sem área · 14</span>
+    <!-- LIVE:decentral:areas:end -->
+      </div>
+    </div>
+    <div class="types">
+      <div class="types-head">Tipo de task</div>
+      <div class="type-chips">
+        <!-- LIVE:decentral:types:start -->
+    <span class="tchip bug">Bug · 2</span>
+<span class="tchip melhoria">Melhoria · 2</span>
+<span class="tchip feature">Nova Funcionalidade · 2</span>
+<span class="tchip outros">Outros · 15</span>
+    <!-- LIVE:decentral:types:end -->
+      </div>
+    </div>
+    <div class="next-ms">
+      <div class="next-ms-head">Próximos milestones</div>
+      <!-- LIVE:decentral:next-milestones:start -->
+    <div class="next-ms-empty">Nenhum milestone mapeado além dos que já estão em execução. Quando um novo milestone for criado no Linear, ele aparece aqui.</div>
+    <!-- LIVE:decentral:next-milestones:end -->
+    </div>
+  </div>
+
+  <div class="grid-group build"><span class="gg-dot"></span><span class="gg-name">Em construção</span><span class="gg-count">2</span><span class="gg-line"></span></div>
 
   <!-- ANTI CEDENTE — EM CONSTRUÇÃO -->
   <div class="card building">
@@ -759,236 +1077,98 @@
       <div class="empty">Nenhum blocker no momento</div>
     </div>
   </div>
-
-  <!-- ANTI SACADO / WEB SACADO -->
+  <!-- GESTÃO DE CONHECIMENTO (Core, MCP, CGO) -->
   <div class="card">
     <div class="card-head">
       <div class="card-title">
-        <h2>Anti Sacado</h2>
-        <span class="platform">Web · ANTI – Web Sacado no Linear</span>
+        <h2>Gestão de Conhecimento</h2>
+        <span class="platform">Core · MCP · CGO · Gestão de Conhecimento no Linear</span>
       </div>
-      <span class="pill progress">Em Andamento</span>
+      <span class="pill build">Em construção</span>
     </div>
 
     <div class="people">
-      <div><span class="k">Tech Lead</span><b>Zaidan</b></div>
+      <div><span class="k">Tech Lead</span><b>André</b></div>
       <div><span class="k">Business Owner</span><b>— —</b></div>
     </div>
 
     <div class="goals">
       <div class="goal-row"><span class="k">Objetivo</span><ol class="goal-list">
-        <li><span class="rank">1</span><p>Viabilizar o piloto do fluxo self-service do sacado para o parceiro escolhido.</p></li>
-        <li><span class="rank">2</span><p>Implantar a régua de comunicação inicial.</p></li>
+        <li><span class="rank">1</span><p class="draft">A definir — objetivo ainda não combinado com o Lucas.</p></li>
       </ol></div>
-      <div class="goal-row"><span class="k">Próximo goal</span><p>Finalizar a implementação e iniciar os testes locais.</p></div>
+      <div class="goal-row"><span class="k">Próximo goal</span><p class="draft">A definir.</p></div>
     </div>
 
-    <div class="milestone">
-      <div class="milestone-head"><span>🎯 Marco · Piloto Risco Sacado</span><span class="date">Meta 28/09</span></div>
-      <div class="milestone-bar"><!-- LIVE:anti-sacado:milestone-bar:start -->
-<div style="width:6719%"></div>
-<!-- LIVE:anti-sacado:milestone-bar:end --></div>
-      <div class="milestone-count"><!-- LIVE:anti-sacado:milestone-count:start -->
-6719% concluído
-<!-- LIVE:anti-sacado:milestone-count:end --></div>
-    </div>
-
-    <div class="board">
-      <div class="col progress">
-        <div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução</div>
-        <!-- LIVE:anti-sacado:board-progress:start -->
-<div class="task"><span class="id mono">DUX-572</span><span>Mapear fluxo operacional do Risco Sacado (cadastro de fornecedor até operação no dia a dia)<span class="who">Lucas Albino DUX</span></span></div>
-<div class="task"><span class="id mono">DUX-570</span><span>Estrutura de política de privacidade, termos de uso e cookies validada<span class="who">Thiago Tiburcio</span></span></div>
-<div class="task"><span class="id mono">DUX-527</span><span>Revisar remetente das réguas de comunicação<span class="who">Lucas Henning</span></span></div>
-<div class="task"><span class="id mono">DUX-465</span><span>Separar ambientes de produção e QA/desenvolvimento<span class="who">Guilherme Zaidan</span></span></div>
-<!-- LIVE:anti-sacado:board-progress:end -->
-      </div>
-      <div class="col qa">
-        <div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>QA</div>
-        <!-- LIVE:anti-sacado:board-qa:start -->
-<div class="task"><span class="id mono">DUX-464</span><span>Ajustar o fluxo de cadastro para ser feito em duas etapas<span class="who">Guilherme Zaidan</span></span></div>
-<!-- LIVE:anti-sacado:board-qa:end -->
-      </div>
-      <div class="col done">
-        <div class="col-head"><span class="dot" style="background:var(--st-done)"></span>Produção (mais recente)</div>
-        <!-- LIVE:anti-sacado:board-done:start -->
-<div class="task"><span class="id mono">DUX-558</span><span>Permitir que fornecedor edite cadastro de e-mail<span class="who">Guilherme Zaidan</span></span></div>
-<!-- LIVE:anti-sacado:board-done:end -->
-      </div>
-    </div>
+    <!-- LIVE:gestao-conhecimento:milestones:start -->
+    <div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms-empty">Nenhum milestone em execução no momento — veja os próximos mais abaixo.</div><div class="ms-outside-note">Fora de milestone · 1 tasks · 0 em execução · 0 em teste · 0 em produção · 1 no backlog/refino</div></div>
+    <!-- LIVE:gestao-conhecimento:milestones:end -->
 
     <div class="blockers">
       <div class="blockers-head">Blockers</div>
-      <div class="empty">Nenhum blocker no momento</div>
+      <!-- LIVE:gestao-conhecimento:blockers:start -->
+    <div class="empty">Nenhum blocker nos milestones no momento</div>
+    <!-- LIVE:gestao-conhecimento:blockers:end -->
     </div>
 
-    <div class="metrics-head">Principais métricas</div>
-    <div class="distro" title="Distribuição das tasks abertas por etapa">
-      <!-- LIVE:anti-sacado:distro-bars:start -->
-<div style="width:18.2%"></div>
-<div style="width:54.5%"></div>
-<div style="width:4.5%"></div>
-<div style="width:4.5%"></div>
-<div style="width:18.2%"></div>
-<!-- LIVE:anti-sacado:distro-bars:end -->
+    <div class="metrics-head">Principais métricas dos milestones</div>
+    <div class="distro" title="Distribuição das tasks por etapa">
+      <!-- LIVE:gestao-conhecimento:distro-bars:start -->
+    
+    <!-- LIVE:gestao-conhecimento:distro-bars:end -->
     </div>
     <div class="distro-legend">
-      <!-- LIVE:anti-sacado:distro-legend:start -->
-<span><span class="dot"></span>In Progress · 4</span>
-<span><span class="dot"></span>Backlog · 12</span>
-<span><span class="dot"></span>Product Refinement · 1</span>
-<span><span class="dot"></span>Priorized · 1</span>
-<span><span class="dot"></span>In Review · 4</span>
-<!-- LIVE:anti-sacado:distro-legend:end -->
+      <!-- LIVE:gestao-conhecimento:distro-legend:start -->
+    <span class="distro-empty">Ainda não há tasks em milestones</span>
+    <!-- LIVE:gestao-conhecimento:distro-legend:end -->
     </div>
     <div class="areas">
-      <div class="areas-head">Áreas envolvidas</div>
+      <div class="areas-head">Área</div>
       <div class="area-chips">
-        <!-- LIVE:anti-sacado:areas:start -->
-<span class="chip mkt">Marketing · 0</span>
+        <!-- LIVE:gestao-conhecimento:areas:start -->
+    <span class="chip mkt">Marketing · 0</span>
 <span class="chip fin">Financeiro · 0</span>
-<span class="chip other">Outros · 34</span>
-<!-- LIVE:anti-sacado:areas:end -->
+<span class="chip ops">Operações · 0</span>
+<span class="chip other" title="Tasks sem label de área">Sem área · 0</span>
+    <!-- LIVE:gestao-conhecimento:areas:end -->
       </div>
     </div>
     <div class="types">
       <div class="types-head">Tipo de task</div>
       <div class="type-chips">
-        <!-- LIVE:anti-sacado:types:start -->
-        <span class="tchip melhoria">Melhoria · 2</span>
-        <span class="tchip feature">Nova Funcionalidade · 10</span>
-        <span class="tchip outros">Outros · 3</span>
-        <!-- LIVE:anti-sacado:types:end -->
+        <!-- LIVE:gestao-conhecimento:types:start -->
+    <span class="tchip bug">Bug · 0</span>
+<span class="tchip melhoria">Melhoria · 0</span>
+<span class="tchip feature">Nova Funcionalidade · 0</span>
+<span class="tchip outros">Outros · 0</span>
+    <!-- LIVE:gestao-conhecimento:types:end -->
       </div>
     </div>
-    <div class="kpis">
-      <div class="kpi"><div class="n">—</div><div class="l">Fornecedores pré-cadastrados</div></div>
-      <div class="kpi"><div class="n">—</div><div class="l">Solicitações via portal</div></div>
-      <div class="kpi"><div class="n">—</div><div class="l">Tempo médio de aprovação</div></div>
+    <div class="next-ms">
+      <div class="next-ms-head">Próximos milestones</div>
+      <!-- LIVE:gestao-conhecimento:next-milestones:start -->
+    <div class="next-ms-item"><div class="next-ms-name">Liberação do MCP</div><div class="next-ms-meta"><span>ainda sem tasks vinculadas</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div><div class="next-ms-item"><div class="next-ms-name">Sistematização do CGO</div><div class="next-ms-meta"><span>ainda sem tasks vinculadas</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div>
+    <!-- LIVE:gestao-conhecimento:next-milestones:end -->
     </div>
   </div>
-
-  <!-- DECENTRAL NEW -->
-  <div class="card">
-    <div class="card-head">
-      <div class="card-title">
-        <h2>Decentral</h2>
-        <span class="platform">Web3 · Decentral no Linear</span>
-      </div>
-      <span class="pill progress">Em Andamento</span>
-    </div>
-
-    <div class="people">
-      <div><span class="k">Tech Lead</span><b>Hyago</b></div>
-      <div><span class="k">Business Owner</span><b>Lucas A.</b></div>
-    </div>
-
-    <div class="goals">
-      <div class="goal-row"><span class="k">Objetivo</span><ol class="goal-list">
-        <li><span class="rank">1</span><p class="draft">Rascunho — migrar as posições legadas (v1/v2) para o ledger da V3, com um calendário de pagamento por pool.</p></li>
-        <li><span class="rank">2</span><p class="draft">Rascunho — lançar as novas ofertas (10% em 90 dias e 14% em 180 dias) com KYC obrigatório.</p></li>
-      </ol></div>
-      <div class="goal-row"><span class="k">Próximo goal</span><p class="draft">Rascunho — concluir o marco "Liberação V3".</p></div>
-    </div>
-
-    <div class="milestone">
-      <div class="milestone-head"><span>🎯 Marco · Liberação V3</span><span class="date">Sem meta definida</span></div>
-      <div class="milestone-bar"><!-- LIVE:decentral:milestone-bar:start -->
-<div style="width:2500%"></div>
-<!-- LIVE:decentral:milestone-bar:end --></div>
-      <div class="milestone-count"><!-- LIVE:decentral:milestone-count:start -->
-2500% concluído
-<!-- LIVE:decentral:milestone-count:end --></div>
-    </div>
-
-    <div class="board">
-      <div class="col progress">
-        <div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução</div>
-        <!-- LIVE:decentral:board-progress:start -->
-<div class="task"><span class="id mono">DUX-529</span><span>Revisão dos termos de uso e aporte<span class="who">Lucas Albino DUX</span></span></div>
-<div class="task"><span class="id mono">DUX-526</span><span>Formalizar acordo com LP para recompra de Principal<span class="who">Lucas Albino DUX</span></span></div>
-<div class="task"><span class="id mono">DUX-524</span><span>Criar painel de controle para acompanhar o desembolso<span class="who">Lucas Albino DUX</span></span></div>
-<div class="task"><span class="id mono">DUX-513</span><span>Relatório Fact Finance atualizado para o modelo V3<span class="who">Hyago Bitencourt | DUX</span></span></div>
-<div class="task"><span class="id mono">DUX-509</span><span>Script de migração legada + ajustes na aplicação<span class="who">Hyago Bitencourt | DUX</span></span></div>
-<!-- LIVE:decentral:board-progress:end -->
-      </div>
-      <div class="col qa">
-        <div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>QA</div>
-        <!-- LIVE:decentral:board-qa:start -->
-<div class="empty">Nenhuma task em QA</div>
-<!-- LIVE:decentral:board-qa:end -->
-      </div>
-      <div class="col done">
-        <div class="col-head"><span class="dot" style="background:var(--st-done)"></span>Produção (mais recente)</div>
-        <!-- LIVE:decentral:board-done:start -->
-<div class="task"><span class="id mono">DUX-498</span><span>Alinhamento</span></div>
-<!-- LIVE:decentral:board-done:end -->
-      </div>
-    </div>
-
-    <div class="blockers">
-      <div class="blockers-head">Blockers</div>
-      <div class="blocker"><span class="blocker-tag interno">Interno</span><p>Preço da saída antecipada via suporte — decisão pendente com o Lucas (DUX-510).</p></div>
-      <div class="blocker"><span class="blocker-tag interno">Interno</span><p>Contrato da pool Hydration (ciclo de 60 dias com votação) — decisão pendente com o Lucas (DUX-507).</p></div>
-      <div class="blocker"><span class="blocker-tag interno">Interno</span><p>Plano de lançamento da V3 alinhado com marketing — pendente com o Lucas (DUX-511).</p></div>
-    </div>
-
-    <div class="metrics-head">Principais métricas</div>
-    <div class="distro" title="Distribuição das tasks abertas por etapa">
-      <!-- LIVE:decentral:distro-bars:start -->
-<div style="width:26.3%"></div>
-<div style="width:26.3%"></div>
-<div style="width:10.5%"></div>
-<div style="width:15.8%"></div>
-<div style="width:21.1%"></div>
-<!-- LIVE:decentral:distro-bars:end -->
-    </div>
-    <div class="distro-legend">
-      <!-- LIVE:decentral:distro-legend:start -->
-<span><span class="dot"></span>In Progress · 5</span>
-<span><span class="dot"></span>Backlog · 5</span>
-<span><span class="dot"></span>Product Refinement · 2</span>
-<span><span class="dot"></span>Priorized · 3</span>
-<span><span class="dot"></span>Ready To Dev · 4</span>
-<!-- LIVE:decentral:distro-legend:end -->
-    </div>
-    <div class="areas">
-      <div class="areas-head">Áreas envolvidas</div>
-      <div class="area-chips">
-        <!-- LIVE:decentral:areas:start -->
-<span class="chip mkt">Marketing · 4</span>
-<span class="chip fin">Financeiro · 4</span>
-<span class="chip other">Outros · 17</span>
-<!-- LIVE:decentral:areas:end -->
-      </div>
-    </div>
-    <div class="types">
-      <div class="types-head">Tipo de task</div>
-      <div class="type-chips">
-        <!-- LIVE:decentral:types:start -->
-        <span class="tchip bug">Bug · 2</span>
-        <span class="tchip melhoria">Melhoria · 2</span>
-        <span class="tchip feature">Nova Funcionalidade · 3</span>
-        <span class="tchip outros">Outros · 17</span>
-        <!-- LIVE:decentral:types:end -->
-      </div>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><div class="n">—</div><div class="l">TVL migrado p/ V3</div></div>
-      <div class="kpi"><div class="n">—</div><div class="l">Posições migradas</div></div>
-      <div class="kpi"><div class="n">—</div><div class="l">Saídas antecipadas processadas</div></div>
-    </div>
-  </div>
-
 </div>
 
 <div class="closing">
   <div class="closing-head">
     <h2>🗓️ Fechamento da Semana</h2>
-    <span class="closing-week" id="closingWeekLabel"></span>
+    <span class="closing-week" id="closingWeekLabel" hidden></span>
+    <div class="weekbox">
+      <div>
+        <div class="label">Semana</div>
+        <div class="value" id="weekValue">—</div>
+      </div>
+      <div class="weeknav">
+        <button id="prevWeek" title="Semana anterior" aria-label="Semana anterior">‹</button>
+        <button id="nextWeek" title="Próxima semana" aria-label="Próxima semana">›</button>
+      </div>
+    </div>
   </div>
-  <div class="closing-sub">Gerado toda sexta-feira às 18h (BRT) — burndown da semana, destaques e sugestões, olhando os 3 projetos em conjunto. Semanas fechadas ficam congeladas; navegue por elas com as setas da semana, lá em cima.</div>
-  <div class="closing-empty" id="closingEmpty">Ainda não houve nenhum fechamento semanal neste formato — o primeiro é gerado nesta sexta-feira, às 18h. A partir daí, cada semana fechada fica disponível aqui e pelas setas de navegação no topo.</div>
+  <div class="closing-sub">Gerado toda sexta-feira às 18h (BRT) — burndown da semana, destaques e sugestões, olhando os 3 projetos em conjunto. Semanas fechadas ficam congeladas; navegue pelas semanas anteriores com as setas ao lado.</div>
+  <div class="closing-empty" id="closingEmpty">Ainda não houve nenhum fechamento semanal neste formato — o primeiro é gerado nesta sexta-feira, às 18h. A partir daí, cada semana fechada fica disponível aqui e pelas setas ao lado.</div>
   <div class="closing-body" id="closingContent" hidden></div>
 </div>
 
@@ -996,13 +1176,21 @@
 
 <div class="page" id="page-tools" hidden>
 
-  <div class="subline" style="margin-bottom:16px;">Panorama do ferramental interno do Grupo DUX — o que cada ferramenta faz, quem usa, o status atual e se já está conectada ao Core. Atualizado manualmente pelo Lucas (última atualização da fonte: 24/set/2026).</div>
+  <div class="subline" style="margin-bottom:16px;">Panorama do ferramental interno do Grupo DUX — o que cada ferramenta faz, quem usa e o status atual. Clique na bolinha de cada linha para ver os próximos passos e se já alimenta o Core. Atualizado manualmente pelo Lucas (última atualização da fonte: 24/set/2026).</div>
 
-  <div class="tools-actions">
-    <button type="button" class="tools-action-btn primary" id="openReportToolBtn">+ Reportar Ferramenta</button>
-    <button type="button" class="tools-action-btn" id="openReportInnovationBtn">💡 Reportar Inovação</button>
+  <div class="subtabs-row">
+    <div class="subtabs" role="tablist" aria-label="Seções do levantamento">
+      <button type="button" class="subtab-btn active" role="tab" data-subtab="portal" aria-selected="true">Portal DUX</button>
+      <button type="button" class="subtab-btn" role="tab" data-subtab="ferramentas" aria-selected="false">Ferramentas reportadas<span class="count" id="subtabCountTools"></span></button>
+      <button type="button" class="subtab-btn" role="tab" data-subtab="inovacoes" aria-selected="false">Inovações reportadas<span class="count" id="subtabCountInnov"></span></button>
+    </div>
+    <div class="tools-actions">
+      <button type="button" class="tools-action-btn primary" id="openReportToolBtn">+ Reportar Ferramenta</button>
+      <button type="button" class="tools-action-btn" id="openReportInnovationBtn">💡 Reportar Inovação</button>
+    </div>
   </div>
 
+  <div class="subpanel" id="subpanel-portal">
   <div class="tools-group">
     <div class="tools-group-head">
       <h2>Portal DUX</h2>
@@ -1013,7 +1201,7 @@
         <thead>
           <tr>
             <th>Ferramenta</th><th>O que faz</th><th>Owner</th><th>Quem usa</th>
-            <th>Status</th><th>Ambiente</th><th>Próximos passos</th><th>Core</th>
+            <th>Status</th><th>Ambiente</th><th></th>
           </tr>
         </thead>
         <tbody>
@@ -1024,8 +1212,7 @@
             <td class="tool-who">Comercial</td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Absorver o volume do Risco Sacado quando o portal do cliente entrar.</td>
-            <td><span class="core-dot sim"><span class="dot"></span>Sim</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Absorver o volume do Risco Sacado quando o portal do cliente entrar." data-name="Solicitações" data-core="sim" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Cadastros</td>
@@ -1034,8 +1221,7 @@
             <td class="tool-who">Operações financeiras</td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Manter a base limpa para receber a migração do histórico.</td>
-            <td><span class="core-dot sim"><span class="dot"></span>Sim</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Manter a base limpa para receber a migração do histórico." data-name="Cadastros" data-core="sim" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Onboarding</td>
@@ -1044,8 +1230,7 @@
             <td class="tool-who">Operações financeiras</td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Conectar ao Core, para o cedente nascer já na base única.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Conectar ao Core, para o cedente nascer já na base única." data-name="Onboarding" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Análise de Crédito</td>
@@ -1054,8 +1239,7 @@
             <td class="tool-who">Crédito</td>
             <td><span class="status-pill construcao">Em construção</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Unificar a fonte das regras; alçada por operador; rating DUX em produção.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Unificar a fonte das regras; alçada por operador; rating DUX em produção." data-name="Análise de Crédito" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Simulador de Taxas</td>
@@ -1064,8 +1248,7 @@
             <td class="tool-who">Comercial</td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Embutir as regras fixas — o piso não depende de quem simula.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Embutir as regras fixas — o piso não depende de quem simula." data-name="Simulador de Taxas" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Gerador de Documentos</td>
@@ -1074,8 +1257,7 @@
             <td class="tool-who">Operações financeiras</td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Revisar os modelos e as travas de pagamento; gerar também a proposta.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Revisar os modelos e as travas de pagamento; gerar também a proposta." data-name="Gerador de Documentos" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Aceites &amp; Anuências</td>
@@ -1084,8 +1266,7 @@
             <td class="tool-who">Operações financeiras</td>
             <td><span class="status-pill pausado">Pausado</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Retomar e pôr em uso pleno; conectar ao Core — o aceite vira dado.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Retomar e pôr em uso pleno; conectar ao Core — o aceite vira dado." data-name="Aceites &amp; Anuências" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Relatórios</td>
@@ -1094,8 +1275,7 @@
             <td class="tool-who">Operações financeiras</td>
             <td><span class="status-pill pausado">Pausado</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Retomar com padrão único — hoje cada leitura sai de um lugar.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Retomar com padrão único — hoje cada leitura sai de um lugar." data-name="Relatórios" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Operações</td>
@@ -1104,17 +1284,19 @@
             <td class="tool-who">Operações financeiras</td>
             <td><span class="status-pill pausado">Pausado</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Retomar a construção — o acompanhamento vive fora do Portal.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Retomar a construção — o acompanhamento vive fora do Portal." data-name="Operações" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
+  </div>
+
+  <div class="subpanel" id="subpanel-ferramentas" hidden>
   <div class="tools-group">
     <div class="tools-group-head">
-      <h2>Fora do Portal</h2>
+      <h2>Ferramentas fora do Portal</h2>
       <span class="tools-group-sub">ferramentas próprias, cada uma no seu endereço</span>
     </div>
     <div class="tools-table-wrap">
@@ -1122,7 +1304,7 @@
         <thead>
           <tr>
             <th>Ferramenta</th><th>O que faz</th><th>Owner</th><th>Quem usa</th>
-            <th>Status</th><th>Ambiente</th><th>Próximos passos</th><th>Core</th>
+            <th>Status</th><th>Ambiente</th><th></th>
           </tr>
         </thead>
         <tbody>
@@ -1133,8 +1315,7 @@
             <td class="tool-who">Operações financeiras</td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Trazer pra dentro do Portal, com controle de casos judiciais. Meta: default &lt; 1%.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Trazer pra dentro do Portal, com controle de casos judiciais. Meta: default &lt; 1%." data-name="Cobrança" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Portal do cliente<br><span class="tool-who" style="display:block;">na mão do Felipe</span></td>
@@ -1143,8 +1324,7 @@
             <td class="tool-who">Cliente</td>
             <td><span class="status-pill incipiente">Incipiente</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Tem as telas, ainda não está pronta — próximo passo a definir com o Felipe.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Tem as telas, ainda não está pronta — próximo passo a definir com o Felipe." data-name="Portal do cliente" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">Controle de Liquidez</td>
@@ -1153,8 +1333,7 @@
             <td class="tool-who">Tesouraria<br><span style="font-size:10.5px;">Lucas · Tibúrcio · João Pena</span></td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Fechar as regras de comissionamento pendentes e pôr atrás do login da casa.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Fechar as regras de comissionamento pendentes e pôr atrás do login da casa." data-name="Controle de Liquidez" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">CNAB<br><span class="tool-who" style="display:block;">interno</span></td>
@@ -1163,8 +1342,7 @@
             <td class="tool-who">Operações financeiras</td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Escalar volume e entrar com pagamento em lote no Itaú.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Escalar volume e entrar com pagamento em lote no Itaú." data-name="CNAB" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">App do originador</td>
@@ -1173,8 +1351,7 @@
             <td class="tool-who">Cliente</td>
             <td><span class="status-pill prototipo">Protótipo</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Sair do desenho e entrar em construção.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Sair do desenho e entrar em construção." data-name="App do originador" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
           <tr>
             <td class="tool-name">People App</td>
@@ -1183,8 +1360,7 @@
             <td class="tool-who">RH</td>
             <td><span class="status-pill uso">Em uso</span></td>
             <td><span class="env-pill">Local</span></td>
-            <td class="tool-next">Não toca a esteira — segue independente do Core.</td>
-            <td><span class="core-dot nao"><span class="dot"></span>Não</span></td>
+            <td class="col-eye"><button type="button" class="icon-eye-btn" data-static-detail="1" data-next="Não toca a esteira — segue independente do Core." data-name="People App" data-core="nao" title="Ver próximos passos e Core"><span class="icon-eye-dot"></span></button></td>
           </tr>
         </tbody>
       </table>
@@ -1201,14 +1377,19 @@
     </div>
   </div>
 
+  </div>
+
+  <div class="subpanel" id="subpanel-inovacoes" hidden>
   <div class="tools-group" id="reportedInnovationsGroup">
     <div class="tools-group-head">
       <h2>Inovações Reportadas</h2>
-      <span class="tools-group-sub">preenchido pela equipe via "Reportar Inovação" · mais recentes primeiro</span>
+      <span class="tools-group-sub">preenchido pela equipe via "Reportar Inovação" · agrupado por frequência de uso</span>
     </div>
     <div id="reportedInnovationsBody">
       <div class="reported-empty">Carregando…</div>
     </div>
+  </div>
+
   </div>
 
   <div class="core-note">
@@ -1227,10 +1408,93 @@
     <span><span class="status-pill pausado">Pausado</span></span>
     <span><span class="status-pill incipiente">Incipiente</span></span>
     <span><span class="status-pill prototipo">Protótipo</span></span>
-    <span><span class="core-dot sim"><span class="dot"></span>Sim</span> / <span class="core-dot nao"><span class="dot"></span>Não</span> — conectada ao Core</span>
+    <span>Bolinha da linha: <span class="core-dot sim"><span class="dot"></span>verde</span> = já alimenta o Core · <span class="core-dot nao"><span class="dot"></span>cinza</span> = ainda não — clique para ver os próximos passos</span>
     <span><span class="env-pill">Local</span> · Homologação · Produção — onde a ferramenta roda hoje</span>
   </div>
 
+</div>
+
+<div class="page" id="page-upstream" hidden>
+
+  <div class="section-head">
+    <h2>Upstream · Novos Projetos <span class="tab-wip" title="Em construção">**</span></h2>
+    <div class="admin-row">
+      <span class="tools-group-sub" id="upSynced"></span>
+      <a class="tools-action-btn" id="upOpenLinear" target="_blank" rel="noopener" href="https://linear.app/wearedux/project/upstream-novos-projetos-e6787a72646c">Abrir projeto no Linear ↗</a>
+    </div>
+  </div>
+  <div class="subline" style="margin-bottom:16px;">Espelho do board do projeto <b>Upstream - Novos Projetos</b> no Linear. As raias são as fases do fluxo Upstream (label "Upstream" no Linear); clicar num card abre a issue direto no Linear. Visível só para o admin por enquanto. <b>** Em construção</b> — ainda não está pronto.</div>
+  <div class="up-board" id="upBoard"><div class="reported-empty">Carregando…</div></div>
+  <div class="tools-group-sub" style="margin-top:6px;" id="upFootnote"></div>
+
+</div>
+
+<div class="page" id="page-admin" hidden>
+
+  <div class="section-head">
+    <h2>Admin</h2>
+    <span class="tools-group-sub" id="adminWho"></span>
+  </div>
+
+  <div class="admin-stats">
+    <div class="admin-stat"><div class="n" id="adminStatPeople">—</div><div class="l">Pessoas no cockpit</div></div>
+    <div class="admin-stat"><div class="n" id="adminStatReports">—</div><div class="l">Ferramentas reportadas</div></div>
+    <div class="admin-stat"><div class="n" id="adminStatInnov">—</div><div class="l">Inovações reportadas</div></div>
+  </div>
+
+  <div class="tools-group">
+    <div class="tools-group-head">
+      <h2>Acesso e convites</h2>
+      <span class="tools-group-sub">você é admin · Colaborador reporta · Visualização só consulta</span>
+    </div>
+    <div class="admin-pad">
+      <p class="admin-note"><b>Como funciona:</b> quem pode abrir o cockpit (e em qual nível) é definido no menu <b>Compartilhar</b> do claude.ai — esta página não consegue conceder acesso nem enviar o convite por conta própria. Aqui você prepara o e-mail com o link e confere quem já aparece no cockpit. <b>Atenção:</b> quem tem só <b>Visualização</b> vê tudo, mas não consegue reportar nem editar — pra alguém enviar ferramentas/inovações, conceda <b>Colaborador</b>.</p>
+      <div class="admin-row">
+        <input type="email" class="admin-input" id="inviteEmail" placeholder="e-mail da pessoa (ex.: nome@wearedux.com)">
+        <a class="tools-action-btn primary" id="inviteMailto" target="_blank" rel="noopener" aria-disabled="true">Preparar e-mail de convite</a>
+        <button type="button" class="tools-action-btn" id="inviteCopyBtn">Copiar texto do convite</button>
+      </div>
+      <span class="hint" style="font-size:11px; color:var(--ink-faint); display:block; margin-top:8px;">Depois de enviar, abra o menu Compartilhar do artifact e adicione o e-mail: Visualização (só consulta) ou Colaborador (consulta e reporta).</span>
+    </div>
+    <hr class="admin-sep">
+    <div class="admin-pad">
+      <div class="admin-row">
+        <input type="search" class="admin-input" id="adminPeopleSearch" placeholder="Buscar pessoas da organização por nome ou e-mail…">
+      </div>
+      <span class="hint" style="font-size:11px; color:var(--ink-faint); display:block; margin-top:8px;" id="adminPeopleHint">Sem busca, a lista mostra você e quem já enviou algo ao cockpit.</span>
+    </div>
+    <div id="adminPeopleBody"><div class="reported-empty">Carregando…</div></div>
+  </div>
+
+  <div class="tools-group">
+    <div class="tools-group-head">
+      <h2>Ferramentas reportadas — editar</h2>
+      <span class="tools-group-sub">alterações são salvas direto no banco do cockpit</span>
+    </div>
+    <div class="tools-table-wrap" id="adminReportsBody"><div class="reported-empty">Carregando…</div></div>
+  </div>
+
+  <div class="tools-group">
+    <div class="tools-group-head">
+      <h2>Inovações reportadas — editar</h2>
+      <span class="tools-group-sub">alterações são salvas direto no banco do cockpit</span>
+    </div>
+    <div class="tools-table-wrap" id="adminInnovBody"><div class="reported-empty">Carregando…</div></div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="editModalOverlay" hidden>
+  <div class="modal wide">
+    <div class="modal-head">
+      <h2 id="editModalTitle">Editar</h2>
+      <button type="button" class="modal-close" data-close-modal="editModalOverlay" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-banner" id="editBanner"></div>
+      <form id="editForm"></form>
+    </div>
+  </div>
 </div>
 
 <div class="modal-overlay" id="reportToolModalOverlay" hidden>
@@ -1430,6 +1694,26 @@
         "Começar a semana de 28/09 atacando o backlog do Anti Banking (9 itens ainda sem refinamento)."
       ]
     }
+  },
+  {
+    "label": "28 SET — 02 OUT 2026",
+    "open": false,
+    "report": {
+      "burndownSvg": "<svg viewBox='0 0 320 160' width='100%' height='160' role='img' aria-label='Itens em aberto por dia, 28 de setembro a 02 de outubro'><line x1='28' y1='142' x2='312' y2='142' stroke='var(--line-strong)' stroke-width='1'/><line x1='28' y1='88.4' x2='312' y2='88.4' stroke='var(--line)' stroke-width='1' stroke-dasharray='2,3'/><line x1='28' y1='34.8' x2='312' y2='34.8' stroke='var(--line)' stroke-width='1' stroke-dasharray='2,3'/><text x='24' y='145' font-size='8' fill='var(--ink-faint)' text-anchor='end'>0</text><text x='24' y='91' font-size='8' fill='var(--ink-faint)' text-anchor='end'>10</text><text x='24' y='38' font-size='8' fill='var(--ink-faint)' text-anchor='end'>20</text><polyline points='28,24.1 99,24.1 170,24.1 241,24.1 312,24.1' fill='none' stroke='var(--st-progress)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><polyline points='28,56.2 99,56.2 170,29.4 241,24.1 312,24.1' fill='none' stroke='var(--st-priorized)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><polyline points='28,8 99,8 170,8 241,8 312,8' fill='none' stroke='var(--blk-int)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><text x='28' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Seg</text><text x='99' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Ter</text><text x='170' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Qua</text><text x='241' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Qui</text><text x='312' y='155' font-size='8' fill='var(--ink-faint)' text-anchor='middle'>Sex</text></svg><div style='display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:10.5px;color:var(--ink-soft);'><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--st-progress);margin-right:4px;'></span>Anti Banking</span><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--st-priorized);margin-right:4px;'></span>Anti Sacado</span><span><span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--blk-int);margin-right:4px;'></span>Decentral</span></div>",
+      "highlights": [
+        "Anti Sacado foi o único projeto com movimento na semana: 15 issues criadas e 3 concluídas (DUX-499, DUX-556, DUX-559) — Anti Banking e Decentral não tiveram nenhuma issue criada ou concluída.",
+        "Guilherme Zaidan liderou as entregas, concluindo 2 das 3 issues da semana (DUX-556, DUX-559); a terceira (DUX-499) foi concluída por Lucas Henning.",
+        "O milestone \"Piloto Risco Sacado- Cliente 1\" avançou de 33% para 49% (13 → 19 issues no milestone), com a meta já vencida em 28/09.",
+        "Itens em aberto no total subiram de 63 (segunda) para 69 (sexta), puxados pelo salto de novas issues no Anti Sacado em 30/09 e 01/10.",
+        "Nenhuma das 15 issues criadas nem das 3 concluídas na semana tinha label Marketing ou Financeiro — todas caíram em \"Outros\"."
+      ],
+      "suggestions": [
+        "Confirmar com André e Hyago se a ausência total de movimento em Anti Banking e Decentral nesta semana reflete o board real ou se há atualizações pendentes no Linear.",
+        "Anti Sacado segue sem nenhuma issue marcada em Marketing ou Financeiro — validar se a área está sendo preenchida pelo time.",
+        "Priorizar o refinamento das 15 issues novas do Anti Sacado (boa parte ainda em Backlog ou Em Revisão) antes do próximo fechamento.",
+        "Decentral segue com 14 das 25 issues em Backlog — considerar uma rodada de refinamento antes de represar ainda mais o board."
+      ]
+    }
   }
 ]
 </script>
@@ -1439,11 +1723,30 @@
     var history = [];
     try { history = JSON.parse(document.getElementById('weekHistoryData').textContent || "[]"); } catch(e){ history = []; }
 
-    // Semana corrente (em aberto) — atualizada ao vivo pelo webhook até fechar na sexta.
-    var currentWeek = { label: "28 SET — 02 OUT 2026", open: true };
+    // Semana corrente (em aberto) — calculada pela data de hoje (fuso de Brasília), segunda a sexta.
+    var MESES = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+    function currentWeekLabel(){
+      var parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()).split('-');
+      var t = Date.UTC(+parts[0], +parts[1] - 1, +parts[2]);
+      var dow = new Date(t).getUTCDay();                 // 0 = domingo
+      var mon = new Date(t - ((dow + 6) % 7) * 86400000);
+      var fri = new Date(mon.getTime() + 4 * 86400000);
+      function dd(d){ return ('0' + d.getUTCDate()).slice(-2); }
+      var left = dd(mon) + (mon.getUTCMonth() !== fri.getUTCMonth() ? ' ' + MESES[mon.getUTCMonth()] : '');
+      return left + ' — ' + dd(fri) + ' ' + MESES[fri.getUTCMonth()] + ' ' + fri.getUTCFullYear();
+    }
+    var currentWeek = { label: currentWeekLabel(), open: true };
 
-    var weeks = history.concat([currentWeek]);
-    var idx = weeks.length - 1;
+    var weeks, idx;
+    function buildWeeks(){
+      var closed = history.filter(function(w){ return w && w.label; });
+      var hasCurrent = closed.some(function(w){ return w.label === currentWeek.label; });
+      weeks = hasCurrent ? closed : closed.concat([currentWeek]);
+      idx = weeks.length - 1;
+    }
+    buildWeeks();
+    // Usado pela versão em produção: o histórico vem do servidor (fechamento automático de sexta, 18h).
+    window.__setWeekHistory = function(arr){ history = Array.isArray(arr) ? arr : []; buildWeeks(); render(); };
 
     var elWeekValue = document.getElementById('weekValue');
     var elClosingWeekLabel = document.getElementById('closingWeekLabel');
@@ -1496,10 +1799,14 @@
     var tabBtns = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
     var pages = {
       projects: document.getElementById('page-projects'),
-      tools: document.getElementById('page-tools')
+      tools: document.getElementById('page-tools'),
+      upstream: document.getElementById('page-upstream'),
+      admin: document.getElementById('page-admin')
     };
     function showPage(key){
       tabBtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-page') === key); });
+      var adminIcon = document.getElementById('adminTabBtn');
+      if (adminIcon) adminIcon.classList.toggle('active', key === 'admin');
       Object.keys(pages).forEach(function(k){ pages[k].hidden = (k !== key); });
     }
     tabBtns.forEach(function(btn){
@@ -1510,8 +1817,65 @@
         if (window.__cockpitSetHash) window.__cockpitSetHash(key === 'tools' ? 'tools' : '');
       });
     });
+    var adminIconBtn = document.getElementById('adminTabBtn');
+    if (adminIconBtn) adminIconBtn.addEventListener('click', function(){
+      var goBack = !pages.admin.hidden;
+      showPage(goBack ? 'projects' : 'admin');
+      if (window.__cockpitSetHash) window.__cockpitSetHash('');
+    });
     // Exposto pro roteamento por hash (#tools, #reportar-ferramenta, #reportar-inovacao), ver script mais abaixo.
     window.__cockpitShowPage = showPage;
+  })();
+</script>
+
+<script>
+  // Sub-abas do Levantamento (Portal DUX / Ferramentas reportadas / Inovações reportadas) + detalhe das ferramentas fixas (Próximos passos e Core).
+  (function(){
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.subtab-btn'));
+    var panels = {
+      portal: document.getElementById('subpanel-portal'),
+      ferramentas: document.getElementById('subpanel-ferramentas'),
+      inovacoes: document.getElementById('subpanel-inovacoes')
+    };
+    function showSub(key){
+      if (!panels[key]) key = 'portal';
+      btns.forEach(function(b){
+        var on = b.getAttribute('data-subtab') === key;
+        b.classList.toggle('active', on); b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      Object.keys(panels).forEach(function(k){ panels[k].hidden = (k !== key); });
+      try { sessionStorage.setItem('cockpit.subtab', key); } catch(e){}
+    }
+    btns.forEach(function(b){ b.addEventListener('click', function(){ showSub(b.getAttribute('data-subtab')); }); });
+    window.__cockpitShowSubtab = showSub;
+    try { var saved = sessionStorage.getItem('cockpit.subtab'); if (saved) showSub(saved); } catch(e){}
+
+    // Contadores nas sub-abas: ferramentas fixas fora do portal + reportadas; inovações reportadas.
+    function updateCounts(){
+      var fixed = panels.ferramentas.querySelectorAll('[data-static-detail]').length;
+      var rep = document.querySelectorAll('#reportedToolsBody [data-detail-tool-idx]').length;
+      var inn = document.querySelectorAll('#reportedInnovationsBody [data-detail-innov-idx]').length;
+      var t = document.getElementById('subtabCountTools'), i = document.getElementById('subtabCountInnov');
+      if (t) t.textContent = (fixed + rep) ? String(fixed + rep) : '';
+      if (i) i.textContent = inn ? String(inn) : '';
+    }
+    updateCounts();
+    ['reportedToolsBody','reportedInnovationsBody'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el && window.MutationObserver) new MutationObserver(updateCounts).observe(el, {childList:true});
+    });
+
+    // Bolinha das ferramentas fixas: abre o detalhe com Próximos passos e Core.
+    function esc(t){ return String(t == null ? '' : t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    document.getElementById('page-tools').addEventListener('click', function(ev){
+      var b = ev.target.closest ? ev.target.closest('[data-static-detail]') : null;
+      if (!b) return;
+      var core = b.getAttribute('data-core') === 'sim';
+      var html = '<div class="reported-desc"><b>Próximos passos</b><br>' + esc(b.getAttribute('data-next')) + '</div>' +
+        '<div class="reported-tags"><span class="core-dot ' + (core ? 'sim' : 'nao') + '"><span class="dot"></span>' +
+        (core ? 'Alimenta o Core' : 'Ainda não alimenta o Core') + '</span></div>';
+      if (typeof window.__cockpitOpenDetail === 'function') window.__cockpitOpenDetail(b.getAttribute('data-name'), html);
+    });
   })();
 </script>
 
@@ -1522,6 +1886,8 @@
     var AREA_ORDER = ["Marketing", "Jurídico", "Financeiro", "Comercial", "Operacional", "Desenvolvimento", "Outro"];
 
     var dbApi = null, assetsApi = null, userApi = null, downloadsApi = null;
+    var innovRenderSeq = 0, toolsRenderSeq = 0;
+    var lastReports = [], lastInnovations = [], isAdmin = false, myId = null;
 
     function $(id){ return document.getElementById(id); }
 
@@ -1612,6 +1978,7 @@
       var el = $(id); if (el) el.hidden = true;
       if (id === 'reportToolModalOverlay' || id === 'reportInnovationModalOverlay') setHash('tools');
     }
+    window.__cockpitOpenDetail = function(t, h){ openDetailModal(t, h); };
     function openDetailModal(title, bodyHtml){
       $('detailModalTitle').textContent = title;
       $('detailModalBody').innerHTML = bodyHtml;
@@ -1722,19 +2089,36 @@
       try { dbApi = await window.claude.use('db'); } catch(e){ dbApi = null; }
       try { assetsApi = await window.claude.use('assets'); } catch(e){ assetsApi = null; }
       try { downloadsApi = await window.claude.use('downloads'); } catch(e){ downloadsApi = null; }
+      if (userApi) {
+        try { myId = await userApi.id(); } catch(e){ myId = null; }
+        try { isAdmin = !!(await userApi.isOwner()); } catch(e){ isAdmin = false; }
+      }
 
-      if (!dbApi || !assetsApi) {
-        setFormEnabled(false, 'Pra enviar um report, você precisa ter acesso de Colaborador (ou superior) a este cockpit — peça o Lucas pra te adicionar.');
+      var canWrite = null;
+      try { canWrite = userApi ? await userApi.can('data.write') : null; } catch(e){ canWrite = null; }
+      var VIEW_ONLY_MSG = 'Seu acesso a este cockpit é só de visualização. Pra reportar uma ferramenta ou inovação, peça ao Lucas acesso de Colaborador.';
+      if (!dbApi) {
+        setFormEnabled(false, 'Não foi possível conectar ao armazenamento deste cockpit. Entre no claude.ai com sua conta @wearedux.com e abra o cockpit de novo.');
+      } else if (canWrite === false) {
+        setFormEnabled(false, VIEW_ONLY_MSG);
       } else {
         setFormEnabled(true);
+        if (!assetsApi) {
+          // Visualizador (sem acesso de edição) não sobe arquivos: o report vai só com texto e links.
+          ['repPrints', 'repVideo'].forEach(function(id){ var el = $(id); if (el) { el.disabled = true; el.value = ''; } });
+          showBanner('info', 'Com o seu nível de acesso dá pra enviar o report normalmente, mas sem anexar prints ou vídeo. Cole os links (Loom, Google Drive etc.) na descrição ou no campo de link do vídeo.');
+        }
       }
       if (!dbApi) {
-        setInnovationFormEnabled(false, 'Pra reportar uma inovação, você precisa ter acesso de Colaborador (ou superior) a este cockpit — peça o Lucas pra te adicionar.');
+        setInnovationFormEnabled(false, 'Não foi possível conectar ao armazenamento deste cockpit. Entre no claude.ai com sua conta @wearedux.com e abra o cockpit de novo.');
+      } else if (canWrite === false) {
+        setInnovationFormEnabled(false, VIEW_ONLY_MSG);
       } else {
         setInnovationFormEnabled(true);
       }
       subscribeReports();
       subscribeInnovations();
+      if (isAdmin) enableAdmin();
     }
 
     // ---- form submit ----
@@ -1742,7 +2126,7 @@
       ev.preventDefault();
       hideBanner();
 
-      if (!dbApi || !assetsApi) {
+      if (!dbApi) {
         showBanner('err', 'Não foi possível conectar ao armazenamento deste cockpit agora.');
         return;
       }
@@ -1780,12 +2164,14 @@
 
       try {
         var prints = [];
-        for (var i = 0; i < printFiles.length; i++) {
-          prints.push(await assetsApi.upload(printFiles[i]));
+        if (assetsApi) {
+          for (var i = 0; i < printFiles.length; i++) {
+            prints.push(await assetsApi.upload(printFiles[i]));
+          }
         }
 
         var videoAsset = null;
-        if (videoFile) videoAsset = await assetsApi.upload(videoFile);
+        if (videoFile && assetsApi) videoAsset = await assetsApi.upload(videoFile);
 
         var submitterId = null;
         try { submitterId = userApi ? await userApi.id() : null; } catch(e){ submitterId = null; }
@@ -1846,7 +2232,9 @@
         return;
       }
       dbApi.collection('reports').onSnapshot(function(snap){
-        renderReported(snap.docs.map(function(d){ return d.data(); }));
+        lastReports = snap.docs.map(function(d){ return { id: d.id, data: d.data() }; });
+        renderReported(lastReports.map(function(r){ return r.data; }));
+        if (isAdmin) renderAdmin();
       }, function(){
         $('reportedToolsBody').innerHTML = '<div class="reported-empty">Não foi possível carregar os reports agora.</div>';
       });
@@ -1900,6 +2288,7 @@
     }
 
     async function renderReported(items){
+      var mySeq = ++toolsRenderSeq;
       var body = $('reportedToolsBody');
       if (!items || !items.length) {
         body.innerHTML = '<div class="reported-empty">Ainda não há nenhum report enviado. Use a aba "Reportar Ferramenta" para adicionar o primeiro.</div>';
@@ -1912,6 +2301,7 @@
       if (userApi && ids.length) {
         try { names = await userApi.profiles(ids); } catch(e){ names = {}; }
       }
+      if (mySeq !== toolsRenderSeq) return;
 
       var byArea = {};
       items.forEach(function(it){
@@ -1951,7 +2341,7 @@
       Array.prototype.slice.call(body.querySelectorAll('[data-detail-tool-idx]')).forEach(function(btn){
         btn.addEventListener('click', function(){
           var it = items[Number(btn.getAttribute('data-detail-tool-idx'))];
-          var who = it.submittedById && names[it.submittedById] && names[it.submittedById].name;
+          var who = (it.reportadoPor && String(it.reportadoPor).trim()) || (it.submittedById && names[it.submittedById] && names[it.submittedById].name);
           openDetailModal(it.nome, toolDetailHtml(it, who));
         });
       });
@@ -2070,7 +2460,9 @@
         return;
       }
       dbApi.collection('innovations').onSnapshot(function(snap){
-        renderInnovations(snap.docs.map(function(d){ return d.data(); }));
+        lastInnovations = snap.docs.map(function(d){ return { id: d.id, data: d.data() }; });
+        renderInnovations(lastInnovations.map(function(r){ return r.data; }));
+        if (isAdmin) renderAdmin();
       }, function(){
         $('reportedInnovationsBody').innerHTML = '<div class="reported-empty">Não foi possível carregar as inovações agora.</div>';
       });
@@ -2090,12 +2482,31 @@
         .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'inovacao';
     }
 
+    // Nome da conta na plataforma (identidade real — usada em listas de pessoas e no "você").
+    function displayName(id, names){
+      return (id && names && names[id] && names[id].name) || 'Equipe DUX';
+    }
+    // Quem aparece como "Reportado por": o campo reportadoPor do próprio registro (editável pelo admin),
+    // ou, se vazio, o nome da conta que enviou. Permite corrigir autoria sem mexer na identidade de ninguém.
+    function attribution(it, names){
+      return (it && it.reportadoPor && String(it.reportadoPor).trim()) || displayName(it && it.submittedById, names);
+    }
+    function freqBucket(text){
+      var t = String(text || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (!t.trim()) return 'Não informada';
+      if (/diari|todo dia|dia a dia|tempo todo|vezes ao dia|por dia/.test(t)) return 'Diária';
+      if (/quinzen/.test(t)) return 'Quinzenal';
+      if (/semana/.test(t)) return 'Semanal';
+      if (/mensal|mes\b|meses/.test(t)) return 'Mensal';
+      return 'Não informada';
+    }
+
     function innovationDetailHtml(it, who){
       var html = '';
       html += '<div class="innovation-meta">Responsável: ' + escapeHtml(who) + ' · ' + escapeHtml(formatDate(it.submittedAt)) + '</div>';
       html += '<div class="reported-tags" style="margin:10px 0;">';
       html += '<span class="status-pill construcao">Área: ' + escapeHtml(it.area || 'Outro') + '</span>';
-      html += '<span class="status-pill uso">Frequência: ' + escapeHtml(it.frequencia || '—') + '</span>';
+      html += '<span class="status-pill uso">Frequência: ' + escapeHtml((it.frequencia && it.frequencia !== '—' ? it.frequencia : it._freqText) || '—') + '</span>';
       html += '<span class="status-pill incipiente">Escopo: ' + escapeHtml(it.escopo || '—') + '</span>';
       html += '</div>';
       if (it.descricao) html += '<div class="reported-desc" style="margin-bottom:10px;">' + escapeHtml(it.descricao) + '</div>';
@@ -2105,14 +2516,28 @@
     }
 
     async function renderInnovations(items){
+      var mySeq = ++innovRenderSeq; // só a renderização mais recente vale (evita um snapshot antigo sobrescrever o completo)
       var body = $('reportedInnovationsBody');
       if (!items || !items.length) {
         body.innerHTML = '<div class="reported-empty">Ainda não há nenhuma inovação reportada. Use o botão "Reportar Inovação" para adicionar a primeira.</div>';
         return;
       }
 
-      // Mais recente primeiro — cada inovação é sua própria linha (nunca lumped), com a área como coluna.
-      items = items.slice().sort(function(a, b){
+      // Cada inovação é sua própria linha (nunca lumped). Agrupadas por frequência de uso (diária > semanal > ...),
+      // e dentro de cada grupo a mais recente primeiro.
+      var FREQ_ORDER = ['Diária', 'Semanal', 'Quinzenal', 'Mensal', 'Não informada'];
+      items = items.map(function(it){
+        var f = it.frequencia;
+        if ((!f || f === '—') && it.texto) {
+          var m = String(it.texto).match(/Frequ[êe]ncia[^:\n]*:\s*([^\n]+)/i);
+          if (m) f = m[1].trim();
+        }
+        it._freqText = (f && f !== '—') ? f : '';
+        it._freqBucket = freqBucket(it._freqText);
+        return it;
+      }).sort(function(a, b){
+        var d = FREQ_ORDER.indexOf(a._freqBucket) - FREQ_ORDER.indexOf(b._freqBucket);
+        if (d !== 0) return d;
         return (b.submittedAt || '').localeCompare(a.submittedAt || '');
       });
 
@@ -2121,26 +2546,36 @@
       if (userApi && ids.length) {
         try { names = await userApi.profiles(ids); } catch(e){ names = {}; }
       }
+      if (mySeq !== innovRenderSeq) return;
+      function whoOf(it){ return attribution(it, names); }
 
-      var html = '<div class="tools-table-wrap"><table class="tools-table"><thead><tr>' +
-        '<th>Descrição</th><th>Responsável</th><th>Área</th><th></th>' +
-        '</tr></thead><tbody>';
-      items.forEach(function(it, idx){
-        var who = (it.submittedById && names[it.submittedById] && names[it.submittedById].name) || 'Equipe DUX';
-        html += '<tr>';
-        html += '<td class="tool-desc">' + escapeHtml(it.descricao || it.titulo || '—') + '</td>';
-        html += '<td class="tool-who">' + escapeHtml(who) + '</td>';
-        html += '<td><span class="status-pill construcao">' + escapeHtml(it.area || 'Outro') + '</span></td>';
-        html += '<td class="col-eye"><button type="button" class="icon-eye-btn" data-detail-innov-idx="' + idx + '" title="Ver detalhes"><span class="icon-eye-dot"></span></button></td>';
-        html += '</tr>';
+      var html = '';
+      FREQ_ORDER.forEach(function(bucket){
+        var group = [];
+        items.forEach(function(it, idx){ if (it._freqBucket === bucket) group.push({it: it, idx: idx}); });
+        if (!group.length) return;
+        html += '<details class="reported-area" open>';
+        html += '<summary class="reported-area-head">' + escapeHtml(bucket) + '<span class="count">' + group.length + '</span></summary>';
+        html += '<div class="tools-table-wrap"><table class="tools-table"><thead><tr>' +
+          '<th>Descrição</th><th>Responsável</th><th>Área</th><th></th>' +
+          '</tr></thead><tbody>';
+        group.forEach(function(g){
+          var it = g.it;
+          html += '<tr>';
+          html += '<td class="tool-desc">' + escapeHtml(it.descricao || it.titulo || '—') + '</td>';
+          html += '<td class="tool-who">' + escapeHtml(whoOf(it)) + '</td>';
+          html += '<td><span class="status-pill construcao">' + escapeHtml(it.area || 'Outro') + '</span></td>';
+          html += '<td class="col-eye"><button type="button" class="icon-eye-btn" data-detail-innov-idx="' + g.idx + '" title="Ver detalhes"><span class="icon-eye-dot"></span></button></td>';
+          html += '</tr>';
+        });
+        html += '</tbody></table></div></details>';
       });
-      html += '</tbody></table></div>';
       body.innerHTML = html;
 
       Array.prototype.slice.call(body.querySelectorAll('[data-detail-innov-idx]')).forEach(function(btn){
         btn.addEventListener('click', function(){
           var it = items[Number(btn.getAttribute('data-detail-innov-idx'))];
-          var who = (it.submittedById && names[it.submittedById] && names[it.submittedById].name) || 'Equipe DUX';
+          var who = whoOf(it);
           openDetailModal(it.titulo, innovationDetailHtml(it, who));
           var dlBtn = $('detailDownloadBtn');
           if (dlBtn) dlBtn.addEventListener('click', async function(){
@@ -2148,7 +2583,7 @@
               dlBtn.textContent = 'Download indisponível neste visualizador';
               return;
             }
-            var content = it.titulo + '\nÁrea: ' + (it.area || 'Outro') + '\nFrequência: ' + (it.frequencia || '—') + '\nEscopo: ' + (it.escopo || '—') +
+            var content = it.titulo + '\nÁrea: ' + (it.area || 'Outro') + '\nFrequência: ' + ((it.frequencia && it.frequencia !== '—' ? it.frequencia : it._freqText) || '—') + '\nEscopo: ' + (it.escopo || '—') +
               '\nResponsável: ' + who + '\nData: ' + formatDate(it.submittedAt) + '\n\n' + it.texto;
             try {
               await downloadsApi.save({ filename: slugify(it.titulo) + '.txt', data: content });
@@ -2156,6 +2591,408 @@
           });
         });
       });
+    }
+
+
+    // ---- Upstream · Novos Projetos (espelho do board do Linear; dados em db "upstream", leitura só admin) ----
+    function fmtDay(iso){
+      if (!iso) return '—';
+      try { return new Date(iso).toLocaleDateString('pt-BR'); } catch(e){ return iso; }
+    }
+    function agoText(iso){
+      if (!iso) return '';
+      var d = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+      if (isNaN(d)) return '';
+      if (d <= 0) return 'hoje';
+      if (d === 1) return 'ontem';
+      return 'há ' + d + ' dias';
+    }
+    function statusPillClass(t){
+      return t === 'started' ? 'construcao' : t === 'completed' ? 'uso' : t === 'unstarted' ? 'incipiente' : 'pausado';
+    }
+    function safeLinearUrl(u){
+      return (typeof u === 'string' && /^https:\/\/linear\.app\//.test(u)) ? u : '#';
+    }
+    function subscribeUpstream(){
+      if (!dbApi) return;
+      dbApi.collection('upstream').onSnapshot(function(snap){
+        var meta = null, items = [];
+        snap.docs.forEach(function(d){ if (d.id === '_meta') meta = d.data(); else items.push(d.data()); });
+        renderUpstream(meta, items);
+      }, function(){
+        $('upBoard').innerHTML = '<div class="reported-empty">Não foi possível carregar o board agora.</div>';
+      });
+    }
+    function renderUpstream(meta, items){
+      var board = $('upBoard');
+      if (!meta && !items.length) {
+        board.innerHTML = '<div class="reported-empty">Ainda não há dados sincronizados do Linear para este board.</div>';
+        return;
+      }
+      if (meta && meta.projectUrl) $('upOpenLinear').href = safeLinearUrl(meta.projectUrl);
+      $('upSynced').textContent = meta && meta.syncedAt ? 'sincronizado do Linear em ' + formatDate(meta.syncedAt) : '';
+
+      var lanes = (meta && Array.isArray(meta.lanes)) ? meta.lanes.slice() : [];
+      var known = {};
+      lanes.forEach(function(l){ known[l.name] = true; });
+      var orphans = items.filter(function(it){ return !it.lane || !known[it.lane]; });
+      if (orphans.length) lanes.push({ name: 'Sem fase', color: '#86867E', _none: true });
+
+      var html = '';
+      lanes.forEach(function(l){
+        var col = items.filter(function(it){ return l._none ? (!it.lane || !known[it.lane]) : it.lane === l.name; });
+        col.sort(function(a, b){ return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); });
+        html += '<div class="up-col"><div class="up-col-head"><span class="dot" style="background:' + escapeHtml(/^#[0-9a-fA-F]{3,8}$/.test(l.color || '') ? l.color : '#86867E') + '"></span>' +
+          escapeHtml(l.name) + '<span class="n">' + col.length + '</span></div>';
+        if (!col.length) html += '<div class="up-empty">Nenhum card nesta fase</div>';
+        col.forEach(function(it){
+          var chips = (Array.isArray(it.labels) ? it.labels : []).map(function(t){ return '<span class="env-pill">' + escapeHtml(t) + '</span>'; }).join('');
+          html += '<a class="up-card" href="' + escapeHtml(safeLinearUrl(it.url)) + '" target="_blank" rel="noopener" title="Abrir no Linear">' +
+            '<div class="up-card-top"><span class="id mono">' + escapeHtml(it.identifier || '') + '</span><span class="go">Abrir no Linear ↗</span></div>' +
+            '<div class="title">' + escapeHtml(it.title || '(sem título)') + '</div>' +
+            '<div class="up-info">' +
+              '<span class="k">Owner</span><span class="v">' + escapeHtml(it.assignee || 'Sem owner') + '</span>' +
+              '<span class="k">Status</span><span class="v"><span class="status-pill ' + statusPillClass(it.statusType) + '">' + escapeHtml(it.status || '—') + '</span></span>' +
+              '<span class="k">Atualizado</span><span class="v">' + escapeHtml(fmtDay(it.updatedAt)) + (agoText(it.updatedAt) ? ' · ' + escapeHtml(agoText(it.updatedAt)) : '') + '</span>' +
+              '<span class="k">Na fase desde</span><span class="v">' + escapeHtml(fmtDay(it.laneSince)) + (it.laneSinceApprox ? ' <span title="O Linear não expõe a data exata da troca de fase; esta é uma estimativa a partir da última atualização.">(est.)</span>' : '') + '</span>' +
+            '</div>' +
+            (chips ? '<div class="up-chips">' + chips + '</div>' : '') +
+          '</a>';
+        });
+        html += '</div>';
+      });
+      board.innerHTML = html;
+      $('upFootnote').textContent = '(est.) = estimativa: o Linear não informa a data exata em que a issue entrou na fase; usamos a data da última atualização no momento da sincronização.';
+    }
+
+    // ============ ÁREA ADMIN (só para o dono do artifact — Lucas) ============
+    // A visibilidade da aba é cosmética (isOwner()); quem escreve no banco é decidido pelas regras do db declaradas no publish.
+    var ARTIFACT_URL = 'https://claude.ai/artifact/8N28NFnpKSkwhG1XusAYns';
+    var adminBound = false, adminToken = 0, editing = null;
+
+    var REPORT_FIELDS = [
+      { k:'nome', label:'Nome da ferramenta', type:'text', required:true },
+      { k:'desenvolvidoPor', label:'Quem desenvolveu', type:'text' },
+      { k:'responsavel', label:'Responsável (owner)', type:'text' },
+      { k:'descritivo', label:'Descritivo', type:'textarea', rows:3, full:true },
+      { k:'area', label:'Áreas', type:'multi', options: AREA_ORDER, full:true },
+      { k:'ambiente', label:'Ambiente', type:'select', options:['Local','Produção'] },
+      { k:'linkAcesso', label:'Link de acesso', type:'url', nullable:true },
+      { k:'disponivelGithub', label:'Disponível no GitHub', type:'select', options:['Sim','Não'] },
+      { k:'linkGithub', label:'Link do repositório', type:'url', nullable:true },
+      { k:'atualizacaoDados', label:'Atualização dos dados', type:'select', options:['Manual','Integrada'] },
+      { k:'disponibilizarOutrasAreas', label:'Disponibilizar p/ outras áreas', type:'select', options:['Sim','Não'] },
+      { k:'dataUltimaAtualizacao', label:'Data da última atualização', type:'date' },
+      { k:'frequenciaUso', label:'Frequência de uso', type:'select', options:['Pouco (cerca de 1x por mês)','Médio (cerca de 1x por semana)','Muito (quase diariamente)'] },
+      { k:'videoLink', label:'Link do vídeo', type:'url', nullable:true, full:true },
+      { k:'reportadoPor', label:'Reportado por (nome exibido — vazio = nome da conta que enviou)', type:'text', nullable:true, full:true }
+    ];
+    var INNOV_FIELDS = [
+      { k:'titulo', label:'Título', type:'text', required:true, full:true },
+      { k:'area', label:'Área', type:'select', options: AREA_ORDER },
+      { k:'escopo', label:'Escopo', type:'select', options:['Operacional','Manual','Otimização de tempo','Essencial'] },
+      { k:'frequencia', label:'Frequência', type:'text', full:true },
+      { k:'descricao', label:'Descrição', type:'textarea', rows:3, full:true },
+      { k:'texto', label:'Resumo completo', type:'textarea', rows:12, full:true },
+      { k:'reportadoPor', label:'Reportado por (nome exibido — vazio = nome da conta que enviou)', type:'text', nullable:true, full:true }
+    ];
+
+    function copyText(text){
+      return (async function(){
+        try { await navigator.clipboard.writeText(text); return true; } catch(e) {}
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.focus(); ta.select();
+          var ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          return ok;
+        } catch(e2) { return false; }
+      })();
+    }
+
+    function enableAdmin(){
+      var tab = $('adminTabBtn'); if (tab) tab.hidden = false;
+      var upTab = $('upstreamTabBtn'); if (upTab) upTab.hidden = false;
+      subscribeUpstream();
+      if ($('adminWho')) $('adminWho').textContent = 'acesso de admin · ' + 'lucashenning@wearedux.com';
+      if (!adminBound) { adminBound = true; bindAdmin(); }
+      renderAdmin();
+    }
+
+    function inviteText(){
+      return 'Oi! Você foi convidado(a) para o Cockpit de Projetos DUX — painel dos projetos (espelho do Linear) e levantamento de ferramentas e inovações da empresa.\n\n' +
+        'Acesse: ' + ARTIFACT_URL + '\n\n' +
+        'Entre no claude.ai com a sua conta @wearedux.com. Lá você consegue acompanhar os projetos e reportar as ferramentas e inovações que usa no dia a dia.';
+    }
+    function updateInviteLink(){
+      var email = $('inviteEmail').value.trim();
+      var a = $('inviteMailto');
+      var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (ok) {
+        a.href = 'mailto:' + email + '?subject=' + encodeURIComponent('Convite — Cockpit de Projetos DUX') + '&body=' + encodeURIComponent(inviteText());
+        a.setAttribute('aria-disabled', 'false');
+      } else {
+        a.removeAttribute('href');
+        a.setAttribute('aria-disabled', 'true');
+      }
+    }
+
+    function bindAdmin(){
+      $('inviteEmail').addEventListener('input', updateInviteLink);
+      $('inviteCopyBtn').addEventListener('click', async function(){
+        var ok = await copyText(inviteText());
+        var b = $('inviteCopyBtn'); var o = 'Copiar texto do convite';
+        b.textContent = ok ? 'Copiado!' : 'Não foi possível copiar';
+        setTimeout(function(){ b.textContent = o; }, 1800);
+      });
+      var t = null;
+      $('adminPeopleSearch').addEventListener('input', function(){
+        clearTimeout(t);
+        t = setTimeout(function(){ renderPeople($('adminPeopleSearch').value.trim()); }, 250);
+      });
+      $('adminPeopleBody').addEventListener('click', function(ev){
+        var b = ev.target.closest ? ev.target.closest('[data-invite-email]') : null;
+        if (!b) return;
+        $('inviteEmail').value = b.getAttribute('data-invite-email');
+        updateInviteLink();
+        $('inviteEmail').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      function onEditClick(ev){
+        var b = ev.target.closest ? ev.target.closest('[data-edit-kind]') : null;
+        if (!b) return;
+        openEdit(b.getAttribute('data-edit-kind'), b.getAttribute('data-edit-id'));
+      }
+      $('adminReportsBody').addEventListener('click', onEditClick);
+      $('adminInnovBody').addEventListener('click', onEditClick);
+      $('editForm').addEventListener('submit', saveEdit);
+    }
+
+    function initials(name){
+      var p = String(name || '?').trim().split(/\s+/);
+      return ((p[0] || '?').charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : '')).toUpperCase();
+    }
+
+    async function renderPeople(query){
+      if (!isAdmin || !userApi) return;
+      var body = $('adminPeopleBody');
+      var counts = {};
+      lastReports.forEach(function(r){ var id = r.data.submittedById; if (id) { counts[id] = counts[id] || {r:0, i:0}; counts[id].r++; } });
+      lastInnovations.forEach(function(r){ var id = r.data.submittedById; if (id) { counts[id] = counts[id] || {r:0, i:0}; counts[id].i++; } });
+
+      var hits = [];
+      try { hits = await userApi.search(query || ''); } catch(e){ hits = []; }
+      var byId = {};
+      hits.forEach(function(h){ byId[h.id] = h; });
+      if (!query) {
+        var missing = Object.keys(counts).filter(function(id){ return !byId[id]; });
+        if (myId && !byId[myId]) missing.push(myId);
+        if (missing.length) {
+          try {
+            var ps = await userApi.profiles(missing);
+            missing.forEach(function(id){ if (ps && ps[id]) byId[id] = Object.assign({ id: id }, ps[id]); });
+          } catch(e){}
+        }
+      }
+      var rows = Object.keys(byId).map(function(id){ return byId[id]; });
+      rows.sort(function(a, b){
+        if (a.id === myId) return -1;
+        if (b.id === myId) return 1;
+        return String(a.name || '').localeCompare(String(b.name || ''));
+      });
+      if (!query) $('adminStatPeople').textContent = rows.length;
+
+      if (!rows.length) {
+        body.innerHTML = '<div class="reported-empty">' + (query ? 'Ninguém encontrado para essa busca.' : 'Nenhuma pessoa para mostrar ainda.') + '</div>';
+        return;
+      }
+      var html = '';
+      rows.forEach(function(p){
+        var name = p.name || 'Pessoa sem nome';
+        var c = counts[p.id] || {r:0, i:0};
+        var tags = '';
+        if (p.id === myId) tags += '<span class="status-pill uso">Admin · você</span> ';
+        if (p.guest) tags += '<span class="status-pill incipiente">Convidado externo</span> ';
+        var sub = [];
+        if (p.email) sub.push(p.email);
+        sub.push(c.r + ' ferramenta(s) · ' + c.i + ' inovação(ões) reportadas');
+        html += '<div class="person"><span class="avatar">' + escapeHtml(initials(name)) + '</span>' +
+          '<div class="person-main"><div class="person-name">' + escapeHtml(name) + ' ' + tags + '</div>' +
+          '<div class="person-sub">' + escapeHtml(sub.join(' · ')) + '</div></div>' +
+          (p.email && p.id !== myId ? '<button type="button" class="tools-action-btn" data-invite-email="' + escapeHtml(p.email) + '">Usar no convite</button>' : '') +
+          '</div>';
+      });
+      body.innerHTML = html;
+    }
+
+    async function renderAdmin(){
+      if (!isAdmin) return;
+      var token = ++adminToken;
+      $('adminStatReports').textContent = lastReports.length;
+      $('adminStatInnov').textContent = lastInnovations.length;
+
+      var ids = [];
+      lastReports.concat(lastInnovations).forEach(function(r){
+        var id = r.data.submittedById; if (id && ids.indexOf(id) === -1) ids.push(id);
+      });
+      var names = {};
+      if (userApi && ids.length) { try { names = await userApi.profiles(ids); } catch(e){ names = {}; } }
+      if (token !== adminToken) return;
+
+      var byDate = function(a, b){ return String(b.data.submittedAt || '').localeCompare(String(a.data.submittedAt || '')); };
+
+      var rs = lastReports.slice().sort(byDate);
+      if (!rs.length) {
+        $('adminReportsBody').innerHTML = '<div class="reported-empty">Nenhuma ferramenta reportada ainda.</div>';
+      } else {
+        var h = '<table class="tools-table"><thead><tr><th>Ferramenta</th><th>Responsável</th><th>Áreas</th><th>Reportado por</th><th>Reportado em</th><th></th></tr></thead><tbody>';
+        rs.forEach(function(r){
+          var it = r.data;
+          var areas = (Array.isArray(it.area) ? it.area : [it.area || 'Outro']).join(', ');
+          h += '<tr><td class="tool-name">' + escapeHtml(it.nome) + '</td>' +
+            '<td class="tool-who">' + escapeHtml(it.responsavel || '—') + '</td>' +
+            '<td class="tool-who">' + escapeHtml(areas) + '</td>' +
+            '<td class="tool-who">' + escapeHtml(attribution(it, names)) + '</td>' +
+            '<td class="tool-who">' + escapeHtml(formatDate(it.submittedAt)) + '</td>' +
+            '<td class="col-eye"><button type="button" class="tools-action-btn" data-edit-kind="report" data-edit-id="' + escapeHtml(r.id) + '">Editar</button></td></tr>';
+        });
+        $('adminReportsBody').innerHTML = h + '</tbody></table>';
+      }
+
+      var is = lastInnovations.slice().sort(byDate);
+      if (!is.length) {
+        $('adminInnovBody').innerHTML = '<div class="reported-empty">Nenhuma inovação reportada ainda.</div>';
+      } else {
+        var h2 = '<table class="tools-table"><thead><tr><th>Título</th><th>Área</th><th>Frequência</th><th>Reportado por</th><th>Reportado em</th><th></th></tr></thead><tbody>';
+        is.forEach(function(r){
+          var it = r.data;
+          h2 += '<tr><td class="tool-name" style="white-space:normal;">' + escapeHtml(it.titulo) + '</td>' +
+            '<td class="tool-who">' + escapeHtml(it.area || 'Outro') + '</td>' +
+            '<td class="tool-who">' + escapeHtml((it.frequencia && it.frequencia !== '—' ? it.frequencia : it._freqText) || '—') + '</td>' +
+            '<td class="tool-who">' + escapeHtml(attribution(it, names)) + '</td>' +
+            '<td class="tool-who">' + escapeHtml(formatDate(it.submittedAt)) + '</td>' +
+            '<td class="col-eye"><button type="button" class="tools-action-btn" data-edit-kind="innovation" data-edit-id="' + escapeHtml(r.id) + '">Editar</button></td></tr>';
+        });
+        $('adminInnovBody').innerHTML = h2 + '</tbody></table>';
+      }
+
+      renderPeople($('adminPeopleSearch').value.trim());
+    }
+
+    // ---- edição de respostas (grava direto no db do cockpit) ----
+    function fieldHtml(f, val){
+      var id = 'ef_' + f.k;
+      var h = '<div class="field' + (f.full ? ' full' : '') + '"><label for="' + id + '">' + escapeHtml(f.label) +
+        (f.required ? ' <span class="required-mark">*</span>' : '') + '</label>';
+      if (f.type === 'textarea') {
+        h += '<textarea id="' + id + '" rows="' + (f.rows || 3) + '"></textarea>';
+      } else if (f.type === 'select') {
+        var opts = f.options.slice();
+        if (val && opts.indexOf(val) === -1) opts.push(val);
+        h += '<select id="' + id + '"><option value=""></option>' +
+          opts.map(function(o){ return '<option>' + escapeHtml(o) + '</option>'; }).join('') + '</select>';
+      } else if (f.type === 'multi') {
+        var mo = f.options.slice();
+        (Array.isArray(val) ? val : []).forEach(function(v){ if (mo.indexOf(v) === -1) mo.push(v); });
+        h += '<div class="check-grid" id="' + id + '">' +
+          mo.map(function(o){ return '<label><input type="checkbox" value="' + escapeHtml(o) + '"> ' + escapeHtml(o) + '</label>'; }).join('') + '</div>';
+      } else {
+        h += '<input type="' + f.type + '" id="' + id + '"' + (f.type === 'url' ? ' placeholder="https://…"' : '') + '>';
+      }
+      return h + '</div>';
+    }
+    function setFieldValue(f, val){
+      var el = $('ef_' + f.k);
+      if (f.type === 'multi') {
+        var arr = Array.isArray(val) ? val : [];
+        Array.prototype.slice.call(el.querySelectorAll('input')).forEach(function(i){ i.checked = arr.indexOf(i.value) !== -1; });
+      } else {
+        el.value = val == null ? '' : val;
+      }
+    }
+    function readField(f){
+      var el = $('ef_' + f.k);
+      if (f.type === 'multi') {
+        return Array.prototype.slice.call(el.querySelectorAll('input:checked')).map(function(i){ return i.value; });
+      }
+      var v = String(el.value || '').trim();
+      if (f.nullable && !v) return null;
+      return v;
+    }
+    function initialValue(kind, f, it){
+      var v = it[f.k];
+      if (f.type === 'multi') return Array.isArray(v) ? v : (v ? [v] : []);
+      if (kind === 'innovation' && f.k === 'frequencia') return (v && v !== '—') ? v : (it._freqText || '');
+      if (f.nullable) return v || null;
+      return v == null ? '' : v;
+    }
+    function showEditBanner(kind, msg){
+      var el = $('editBanner'); el.className = 'form-banner show ' + kind; el.textContent = msg;
+    }
+
+    function openEdit(kind, id){
+      var list = kind === 'report' ? lastReports : lastInnovations;
+      var rec = null;
+      list.forEach(function(r){ if (r.id === id) rec = r; });
+      if (!rec) return;
+      var fields = kind === 'report' ? REPORT_FIELDS : INNOV_FIELDS;
+      var orig = {};
+      fields.forEach(function(f){ orig[f.k] = initialValue(kind, f, rec.data); });
+      editing = { kind: kind, id: id, fields: fields, orig: orig, coll: kind === 'report' ? 'reports' : 'innovations' };
+
+      $('editModalTitle').textContent = (kind === 'report' ? 'Editar ferramenta — ' + (rec.data.nome || '') : 'Editar inovação — ' + (rec.data.titulo || ''));
+      $('editBanner').className = 'form-banner'; $('editBanner').textContent = '';
+      var html = '<div class="edit-grid">' + fields.map(function(f){ return fieldHtml(f, orig[f.k]); }).join('') + '</div>' +
+        '<div class="admin-row" style="justify-content:space-between; margin-top:8px;">' +
+        '<div class="admin-row"><button type="submit" class="form-submit" id="editSaveBtn">Salvar alterações</button>' +
+        '<button type="button" class="tools-action-btn" id="editCancelBtn">Cancelar</button></div>' +
+        '<button type="button" class="btn-danger" id="editDeleteBtn">Excluir</button></div>';
+      $('editForm').innerHTML = html;
+      fields.forEach(function(f){ setFieldValue(f, orig[f.k]); });
+      $('editCancelBtn').addEventListener('click', function(){ closeModal('editModalOverlay'); });
+      var del = $('editDeleteBtn'), armed = false, timer = null;
+      del.addEventListener('click', async function(){
+        if (!armed) {
+          armed = true; del.classList.add('armed'); del.textContent = 'Clique de novo para excluir';
+          timer = setTimeout(function(){ armed = false; del.classList.remove('armed'); del.textContent = 'Excluir'; }, 5000);
+          return;
+        }
+        clearTimeout(timer);
+        del.disabled = true; del.textContent = 'Excluindo…';
+        try {
+          await dbApi.doc(editing.coll + '/' + editing.id).delete();
+          closeModal('editModalOverlay');
+          showToast('Registro excluído.');
+        } catch(err) {
+          showEditBanner('err', 'Não foi possível excluir agora. ' + ((err && (err.code || err.message)) || ''));
+          del.disabled = false; armed = false; del.classList.remove('armed'); del.textContent = 'Excluir';
+        }
+      });
+      openModal('editModalOverlay');
+    }
+
+    async function saveEdit(ev){
+      ev.preventDefault();
+      if (!editing || !dbApi) return;
+      var changes = {}, n = 0;
+      for (var i = 0; i < editing.fields.length; i++) {
+        var f = editing.fields[i];
+        var v = readField(f);
+        if (f.required && !v) { showEditBanner('err', 'Preencha o campo "' + f.label + '".'); return; }
+        if (JSON.stringify(v) !== JSON.stringify(editing.orig[f.k])) { changes[f.k] = v; n++; }
+      }
+      if (!n) { showEditBanner('info', 'Nenhuma alteração para salvar.'); return; }
+      changes.editedAt = new Date().toISOString();
+      if (myId) changes.editedById = myId;
+      var btn = $('editSaveBtn'); btn.disabled = true; btn.textContent = 'Salvando…';
+      try {
+        await dbApi.doc(editing.coll + '/' + editing.id).update(changes);
+        closeModal('editModalOverlay');
+        showToast('Alterações salvas.');
+      } catch(err) {
+        showEditBanner('err', 'Não foi possível salvar agora. ' + ((err && (err.code || err.message)) || ''));
+        btn.disabled = false; btn.textContent = 'Salvar alterações';
+      }
     }
 
     initCapabilities();
@@ -2167,6 +3004,8 @@
       var goesToTools = ['tools', 'ferramentas', 'levantamento', 'reportar-ferramenta', 'reportar-inovacao', 'inovacao'];
       if (goesToTools.indexOf(hash) !== -1 && window.__cockpitShowPage) window.__cockpitShowPage('tools');
       if (hash === 'reportar-ferramenta') openModal('reportToolModalOverlay');
+      if ((hash === 'reportar-inovacao' || hash === 'inovacao') && window.__cockpitShowSubtab) window.__cockpitShowSubtab('inovacoes');
+      if (hash === 'reportar-ferramenta' && window.__cockpitShowSubtab) window.__cockpitShowSubtab('ferramentas');
       if (hash === 'reportar-inovacao' || hash === 'inovacao') openModal('reportInnovationModalOverlay');
     }
     routeHash();

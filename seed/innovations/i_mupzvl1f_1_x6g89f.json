@@ -1,0 +1,10 @@
+{
+  "area": "Desenvolvimento",
+  "descricao": "Direção e financeiro perguntam ao assistente de IA sobre volumes, cedentes e liquidação e recebem a resposta a partir dos dados reais da DUX.",
+  "escopo": "Otimização de tempo",
+  "frequencia": "Semanalmente",
+  "submittedAt": "2026-10-01T20:36:34.436Z",
+  "submittedById": "u_AXUnhARS7ve63Y8JCyBTCw",
+  "texto": "- Fluxo: o assistente de IA se conecta ao MCP de Dados da DUX, enxerga as tabelas permitidas para o perfil da pessoa, monta uma consulta somente leitura e responde informando o frescor do dado.\n- Ferramenta gerada: MCP de Dados da DUX (mcp.wearedux.com), alimentado pelo DUX Data Core.\n- Vale outras pessoas conhecerem: sim, a ideia é ampliar para direção, financeiro e comercial.\n- IA envolvida: Claude (conector MCP).\n- Frequência: semanalmente (cresce conforme novas pessoas recebem acesso).\n- Escopo: otimização de tempo (substitui abrir a planilha da CGO e montar filtros à mão).\n- Dados sensíveis: dados financeiros e de margem da DUX; sem dado pessoal (pessoa física aparece sem documento); acesso por lista de e-mails e trilha de auditoria de todas as consultas.",
+  "titulo": "Consulta de dados da operação em linguagem natural"
+}
