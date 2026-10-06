@@ -1858,6 +1858,8 @@
     var lastReports = [], lastInnovations = [], isAdmin = false, myId = null;
 
     function $(id){ return document.getElementById(id); }
+    // Nomes são "best effort": se a consulta de perfis demorar, segue sem eles em vez de travar a lista.
+    function withTimeout(p, ms){ return Promise.race([p, new Promise(function(_, rej){ setTimeout(function(){ rej(new Error('timeout')); }, ms); })]); }
 
     var INNOVATION_PROMPT =
       "Você vai conduzir uma entrevista comigo sobre um ou mais fluxos de inovação com IA que eu uso ou desenvolvi no meu dia a dia de trabalho na DUX. " +
@@ -2291,7 +2293,7 @@
       var ids = items.map(function(it){ return it.submittedById; }).filter(Boolean);
       var names = {};
       if (userApi && ids.length) {
-        try { names = await userApi.profiles(ids); } catch(e){ names = {}; }
+        try { names = await withTimeout(userApi.profiles(ids), 4000); } catch(e){ names = {}; }
       }
       if (mySeq !== toolsRenderSeq) return;
 
@@ -2451,8 +2453,22 @@
         $('reportedInnovationsBody').innerHTML = '<div class="reported-empty">Entre com sua conta @wearedux.com para ver as inovações reportadas.</div>';
         return;
       }
+      function innovHasRows(){ var b = $('reportedInnovationsBody'); return !!(b && b.querySelector('[data-detail-innov-idx]')); }
+      [5000, 15000].forEach(function(ms){
+        setTimeout(function(){
+          if (innovHasRows()) return;
+          var b = $('reportedInnovationsBody');
+          if (lastInnovations.length) {
+            console.warn('[cockpit] lista de inovações vazia com ' + lastInnovations.length + ' registros; renderizando de novo');
+            renderInnovations(lastInnovations.map(function(r){ return r.data; }));
+          } else if (b && /Carregando/.test(b.textContent || '')) {
+            b.innerHTML = '<div class="reported-empty">As inovações ainda não chegaram do banco. Recarregue a página em alguns segundos.</div>';
+          }
+        }, ms);
+      });
       dbApi.collection('innovations').onSnapshot(function(snap){
         lastInnovations = snap.docs.map(function(d){ return { id: d.id, data: d.data() }; });
+        try { console.log('[cockpit] inovações recebidas:', lastInnovations.length); } catch(e){}
         renderInnovations(lastInnovations.map(function(r){ return r.data; }));
         if (isAdmin) renderAdmin();
       }, function(){
@@ -2536,7 +2552,7 @@
       var ids = items.map(function(it){ return it.submittedById; }).filter(Boolean);
       var names = {};
       if (userApi && ids.length) {
-        try { names = await userApi.profiles(ids); } catch(e){ names = {}; }
+        try { names = await withTimeout(userApi.profiles(ids), 4000); } catch(e){ names = {}; }
       }
       if (mySeq !== innovRenderSeq) return;
       function whoOf(it){ return attribution(it, names); }
@@ -2839,7 +2855,7 @@
         var id = r.data.submittedById; if (id && ids.indexOf(id) === -1) ids.push(id);
       });
       var names = {};
-      if (userApi && ids.length) { try { names = await userApi.profiles(ids); } catch(e){ names = {}; } }
+      if (userApi && ids.length) { try { names = await withTimeout(userApi.profiles(ids), 4000); } catch(e){ names = {}; } }
       if (token !== adminToken) return;
 
       var byDate = function(a, b){ return String(b.data.submittedAt || '').localeCompare(String(a.data.submittedAt || '')); };
