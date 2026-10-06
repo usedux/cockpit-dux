@@ -36,6 +36,14 @@
     --area-fin-soft:#DDEEF3;
     --area-ops:#3F6F4A;
     --area-ops-soft:#E1EFE3;
+    --area-jur:#6B5B95;
+    --area-jur-soft:#EFEAF6;
+    --area-com:#B4533A;
+    --area-com-soft:#F9E8E2;
+    --area-dev:#2E5EDB;
+    --area-dev-soft:#E3EAFB;
+    --area-out:#6E6E66;
+    --area-out-soft:#EDEDE9;
     --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 6px 20px -8px rgba(0,0,0,0.12);
     color-scheme: light;
   }
@@ -74,6 +82,14 @@
       --area-fin-soft:#122B32;
       --area-ops:#8FCB9B;
       --area-ops-soft:#1C2B20;
+      --area-jur:#B9A6E0;
+      --area-jur-soft:#2A2340;
+      --area-com:#E89A82;
+      --area-com-soft:#3A241D;
+      --area-dev:#7C9CFF;
+      --area-dev-soft:#1B2540;
+      --area-out:#A0A096;
+      --area-out-soft:#242420;
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 24px -10px rgba(0,0,0,0.5);
     }
   }
@@ -109,6 +125,16 @@
     --area-mkt-soft:#332C15;
     --area-fin:#7FCBE0;
     --area-fin-soft:#122B32;
+    --area-ops:#8FCB9B;
+    --area-ops-soft:#1C2B20;
+    --area-jur:#B9A6E0;
+    --area-jur-soft:#2A2340;
+    --area-com:#E89A82;
+    --area-com-soft:#3A241D;
+    --area-dev:#7C9CFF;
+    --area-dev-soft:#1B2540;
+    --area-out:#A0A096;
+    --area-out-soft:#242420;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 24px -10px rgba(0,0,0,0.5);
   }
 
@@ -468,6 +494,14 @@
   .status-pill.pausado{background:var(--st-build-soft); color:var(--st-build); border:1px dashed var(--st-build);}
   .status-pill.incipiente{background:var(--st-qa-soft); color:var(--st-qa);}
   .status-pill.prototipo{background:var(--blk-int-soft); color:var(--blk-int);}
+  .status-pill.area-mkt{background:var(--area-mkt-soft); color:var(--area-mkt);}
+  .status-pill.area-fin{background:var(--area-fin-soft); color:var(--area-fin);}
+  .status-pill.area-ops{background:var(--area-ops-soft); color:var(--area-ops);}
+  .status-pill.area-jur{background:var(--area-jur-soft); color:var(--area-jur);}
+  .status-pill.area-com{background:var(--area-com-soft); color:var(--area-com);}
+  .status-pill.area-dev{background:var(--area-dev-soft); color:var(--area-dev);}
+  .status-pill.area-out{background:var(--area-out-soft); color:var(--area-out);}
+  .area-pills{display:inline-flex; flex-wrap:wrap; gap:4px;}
   .env-pill{
     font-size:10.5px; font-weight:600; padding:3px 10px; border-radius:100px; white-space:nowrap;
     display:inline-block; background:var(--surface-muted); color:var(--ink-soft); border:1px solid var(--line-strong);
@@ -2227,6 +2261,20 @@
         return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
       });
     }
+    // Cada área tem sua cor. Registros antigos podem trazer "Comercial e Operacional" numa string só: vira uma pílula por área.
+    var AREA_CLASS = { 'marketing':'area-mkt', 'juridico':'area-jur', 'financeiro':'area-fin', 'comercial':'area-com', 'operacional':'area-ops', 'operacao':'area-ops', 'desenvolvimento':'area-dev', 'outro':'area-out' };
+    function areaClass(name){
+      var k = String(name || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+      return AREA_CLASS[k] || 'area-out';
+    }
+    function areaPills(value, prefix){
+      var list = Array.isArray(value) ? value : String(value == null || value === '' ? 'Outro' : value).split(/\s+e\s+|\s*[,;\/]\s*/);
+      list = list.map(function(a){ return String(a).trim(); }).filter(Boolean);
+      if (!list.length) list = ['Outro'];
+      return '<span class="area-pills">' + list.map(function(a){
+        return '<span class="status-pill ' + areaClass(a) + '">' + (prefix || '') + escapeHtml(a) + '</span>';
+      }).join('') + '</span>';
+    }
 
     function subscribeReports(){
       if (!dbApi) {
@@ -2246,9 +2294,7 @@
       var html = '';
       html += '<div class="reported-desc">' + escapeHtml(it.descritivo) + '</div>';
       html += '<div class="reported-tags">';
-      (Array.isArray(it.area) ? it.area : [it.area || 'Outro']).forEach(function(a){
-        html += '<span class="status-pill construcao">' + escapeHtml(a) + '</span>';
-      });
+      html += areaPills(it.area);
       html += '<span class="env-pill">' + escapeHtml(it.ambiente) + '</span>';
       html += '<span class="status-pill ' + (it.atualizacaoDados === 'Manual' ? 'pausado' : 'uso') + '">' + escapeHtml(it.atualizacaoDados) + '</span>';
       html += '<span class="status-pill ' + (it.disponibilizarOutrasAreas === 'Sim' ? 'uso' : 'incipiente') + '">Compartilhar p/ outras áreas: ' + escapeHtml(it.disponibilizarOutrasAreas) + '</span>';
@@ -2545,7 +2591,7 @@
       var html = '';
       html += '<div class="innovation-meta">Responsável: ' + escapeHtml(who) + ' · ' + escapeHtml(formatDate(it.submittedAt)) + '</div>';
       html += '<div class="reported-tags" style="margin:10px 0;">';
-      html += '<span class="status-pill construcao">Área: ' + escapeHtml(it.area || 'Outro') + '</span>';
+      html += areaPills(it.area, 'Área: ');
       html += '<span class="status-pill uso">Frequência: ' + escapeHtml((it.frequencia && it.frequencia !== '—' ? it.frequencia : it._freqText) || '—') + '</span>';
       html += '<span class="status-pill incipiente">Escopo: ' + escapeHtml(it.escopo || '—') + '</span>';
       html += '</div>';
@@ -2604,7 +2650,7 @@
           html += '<tr>';
           html += '<td class="tool-desc">' + escapeHtml(it.descricao || it.titulo || '—') + '</td>';
           html += '<td class="tool-who">' + escapeHtml(whoOf(it)) + '</td>';
-          html += '<td><span class="status-pill construcao">' + escapeHtml(it.area || 'Outro') + '</span></td>';
+          html += '<td>' + areaPills(it.area) + '</td>';
           html += '<td class="col-eye"><button type="button" class="icon-eye-btn" data-detail-innov-idx="' + g.idx + '" title="Ver detalhes"><span class="icon-eye-dot"></span></button></td>';
           html += '</tr>';
         });
@@ -2616,7 +2662,7 @@
         html += '<details class="reported-area" open><summary class="reported-area-head">Todas<span class="count">' + items.length + '</span></summary>';
         html += '<div class="tools-table-wrap"><table class="tools-table"><thead><tr><th>Descrição</th><th>Responsável</th><th>Área</th><th></th></tr></thead><tbody>';
         items.forEach(function(it, idx){
-          html += '<tr><td class="tool-desc">' + escapeHtml(it.descricao || it.titulo || '—') + '</td><td class="tool-who">' + escapeHtml(whoOf(it)) + '</td><td><span class="status-pill construcao">' + escapeHtml(it.area || 'Outro') + '</span></td>' +
+          html += '<tr><td class="tool-desc">' + escapeHtml(it.descricao || it.titulo || '—') + '</td><td class="tool-who">' + escapeHtml(whoOf(it)) + '</td><td>' + areaPills(it.area) + '</td>' +
             '<td class="col-eye"><button type="button" class="icon-eye-btn" data-detail-innov-idx="' + idx + '" title="Ver detalhes"><span class="icon-eye-dot"></span></button></td></tr>';
         });
         html += '</tbody></table></div></details>';
