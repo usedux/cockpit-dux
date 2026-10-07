@@ -129,6 +129,7 @@ test("webhook: evento irrelevante é ignorado; evento de Issue atualiza o cockpi
   const live = await (await call(env.base, "/api/live", { cookie: ana })).json();
   assert.match(live.blocks["anti-sacado:milestones"], /Piloto Risco Sacado/);
   assert.equal(live.meta.warnings.length > 0, true); // DUX-510/511 ocultos
+  assert.match(live.blocks["meta:synced"], /<time datetime="\d{4}-\d{2}-\d{2}T[^"]+Z"><\/time>/); // carimbo "última atualização do Linear"
   // muda algo no "Linear" e dispara de novo → versão muda e o bloco reflete
   env.mock.setStatus("DUX-572", "Done / In Prod");
   await hook({ type: "Issue", action: "update", webhookTimestamp: Date.now() });
@@ -168,7 +169,7 @@ test("build: HTML de produção sem referências ao claude.ai, histórico zerado
   const { html } = transform(src);
   assert.doesNotMatch(html, /claude\.ai/);
   assert.match(html, /<script id="weekHistoryData" type="application\/json">\[\]<\/script>/);
-  assert.equal(liveMarkerNames(html).length, 28);
+  assert.equal(liveMarkerNames(html).length, 29);
   const filled = applyLiveBlocks(html, { "anti-sacado:areas": "<span>TESTE</span>" });
   assert.match(filled, /LIVE:anti-sacado:areas:start -->\n<span>TESTE<\/span>\n<!-- LIVE:anti-sacado:areas:end/);
 });

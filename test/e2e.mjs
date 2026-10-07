@@ -28,6 +28,8 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || 
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 const [name, value] = cookie.split("=");
 await ctx.addCookies([{ name, value: decodeURIComponent(value), url: env.base }]);
+// o teste não depende da internet: fontes e demais hosts externos são bloqueados (evita travar se o proxy/rede demorar)
+await ctx.route((url) => !/^(127\.0\.0\.1|localhost)$/.test(url.hostname), (route) => route.abort());
 const page = await ctx.newPage();
 const errors = [];
 page.on("pageerror", (e) => errors.push(String(e)));
@@ -44,6 +46,9 @@ ok("página carrega logada");
 const html0 = await page.content();
 assert.match(html0, /Piloto Risco Sacado/);
 ok("bloco de milestones do Linear presente no primeiro carregamento");
+const stampTxt = await page.locator("#syncStampText").innerText();
+assert.match(stampTxt, /^Linear · atualizado em \d{2}\/[a-zç]{3} às \d{2}:\d{2} \(/);
+ok("carimbo da última atualização do Linear aparece em Principais Projetos: " + stampTxt);
 
 // 2) webhook → painel muda sem recarregar
 const before = await page.locator("#page-projects").innerText();

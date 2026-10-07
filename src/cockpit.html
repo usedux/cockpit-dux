@@ -192,6 +192,10 @@
     padding-bottom:14px; border-bottom:1px solid var(--line-strong); margin-bottom:20px;
   }
   .section-head h2{font-size:20px; font-weight:700; letter-spacing:-.01em;}
+  .sync-stamp{display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--ink-faint); font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace; letter-spacing:.01em; padding-bottom:2px;}
+  .sync-stamp .sync-dot{width:6px; height:6px; border-radius:50%; background:var(--ink-faint); flex:none;}
+  .sync-stamp.fresh .sync-dot{background:var(--st-done);}
+  .sync-stamp.stale .sync-dot{background:var(--st-qa);}
 
   /* ---------- Legend ---------- */
   .legend{
@@ -807,6 +811,10 @@
 
 <div class="section-head">
   <h2>Principais Projetos</h2>
+  <div class="sync-stamp" id="syncStamp" title="Última vez que o cockpit recebeu dados do Linear">
+    <span class="sync-dot"></span><span id="syncStampText">Linear · última atualização: —</span>
+    <span id="syncSrc" hidden><!-- LIVE:meta:synced:start --><!-- LIVE:meta:synced:end --></span>
+  </div>
 </div>
 
 <div class="legend-groups">
@@ -1859,6 +1867,40 @@
     });
     // Exposto pro roteamento por hash (#tools, #reportar-ferramenta, #reportar-inovacao), ver script mais abaixo.
     window.__cockpitShowPage = showPage;
+  })();
+</script>
+
+<script>
+  // Carimbo "última atualização do Linear": o servidor grava a hora da sincronização no bloco LIVE:meta:synced.
+  (function(){
+    var stamp = document.getElementById('syncStamp'), txt = document.getElementById('syncStampText'), src = document.getElementById('syncSrc');
+    if (!stamp || !txt || !src) return;
+    var MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+    function brt(d){
+      var parts = new Intl.DateTimeFormat('pt-BR', { timeZone:'America/Sao_Paulo', day:'2-digit', month:'numeric', hour:'2-digit', minute:'2-digit', hour12:false }).formatToParts(d);
+      var g = {}; parts.forEach(function(p){ g[p.type] = p.value; });
+      return g.day + '/' + MESES[Number(g.month) - 1] + ' às ' + g.hour + ':' + g.minute;
+    }
+    function ago(ms){
+      var m = Math.floor(ms / 60000);
+      if (m < 1) return 'agora há pouco';
+      if (m < 60) return 'há ' + m + ' min';
+      var h = Math.floor(m / 60);
+      if (h < 24) return 'há ' + h + ' h';
+      return 'há ' + Math.floor(h / 24) + ' d';
+    }
+    function render(){
+      var t = src ? src.querySelector('time[datetime]') : null;
+      var d = t ? new Date(t.getAttribute('datetime')) : null;
+      if (!d || isNaN(d.getTime())) { txt.textContent = 'Linear · última atualização: —'; stamp.classList.remove('fresh','stale'); return; }
+      var diff = Date.now() - d.getTime();
+      txt.textContent = 'Linear · atualizado em ' + brt(d) + ' (' + ago(Math.max(diff, 0)) + ')';
+      stamp.classList.toggle('fresh', diff < 36 * 3600 * 1000);
+      stamp.classList.toggle('stale', diff >= 36 * 3600 * 1000);
+    }
+    render();
+    if (window.MutationObserver) new MutationObserver(render).observe(src, { childList:true, subtree:true }); // só a fonte do dado (observar o próprio texto causaria laço)
+    setInterval(render, 30000);
   })();
 </script>
 
