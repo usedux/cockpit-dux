@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-08T01:42:02.923Z","sha":"3d87bd1","message":"Cockpit DUX: projetos por status (bloqueado/execução/construção), sub-abas do levantamento, Vercel (login Google, webhook Linear, fechamento","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-08T11:27:39.005Z","sha":"3d87bd1","message":"Cockpit DUX: projetos por status (bloqueado/execução/construção), sub-abas do levantamento, Vercel (login Google, webhook Linear, fechamento","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -769,6 +769,7 @@
   .admin-note b{color:var(--ink);}
   .admin-sep{border:none; border-top:1px solid var(--line); margin:0;}
   a.tools-action-btn{text-decoration:none; display:inline-block;}
+  #adminLogout[hidden]{display:none !important;}
   a.tools-action-btn[aria-disabled="true"]{opacity:.5; pointer-events:none;}
   .person{display:flex; align-items:center; gap:12px; padding:10px 18px; border-bottom:1px solid var(--line);}
   .person:last-child{border-bottom:none;}
@@ -1492,6 +1493,7 @@
   <div class="section-head">
     <h2>Admin</h2>
     <span class="tools-group-sub" id="adminWho"></span>
+    <a class="tools-action-btn" id="adminLogout" href="/auth/logout" hidden style="margin-left:auto;text-decoration:none">Log out</a>
   </div>
 
   <div class="deploy-stamp" id="adminDeploy" hidden></div>
@@ -2855,6 +2857,12 @@
 
     // Importação dos dados que vinham do Artifact (só existe no deploy da Vercel; fora dele a chamada falha e o cartão fica escondido).
     function paintSeed(st, extra){
+      if (st.storage && st.storage.ok === false) {
+        $('adminSeedText').textContent = 'ATENÇÃO: ' + st.storage.error + ' Enquanto isso, nada do que é enviado ou importado fica salvo (cada requisição cai numa instância diferente).';
+        $('adminSeedText').style.color = '#9b2c2c';
+        var bt = $('adminSeedBtn'); if (bt) bt.disabled = true;
+        return;
+      }
       var b = st.bundled || {}, p = st.present || {};
       var t = 'No banco agora: ' + (p.reports || 0) + ' ferramenta(s) e ' + (p.innovations || 0) + ' inovação(ões). ' +
         'Disponível para importar: ' + (b.reports || 0) + ' ferramenta(s), ' + (b.innovations || 0) + ' inovação(ões), ' + (b.history || 0) + ' semana(s) de histórico e ' + (b.assets || 0) + ' anexo(s). ' +
@@ -2942,6 +2950,7 @@
     function enableAdmin(){
       var tab = $('adminTabBtn'); if (tab) tab.hidden = false;
       paintDeploy();
+      var lo = $('adminLogout'); if (lo && window.__DEPLOY__) lo.hidden = false; // só existe login/logout no site da Vercel
       checkSeed();
       checkLinear();
       var upTab = $('upstreamTabBtn'); if (upTab) upTab.hidden = false;

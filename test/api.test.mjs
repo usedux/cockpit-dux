@@ -241,3 +241,23 @@ test("build: grava data/hora e commit do deploy no HTML, e a tela Admin tem onde
   assert.doesNotMatch(html, /Teste <\/script>/); // mensagem de commit não pode fechar o <script>
   assert.match(html, /id="adminDeploy"/);
 });
+
+test("produção sem Redis: falha alto (503) em vez de guardar em memória por instância; aceita nomes com prefixo", async () => {
+  const { store: st, col, storageStatus, usingMemory } = await import("../lib/store.js");
+  process.env.VERCEL = "1";
+  try {
+    assert.equal(storageStatus().ok, false);
+    await assert.rejects(() => st.get("x"), /Upstash Redis/);
+    await assert.rejects(() => col.list("reports"), (e) => e.status === 503);
+  } finally { delete process.env.VERCEL; }
+  assert.equal(usingMemory(), true);
+  process.env.STORAGE_KV_REST_API_URL = "https://exemplo.upstash.io";
+  try { assert.equal(usingMemory(), false); assert.equal(storageStatus().kind, "redis"); } finally { delete process.env.STORAGE_KV_REST_API_URL; }
+});
+
+test("build: botão Log out na área Admin (só aparece no site da Vercel)", () => {
+  const src = readFileSync(new URL("../src/cockpit.html", import.meta.url), "utf8");
+  const { html } = transform(src, { deploy: { builtAt: "2026-10-08T12:30:00.000Z" } });
+  assert.match(html, /id="adminLogout"[^>]*href="\/auth\/logout"/);
+  assert.match(html, /window\.__DEPLOY__ \) lo\.hidden = false|window\.__DEPLOY__\) lo\.hidden = false/);
+});

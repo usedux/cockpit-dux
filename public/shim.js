@@ -6,11 +6,19 @@
   'use strict';
   var POLL_MS = 4000, LIVE_MS = 8000;
 
+  function showStorageBanner(msg) {
+    if (document.getElementById('storageBanner') || !document.body) return;
+    var b = document.createElement('div'); b.id = 'storageBanner';
+    b.style.cssText = 'position:sticky;top:0;z-index:9999;background:#7a1f1f;color:#fff;padding:10px 16px;font:13px/1.45 system-ui,sans-serif;text-align:center';
+    b.textContent = 'Atenção: ' + msg;
+    document.body.insertBefore(b, document.body.firstChild);
+  }
   function goLogin() { location.href = '/auth/login'; }
   async function api(path, opts) {
     var res = await fetch(path, Object.assign({ credentials: 'same-origin', cache: 'no-store' }, opts || {}));
     if (res.status === 401) { goLogin(); throw new Error('não autenticado'); }
     var data = await res.json().catch(function () { return {}; });
+    if (res.status === 503 && /Redis/.test(data.error || '')) showStorageBanner(data.error);
     if (!res.ok) { var e = new Error(data.error || ('erro ' + res.status)); e.code = res.status; throw e; }
     return data;
   }

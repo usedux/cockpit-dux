@@ -125,3 +125,7 @@ DEV_AUTH_EMAIL=lucashenning@wearedux.com MOCK_LINEAR=1 npm run dev   # http://lo
 ```
 
 Para alterar a página: edite `src/cockpit.html` (é o mesmo HTML do Artifact) e faça deploy; `scripts/build-app.mjs` gera `app/index.html` automaticamente no build.
+
+## Se as listas aparecem vazias (ferramentas, inovações, pessoas, histórico)
+
+Quase sempre é o banco não conectado. A Vercel roda cada requisição numa instância diferente: sem o Upstash Redis, nada que é gravado numa chamada aparece na seguinte. O app agora avisa isso em vermelho (faixa no topo e no cartão "Dados do Artifact" da aba Admin). Solução: **Storage → Create Database → Upstash (Redis) → Connect Project (marque Production, Preview e Development) → Redeploy**. Nomes de variável com prefixo (ex.: `STORAGE_KV_REST_API_URL`) também são aceitos. Depois do Redeploy, a importação dos dados do Artifact roda sozinha ao abrir a aba Admin.

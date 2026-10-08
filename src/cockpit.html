@@ -759,6 +759,7 @@
   .admin-note b{color:var(--ink);}
   .admin-sep{border:none; border-top:1px solid var(--line); margin:0;}
   a.tools-action-btn{text-decoration:none; display:inline-block;}
+  #adminLogout[hidden]{display:none !important;}
   a.tools-action-btn[aria-disabled="true"]{opacity:.5; pointer-events:none;}
   .person{display:flex; align-items:center; gap:12px; padding:10px 18px; border-bottom:1px solid var(--line);}
   .person:last-child{border-bottom:none;}
@@ -1482,6 +1483,7 @@
   <div class="section-head">
     <h2>Admin</h2>
     <span class="tools-group-sub" id="adminWho"></span>
+    <a class="tools-action-btn" id="adminLogout" href="/auth/logout" hidden style="margin-left:auto;text-decoration:none">Log out</a>
   </div>
 
   <div class="deploy-stamp" id="adminDeploy" hidden></div>
@@ -2886,6 +2888,12 @@
 
     // Importação dos dados que vinham do Artifact (só existe no deploy da Vercel; fora dele a chamada falha e o cartão fica escondido).
     function paintSeed(st, extra){
+      if (st.storage && st.storage.ok === false) {
+        $('adminSeedText').textContent = 'ATENÇÃO: ' + st.storage.error + ' Enquanto isso, nada do que é enviado ou importado fica salvo (cada requisição cai numa instância diferente).';
+        $('adminSeedText').style.color = '#9b2c2c';
+        var bt = $('adminSeedBtn'); if (bt) bt.disabled = true;
+        return;
+      }
       var b = st.bundled || {}, p = st.present || {};
       var t = 'No banco agora: ' + (p.reports || 0) + ' ferramenta(s) e ' + (p.innovations || 0) + ' inovação(ões). ' +
         'Disponível para importar: ' + (b.reports || 0) + ' ferramenta(s), ' + (b.innovations || 0) + ' inovação(ões), ' + (b.history || 0) + ' semana(s) de histórico e ' + (b.assets || 0) + ' anexo(s). ' +
@@ -2973,6 +2981,7 @@
     function enableAdmin(){
       var tab = $('adminTabBtn'); if (tab) tab.hidden = false;
       paintDeploy();
+      var lo = $('adminLogout'); if (lo && window.__DEPLOY__) lo.hidden = false; // só existe login/logout no site da Vercel
       checkSeed();
       checkLinear();
       var upTab = $('upstreamTabBtn'); if (upTab) upTab.hidden = false;

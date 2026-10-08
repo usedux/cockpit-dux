@@ -4,10 +4,12 @@
 // É idempotente (veja scripts/seed.mjs): rodar de novo não duplica nem apaga o que a equipe criou depois.
 import { route, json, readJson } from "../lib/http.js";
 import { requireAdmin } from "../lib/auth.js";
-import { store, col } from "../lib/store.js";
+import { store, col, storageStatus } from "../lib/store.js";
 import { runSeed, bundleCounts } from "../scripts/seed.mjs";
 
 async function situation() {
+  const storage = storageStatus();
+  if (!storage.ok) return { storage, bundled: await bundleCounts(), present: { reports: 0, innovations: 0, upstream: 0 }, seededAt: null, needsImport: false };
   const [reports, innovations, upstream, seededAt] = await Promise.all([
     col.list("reports"), col.list("innovations"), col.list("upstream"), store.get("seed:done"),
   ]);
@@ -19,7 +21,7 @@ async function situation() {
   try { mark = seededAt ? JSON.parse(seededAt) : null; } catch { mark = null; }
   const didImport = !!(mark && (mark.reports > 0 || mark.innovations > 0));
   const needsImport = hasBundle && !didImport && present.reports + present.innovations === 0;
-  return { bundled, present, seededAt: didImport ? mark.at : null, needsImport };
+  return { storage, bundled, present, seededAt: didImport ? mark.at : null, needsImport };
 }
 
 export default route(async (req, res) => {
