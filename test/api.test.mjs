@@ -261,3 +261,13 @@ test("build: botão Log out na área Admin (só aparece no site da Vercel)", () 
   assert.match(html, /id="adminLogout"[^>]*href="\/auth\/logout"/);
   assert.match(html, /window\.__DEPLOY__ \) lo\.hidden = false|window\.__DEPLOY__\) lo\.hidden = false/);
 });
+
+test("REDIS_URL colada com o comando redis-cli ou com aspas é normalizada", async () => {
+  const { normalizeRedisUrl } = await import("../lib/store.js");
+  const u = "redis://default:abc123@host.exemplo.com:11933";
+  assert.equal(normalizeRedisUrl(u), u);
+  assert.equal(normalizeRedisUrl(`redis-cli -u ${u}`), u);
+  assert.equal(normalizeRedisUrl(`"${u}"`), u);
+  assert.equal(normalizeRedisUrl(`  ${u}\n`), u);
+  assert.equal(normalizeRedisUrl("rediss://default:x@h:1"), "rediss://default:x@h:1");
+});
