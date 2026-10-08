@@ -1493,6 +1493,17 @@
     <div class="admin-stat"><div class="n" id="adminStatInnov">—</div><div class="l">Inovações reportadas</div></div>
   </div>
 
+  <div class="tools-group" id="adminSeedBox" hidden>
+    <div class="tools-group-head">
+      <h2>Dados do Artifact</h2>
+      <span class="tools-group-sub">ferramentas, inovações, histórico semanal e anexos que vinham da versão anterior</span>
+    </div>
+    <div class="admin-pad">
+      <p class="admin-note" id="adminSeedText">Verificando…</p>
+      <div class="admin-row"><button type="button" class="tools-action-btn" id="adminSeedBtn">Importar de novo</button></div>
+    </div>
+  </div>
+
   <div class="tools-group">
     <div class="tools-group-head">
       <h2>Acesso e convites</h2>
@@ -2818,8 +2829,47 @@
       })();
     }
 
+    // Importação dos dados que vinham do Artifact (só existe no deploy da Vercel; fora dele a chamada falha e o cartão fica escondido).
+    function paintSeed(st, extra){
+      var b = st.bundled || {}, p = st.present || {};
+      var t = 'No banco agora: ' + (p.reports || 0) + ' ferramenta(s) e ' + (p.innovations || 0) + ' inovação(ões). ' +
+        'Disponível para importar: ' + (b.reports || 0) + ' ferramenta(s), ' + (b.innovations || 0) + ' inovação(ões), ' + (b.history || 0) + ' semana(s) de histórico e ' + (b.assets || 0) + ' anexo(s). ' +
+        (st.seededAt ? 'Última importação: ' + formatDate(st.seededAt) + '. ' : 'Ainda não importado. ') +
+        'Importar não duplica nem apaga nada que a equipe já tenha criado.';
+      $('adminSeedText').textContent = (extra ? extra + ' ' : '') + t;
+    }
+    async function runSeedImport(auto){
+      var btn = $('adminSeedBtn'); btn.disabled = true;
+      $('adminSeedText').textContent = 'Importando os dados do Artifact… pode levar alguns segundos.';
+      try {
+        var r = await fetch('/api/seed', { method:'POST', credentials:'same-origin', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ auto: !!auto }) });
+        var out = await r.json();
+        if (!r.ok) throw new Error(out.error || ('HTTP ' + r.status));
+        if (out.skipped) { paintSeed(out); btn.disabled = false; return; }
+        var i = out.imported || {};
+        paintSeed(out, 'Importado: ' + (i.reports || 0) + ' ferramentas, ' + (i.innovations || 0) + ' inovações, ' + (i.history || 0) + ' semana(s), ' + (i.assets || 0) + ' anexo(s)' + (i.assetsFailed ? ' (' + i.assetsFailed + ' anexo(s) com falha)' : '') + '. Recarregando…');
+        setTimeout(function(){ location.reload(); }, 1500);
+      } catch(e) {
+        $('adminSeedText').textContent = 'Não foi possível importar agora: ' + ((e && e.message) || e) + '. Tente de novo em instantes.';
+        btn.disabled = false;
+      }
+    }
+    async function checkSeed(){
+      var box = $('adminSeedBox'); if (!box) return;
+      try {
+        var r = await fetch('/api/seed', { credentials:'same-origin' });
+        if (!r.ok) return;
+        var st = await r.json();
+        if (!st || !st.bundled) return;
+        box.hidden = false; paintSeed(st);
+        $('adminSeedBtn').addEventListener('click', function(){ runSeedImport(false); });
+        if (st.needsImport) runSeedImport(true);
+      } catch(e) { /* fora da Vercel: sem importação */ }
+    }
+
     function enableAdmin(){
       var tab = $('adminTabBtn'); if (tab) tab.hidden = false;
+      checkSeed();
       var upTab = $('upstreamTabBtn'); if (upTab) upTab.hidden = false;
       subscribeUpstream();
       if ($('adminWho')) $('adminWho').textContent = 'acesso de admin · ' + 'lucashenning@wearedux.com';
@@ -2901,6 +2951,14 @@
           } catch(e){}
         }
       }
+      if (!query) {
+        // Quem reportou na versão anterior mas ainda não entrou com a conta Google: aparece pelo nome do registro.
+        var authorNames = {};
+        lastReports.concat(lastInnovations).forEach(function(r){ var id = r.data.submittedById; if (id && r.data.reportadoPor && !authorNames[id]) authorNames[id] = String(r.data.reportadoPor); });
+        Object.keys(counts).forEach(function(id){
+          if (!byId[id]) byId[id] = { id: id, name: authorNames[id] || 'Autor de registros antigos', pending: true };
+        });
+      }
       var rows = Object.keys(byId).map(function(id){ return byId[id]; });
       rows.sort(function(a, b){
         if (a.id === myId) return -1;
@@ -2920,6 +2978,7 @@
         var tags = '';
         if (p.id === myId) tags += '<span class="status-pill uso">Admin · você</span> ';
         if (p.guest) tags += '<span class="status-pill incipiente">Convidado externo</span> ';
+        if (p.pending) tags += '<span class="status-pill pausado" title="Reportou na versão anterior; assim que entrar com a conta Google @wearedux.com passa a aparecer com e-mail.">Ainda não entrou</span> ';
         var sub = [];
         if (p.email) sub.push(p.email);
         sub.push(c.r + ' ferramenta(s) · ' + c.i + ' inovação(ões) reportadas');

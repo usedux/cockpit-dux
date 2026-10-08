@@ -17,6 +17,16 @@ const TYPES = { ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg"
 const readJson = (f) => JSON.parse(readFileSync(f, "utf8"));
 const listJson = (dir) => (existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".json")) : []);
 
+// Quantos registros vêm embutidos no deploy (para o painel admin saber se há o que importar).
+export function bundleCounts() {
+  const c = { reports: listJson(join(seedDir, "reports")).length, innovations: listJson(join(seedDir, "innovations")).length, upstream: listJson(join(seedDir, "upstream")).length, history: 0, assets: 0 };
+  const h = join(seedDir, "history.json");
+  if (existsSync(h)) { try { c.history = readJson(h).length; } catch { /* ignora */ } }
+  const a = join(seedDir, "assets");
+  if (existsSync(a)) c.assets = readdirSync(a).filter((f) => TYPES[extname(f).toLowerCase()]).length;
+  return c;
+}
+
 export async function runSeed({ log = console.log } = {}) {
   // mapa id antigo → e-mail (opcional)
   const legacyFile = join(seedDir, "legacy-people.json");
@@ -47,14 +57,17 @@ export async function runSeed({ log = console.log } = {}) {
   }
 
   const assetsDir = join(seedDir, "assets");
+  out.assetsFailed = 0;
   if (existsSync(assetsDir)) {
     for (const f of readdirSync(assetsDir)) {
       const type = TYPES[extname(f).toLowerCase()];
       if (!type) continue;
       const id = f.replace(/\.[^.]+$/, "");
       if (!/^[0-9a-f]{32}$/.test(id)) continue;
-      if (!dry) await putAssetWithId(id, { buf: readFileSync(join(assetsDir, f)), name: f, type });
-      out.assets++;
+      try {
+        if (!dry) await putAssetWithId(id, { buf: readFileSync(join(assetsDir, f)), name: f, type });
+        out.assets++;
+      } catch (e) { out.assetsFailed++; log(`  ! anexo ${f}: ${e.message}`); } // um anexo com problema não derruba a importação do resto
     }
   }
 

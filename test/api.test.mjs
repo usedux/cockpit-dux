@@ -184,3 +184,26 @@ test("closing?dry=1 não grava nada (dá pra testar no meio da semana sem travar
   const real = await call(env.base, "/api/closing", { headers: { authorization: "Bearer cron_teste" } }).then((r) => r.json());
   assert.equal(real.ok, true);
 });
+
+test("/api/seed: só admin; banco vazio importa sozinho uma vez (auto) e depois não repete", async () => {
+  const { store, col } = await import("../lib/store.js");
+  store._reset();
+  const admin = await env.cookieFor("lucashenning@wearedux.com", "Lucas Henning");
+  const user = await env.cookieFor("ana@wearedux.com", "Ana Teste");
+  assert.equal((await call(env.base, "/api/seed", { cookie: user })).status, 403);
+  assert.equal((await call(env.base, "/api/seed")).status, 401);
+  const st = await (await call(env.base, "/api/seed", { cookie: admin })).json();
+  assert.equal(st.needsImport, true);
+  assert.deepEqual({ r: st.bundled.reports, i: st.bundled.innovations }, { r: 15, i: 10 });
+  const run = await (await call(env.base, "/api/seed", { cookie: admin, method: "POST", body: { auto: true } })).json();
+  assert.equal(run.imported.reports, 15);
+  assert.equal(run.imported.innovations, 10);
+  assert.equal(run.needsImport, false);
+  assert.equal((await col.list("innovations")).length, 10);
+  const again = await (await call(env.base, "/api/seed", { cookie: admin, method: "POST", body: { auto: true } })).json();
+  assert.equal(again.skipped, true);
+  // se o admin apagar tudo depois, o automático não traz de volta (só o botão manual)
+  for (const r of await col.list("reports")) await col.del("reports", r.id);
+  for (const r of await col.list("innovations")) await col.del("innovations", r.id);
+  assert.equal((await (await call(env.base, "/api/seed", { cookie: admin })).json()).needsImport, false);
+});

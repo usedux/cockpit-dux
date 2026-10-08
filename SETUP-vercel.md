@@ -71,7 +71,9 @@ Depois de salvar: **Deployments → ⋯ no último deploy → Redeploy** (variá
 
 ## 8. Importar o que já existe no Artifact (reports, inovações, Upstream, histórico, prints)
 
-No seu computador, dentro da pasta do projeto (precisa de Node 22+):
+**Caminho mais fácil (sem terminal):** entre no cockpit como admin e abra a aba **Admin**. Na primeira vez, com o banco vazio, a importação roda sozinha e a página recarrega com tudo. Depois disso o cartão **Dados do Artifact** mostra a situação e tem o botão *Importar de novo* (seguro: não duplica nem apaga nada).
+
+Alternativa pelo terminal, no seu computador, dentro da pasta do projeto (precisa de Node 22+):
 
 ```
 npm install

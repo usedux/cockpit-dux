@@ -3,27 +3,63 @@
   "buildCommand": "node scripts/build-app.mjs",
   "outputDirectory": "public",
   "rewrites": [
-    { "source": "/", "destination": "/api/page" },
-    { "source": "/auth/:action", "destination": "/api/auth?action=:action" },
-    { "source": "/_blob/:id", "destination": "/api/blob?id=:id" }
+    {
+      "source": "/",
+      "destination": "/api/page"
+    },
+    {
+      "source": "/auth/:action",
+      "destination": "/api/auth?action=:action"
+    },
+    {
+      "source": "/_blob/:id",
+      "destination": "/api/blob?id=:id"
+    }
   ],
   "functions": {
-    "api/page.js": { "includeFiles": "app/**" },
-    "api/linear-webhook.js": { "maxDuration": 60 },
-    "api/refresh.js": { "maxDuration": 60 },
-    "api/closing.js": { "maxDuration": 60 }
+    "api/page.js": {
+      "includeFiles": "app/**"
+    },
+    "api/linear-webhook.js": {
+      "maxDuration": 60
+    },
+    "api/refresh.js": {
+      "maxDuration": 60
+    },
+    "api/closing.js": {
+      "maxDuration": 60
+    },
+    "api/seed.js": {
+      "includeFiles": "seed/**",
+      "maxDuration": 60
+    }
   },
   "crons": [
-    { "path": "/api/closing", "schedule": "0 21 * * 5" },
-    { "path": "/api/refresh", "schedule": "0 9 * * *" }
+    {
+      "path": "/api/closing",
+      "schedule": "0 21 * * 5"
+    },
+    {
+      "path": "/api/refresh",
+      "schedule": "0 9 * * *"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "same-origin" },
-        { "key": "X-Frame-Options", "value": "DENY" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
       ]
     }
   ]
