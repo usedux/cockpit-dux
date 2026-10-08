@@ -766,6 +766,8 @@
     flex:0 0 auto; width:30px; height:30px; border-radius:50%; background:var(--accent-soft); color:var(--accent-strong);
     display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px;
   }
+  .deploy-stamp{font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace; font-size:11.5px; color:var(--ink-soft); margin:-8px 0 16px; display:flex; flex-wrap:wrap; gap:4px 14px;}
+  .deploy-stamp b{color:var(--ink); font-weight:600;}
   .person-main{flex:1 1 auto; min-width:0;}
   .person-link{display:flex; gap:6px; align-items:center; flex:0 1 400px;}
   .person-link .tools-action-btn{white-space:nowrap; flex:none;}
@@ -1481,6 +1483,8 @@
     <h2>Admin</h2>
     <span class="tools-group-sub" id="adminWho"></span>
   </div>
+
+  <div class="deploy-stamp" id="adminDeploy" hidden></div>
 
   <div class="admin-stats">
     <div class="admin-stat"><div class="n" id="adminStatPeople">—</div><div class="l">Pessoas no cockpit</div></div>
@@ -2953,8 +2957,22 @@
       } catch(e) { /* fora da Vercel: sem importação */ }
     }
 
+    // Último deploy: data/hora do build (gravada no HTML pela Vercel), commit e mensagem.
+    function paintDeploy(){
+      var el = $('adminDeploy'), d = window.__DEPLOY__;
+      if (!el || !d || !d.builtAt) return;
+      var dt = new Date(d.builtAt); if (isNaN(dt.getTime())) return;
+      var when = dt.toLocaleString('pt-BR', { timeZone:'America/Sao_Paulo', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }).replace(',', ' às');
+      var diff = Date.now() - dt.getTime(), m = Math.floor(diff / 60000);
+      var ago = m < 1 ? 'agora há pouco' : m < 60 ? 'há ' + m + ' min' : m < 1440 ? 'há ' + Math.floor(m / 60) + ' h' : 'há ' + Math.floor(m / 1440) + ' d';
+      var html = '<span>Último deploy: <b>' + escapeHtml(when) + '</b> (' + ago + ', horário de Brasília)</span>';
+      if (d.sha) html += '<span>commit <b>' + escapeHtml(d.sha) + '</b>' + (d.message ? ' — ' + escapeHtml(d.message) : '') + '</span>';
+      el.innerHTML = html; el.hidden = false;
+    }
+
     function enableAdmin(){
       var tab = $('adminTabBtn'); if (tab) tab.hidden = false;
+      paintDeploy();
       checkSeed();
       checkLinear();
       var upTab = $('upstreamTabBtn'); if (upTab) upTab.hidden = false;

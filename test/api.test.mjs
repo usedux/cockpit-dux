@@ -233,3 +233,11 @@ test("/api/seed: marca antiga (sem contagem) não bloqueia; /api/people link ass
   assert.equal((await col.list("innovations")).filter((x) => x.data.submittedById === r.userId).length, before);
   assert.equal((await col.list("innovations")).filter((x) => x.data.submittedById === legacy).length, 0);
 });
+
+test("build: grava data/hora e commit do deploy no HTML, e a tela Admin tem onde mostrar", () => {
+  const src = readFileSync(new URL("../src/cockpit.html", import.meta.url), "utf8");
+  const { html } = transform(src, { deploy: { builtAt: "2026-10-08T12:30:00.000Z", sha: "abc1234", message: "Teste </script> de deploy", env: "production" } });
+  assert.match(html, /window\.__DEPLOY__ = \{"builtAt":"2026-10-08T12:30:00.000Z","sha":"abc1234"/);
+  assert.doesNotMatch(html, /Teste <\/script>/); // mensagem de commit não pode fechar o <script>
+  assert.match(html, /id="adminDeploy"/);
+});

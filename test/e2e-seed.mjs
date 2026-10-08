@@ -43,6 +43,9 @@ const afterLink = await page.locator(".person", { hasText: "Lucas Albino" }).fir
 assert.match(afterLink, /lucas\.albino@wearedux\.com/);
 assert.doesNotMatch(afterLink, /Ainda não entrou/);
 console.log("associação por e-mail OK");
+const deployTxt = await page.locator("#adminDeploy").innerText();
+assert.match(deployTxt, /Último deploy: \d{2}\/\d{2}\/\d{4} às \d{2}:\d{2}/);
+console.log("carimbo do último deploy OK:", deployTxt.replace(/\n/g, " | "));
 await page.waitForFunction(() => /Última sincronização:/.test(document.getElementById("adminLinearText")?.textContent || ""), null, { timeout: 10000 });
 await page.click('#upstreamTabBtn');
 await page.waitForFunction(() => document.querySelectorAll("#upBoard .up-col").length > 0, null, { timeout: 10000 });

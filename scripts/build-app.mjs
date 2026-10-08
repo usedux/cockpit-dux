@@ -3,11 +3,21 @@
 // zera o histórico embutido (agora vem do servidor) e troca os textos que citavam o claude.ai.
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-export function transform(fragment, { appUrl = "https://cockpit-dux.vercel.app" } = {}) {
+// Dados do deploy gravados no HTML na hora do build (a Vercel roda este script a cada deploy).
+export function deployInfo(env = process.env) {
+  let sha = env.VERCEL_GIT_COMMIT_SHA || "";
+  let message = env.VERCEL_GIT_COMMIT_MESSAGE || "";
+  if (!sha) { try { sha = execSync("git rev-parse HEAD", { stdio: ["ignore", "pipe", "ignore"] }).toString().trim(); } catch { /* sem git */ } }
+  if (!message && sha) { try { message = execSync("git log -1 --format=%s", { stdio: ["ignore", "pipe", "ignore"] }).toString().trim(); } catch { /* sem git */ } }
+  return { builtAt: new Date().toISOString(), sha: sha.slice(0, 7), message: String(message).split("\n")[0].slice(0, 140), env: env.VERCEL_ENV || (env.VERCEL ? "vercel" : "local") };
+}
+
+export function transform(fragment, { appUrl = "https://cockpit-dux.vercel.app", deploy = deployInfo() } = {}) {
   let s = fragment;
   const must = (label, re, repl) => {
     const before = s;
@@ -45,6 +55,7 @@ export function transform(fragment, { appUrl = "https://cockpit-dux.vercel.app" 
 <meta name="robots" content="noindex, nofollow">
 <title>${title}</title>
 ${icon}
+<script>window.__DEPLOY__ = ${JSON.stringify(deploy).replace(/</g, "\\u003c")};</script>
 <script src="/shim.js"></script>
 </head>
 <body>

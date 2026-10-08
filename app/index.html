@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-08T01:42:02.923Z","sha":"3d87bd1","message":"Cockpit DUX: projetos por status (bloqueado/execução/construção), sub-abas do levantamento, Vercel (login Google, webhook Linear, fechamento","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -775,6 +776,8 @@
     flex:0 0 auto; width:30px; height:30px; border-radius:50%; background:var(--accent-soft); color:var(--accent-strong);
     display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px;
   }
+  .deploy-stamp{font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace; font-size:11.5px; color:var(--ink-soft); margin:-8px 0 16px; display:flex; flex-wrap:wrap; gap:4px 14px;}
+  .deploy-stamp b{color:var(--ink); font-weight:600;}
   .person-main{flex:1 1 auto; min-width:0;}
   .person-link{display:flex; gap:6px; align-items:center; flex:0 1 400px;}
   .person-link .tools-action-btn{white-space:nowrap; flex:none;}
@@ -1490,6 +1493,8 @@
     <h2>Admin</h2>
     <span class="tools-group-sub" id="adminWho"></span>
   </div>
+
+  <div class="deploy-stamp" id="adminDeploy" hidden></div>
 
   <div class="admin-stats">
     <div class="admin-stat"><div class="n" id="adminStatPeople">—</div><div class="l">Pessoas no cockpit</div></div>
@@ -2921,8 +2926,22 @@
       } catch(e) { /* fora da Vercel: sem importação */ }
     }
 
+    // Último deploy: data/hora do build (gravada no HTML pela Vercel), commit e mensagem.
+    function paintDeploy(){
+      var el = $('adminDeploy'), d = window.__DEPLOY__;
+      if (!el || !d || !d.builtAt) return;
+      var dt = new Date(d.builtAt); if (isNaN(dt.getTime())) return;
+      var when = dt.toLocaleString('pt-BR', { timeZone:'America/Sao_Paulo', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }).replace(',', ' às');
+      var diff = Date.now() - dt.getTime(), m = Math.floor(diff / 60000);
+      var ago = m < 1 ? 'agora há pouco' : m < 60 ? 'há ' + m + ' min' : m < 1440 ? 'há ' + Math.floor(m / 60) + ' h' : 'há ' + Math.floor(m / 1440) + ' d';
+      var html = '<span>Último deploy: <b>' + escapeHtml(when) + '</b> (' + ago + ', horário de Brasília)</span>';
+      if (d.sha) html += '<span>commit <b>' + escapeHtml(d.sha) + '</b>' + (d.message ? ' — ' + escapeHtml(d.message) : '') + '</span>';
+      el.innerHTML = html; el.hidden = false;
+    }
+
     function enableAdmin(){
       var tab = $('adminTabBtn'); if (tab) tab.hidden = false;
+      paintDeploy();
       checkSeed();
       checkLinear();
       var upTab = $('upstreamTabBtn'); if (upTab) upTab.hidden = false;
