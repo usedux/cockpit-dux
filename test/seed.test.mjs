@@ -19,3 +19,21 @@ test("seed importa tudo, preserva ids dos anexos e é idempotente", async () => 
   assert.equal((await col.list("reports")).length, 15);
   assert.equal(JSON.parse(await store.get("history")).length, 2);
 });
+
+test("reimportar/atualizar o código NÃO perde nem sobrescreve nada: edições do admin e registros novos da equipe ficam", async () => {
+  store._reset();
+  await runSeed({ log: () => {} });
+  const [first] = await col.list("reports");
+  await col.set("reports", first.id, { ...first.data, descritivo: "TEXTO EDITADO PELO ADMIN", reportadoPor: "Fulana" });
+  await col.set("reports", "r_novo_da_equipe", { nome: "Ferramenta nova", submittedById: "u_abc", submittedAt: "2026-10-08T10:00:00Z" });
+  await col.set("innovations", "i_nova", { titulo: "Inovação nova", submittedById: "u_abc" });
+  await col.del("innovations", Object.keys((await import("../lib/seed-data.js")).default.innovations)[0]); // admin apagou uma
+  const again = await runSeed({ log: () => {} });
+  assert.equal(again.reports, 0);
+  assert.equal(again.kept.reports, 15);
+  assert.equal((await col.get("reports", first.id)).descritivo, "TEXTO EDITADO PELO ADMIN");
+  assert.equal((await col.get("reports", first.id)).reportadoPor, "Fulana");
+  assert.equal((await col.get("reports", "r_novo_da_equipe")).nome, "Ferramenta nova");
+  assert.equal((await col.get("innovations", "i_nova")).titulo, "Inovação nova");
+  assert.equal(again.innovations, 1); // só a apagada volta (é o botão manual; o automático nunca roda com o banco já preenchido)
+});

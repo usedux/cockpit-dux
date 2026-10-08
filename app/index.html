@@ -1497,6 +1497,17 @@
     <div class="admin-stat"><div class="n" id="adminStatInnov">—</div><div class="l">Inovações reportadas</div></div>
   </div>
 
+  <div class="tools-group" id="adminLinearBox" hidden>
+    <div class="tools-group-head">
+      <h2>Sincronização com o Linear</h2>
+      <span class="tools-group-sub">projetos, milestones e board Upstream</span>
+    </div>
+    <div class="admin-pad">
+      <p class="admin-note" id="adminLinearText">Verificando…</p>
+      <div class="admin-row"><button type="button" class="tools-action-btn primary" id="adminLinearBtn">Sincronizar agora</button></div>
+    </div>
+  </div>
+
   <div class="tools-group" id="adminSeedBox" hidden>
     <div class="tools-group-head">
       <h2>Dados do Artifact</h2>
@@ -1504,7 +1515,7 @@
     </div>
     <div class="admin-pad">
       <p class="admin-note" id="adminSeedText">Verificando…</p>
-      <div class="admin-row"><button type="button" class="tools-action-btn" id="adminSeedBtn">Importar de novo</button></div>
+      <div class="admin-row"><button type="button" class="tools-action-btn" id="adminSeedBtn">Importar o que faltar</button></div>
     </div>
   </div>
 
@@ -2748,7 +2759,11 @@
     function renderUpstream(meta, items){
       var board = $('upBoard');
       if (!meta && !items.length) {
-        board.innerHTML = '<div class="reported-empty">Ainda não há dados sincronizados do Linear para este board.</div>';
+        board.innerHTML = '<div class="reported-empty">Ainda não há dados sincronizados do Linear para este board.' +
+          '<div style="margin-top:12px;"><button type="button" class="tools-action-btn primary" id="upSyncBtn">Sincronizar com o Linear agora</button></div>' +
+          '<div id="upSyncMsg" style="margin-top:8px; font-size:12px;"></div></div>';
+        var ub = $('upSyncBtn');
+        if (ub) ub.addEventListener('click', function(){ syncLinearNow($('upSyncMsg'), ub); });
         return;
       }
       if (meta && meta.projectUrl) $('upOpenLinear').href = safeLinearUrl(meta.projectUrl);
@@ -2839,7 +2854,7 @@
       var t = 'No banco agora: ' + (p.reports || 0) + ' ferramenta(s) e ' + (p.innovations || 0) + ' inovação(ões). ' +
         'Disponível para importar: ' + (b.reports || 0) + ' ferramenta(s), ' + (b.innovations || 0) + ' inovação(ões), ' + (b.history || 0) + ' semana(s) de histórico e ' + (b.assets || 0) + ' anexo(s). ' +
         (st.seededAt ? 'Última importação: ' + formatDate(st.seededAt) + '. ' : 'Ainda não importado. ') +
-        'Importar não duplica nem apaga nada que a equipe já tenha criado.';
+        'A importação só cria o que ainda não existe: nunca sobrescreve nem apaga nada que já esteja aí (edições do admin e envios da equipe ficam como estão).';
       $('adminSeedText').textContent = (extra ? extra + ' ' : '') + t;
     }
     async function runSeedImport(auto){
@@ -2858,6 +2873,41 @@
         btn.disabled = false;
       }
     }
+    // Sincronização com o Linear (só existe no deploy da Vercel). Mostra quando foi a última e o motivo de qualquer falha.
+    async function syncLinearNow(textEl, btn){
+      if (btn) btn.disabled = true;
+      textEl.textContent = 'Sincronizando com o Linear… pode levar até um minuto.';
+      try {
+        var r = await fetch('/api/refresh', { method:'POST', credentials:'same-origin' });
+        var out = await r.json().catch(function(){ return {}; });
+        if (!r.ok || out.error) throw new Error(out.error || ('HTTP ' + r.status));
+        if (out.skipped) { textEl.textContent = 'Já existe uma sincronização em andamento; ela termina em instantes.'; if (btn) btn.disabled = false; return false; }
+        textEl.textContent = 'Sincronizado agora' + ((out.warnings && out.warnings.length) ? ' (com avisos: ' + out.warnings.join(' · ') + ')' : '') + '. Recarregando…';
+        setTimeout(function(){ location.reload(); }, 1200);
+        return true;
+      } catch(e) {
+        textEl.textContent = 'Não foi possível sincronizar: ' + ((e && e.message) || e) + (/LINEAR_API_KEY/.test(String((e && e.message) || e)) ? ' — cadastre a variável LINEAR_API_KEY na Vercel (Settings → Environment Variables) e faça um Redeploy.' : '');
+        if (btn) btn.disabled = false;
+        return false;
+      }
+    }
+    async function checkLinear(){
+      var box = $('adminLinearBox'); if (!box) return;
+      try {
+        var r = await fetch('/api/live', { credentials:'same-origin' });
+        if (!r.ok) return;
+        var live = await r.json();
+        box.hidden = false;
+        var txt = $('adminLinearText'), btn = $('adminLinearBtn');
+        var meta = live && live.meta;
+        var warn = (meta && meta.warnings && meta.warnings.length) ? ' Avisos da última sincronização: ' + meta.warnings.join(' · ') + '.' : '';
+        txt.textContent = meta && meta.syncedAt
+          ? 'Última sincronização: ' + formatDate(meta.syncedAt) + '. Acontece sozinha a cada mudança no Linear (webhook) e uma vez por dia.' + warn
+          : 'Ainda não houve nenhuma sincronização com o Linear nesta instalação.';
+        btn.addEventListener('click', function(){ syncLinearNow(txt, btn); });
+        if (!(meta && meta.syncedAt)) syncLinearNow(txt, btn); // primeira vez: sincroniza sozinho
+      } catch(e) { /* fora da Vercel */ }
+    }
     async function checkSeed(){
       var box = $('adminSeedBox'); if (!box) return;
       try {
@@ -2874,6 +2924,7 @@
     function enableAdmin(){
       var tab = $('adminTabBtn'); if (tab) tab.hidden = false;
       checkSeed();
+      checkLinear();
       var upTab = $('upstreamTabBtn'); if (upTab) upTab.hidden = false;
       subscribeUpstream();
       if ($('adminWho')) $('adminWho').textContent = 'acesso de admin · ' + 'lucashenning@wearedux.com';

@@ -4,7 +4,7 @@
 // então funcionam igual no terminal e dentro da função da Vercel (api/seed.js).
 // Uso:   npm run seed            (precisa das variáveis de ambiente do Redis; veja SETUP-vercel.md)
 //        npm run seed -- --dry   (só mostra o que seria importado)
-// É idempotente: pode rodar de novo (sobrescreve os mesmos ids; não apaga nada que a equipe tenha criado depois).
+// É seguro rodar de novo: só cria o que ainda não existe; nunca sobrescreve nem apaga o que já está no banco.
 import { fileURLToPath } from "node:url";
 import { store, col, usingMemory } from "../lib/store.js";
 import { putAssetWithId } from "../lib/assets.js";
@@ -31,17 +31,21 @@ export async function runSeed({ log = console.log } = {}) {
     mapped++;
     if (!dry) {
       const prev = await col.get("users", idMap[oldId]);
+      if (prev) continue; // conta que já existe não é reescrita
       await col.set("users", idMap[oldId], { id: idMap[oldId], email, name: v.nome || prev?.name || email.split("@")[0], firstSeen: prev?.firstSeen || new Date().toISOString(), lastSeen: prev?.lastSeen || null, imported: true });
     }
   }
-  const out = { reports: 0, innovations: 0, upstream: 0, assets: 0, assetsFailed: 0, history: 0, mappedPeople: mapped };
+  const out = { reports: 0, innovations: 0, upstream: 0, assets: 0, assetsFailed: 0, history: 0, mappedPeople: mapped, kept: { reports: 0, innovations: 0, upstream: 0, assets: 0 } };
 
+  // NUNCA sobrescreve: o que já existe no banco (editado pelo admin, ou enviado pela equipe) fica como está.
+  // A importação só cria o que ainda não existe — por isso é seguro rodar de novo e atualizar o código sem perder dados.
   for (const c of ["reports", "innovations", "upstream"]) {
     for (const [id, doc] of Object.entries(seed[c])) {
+      if (await col.get(c, id)) { out.kept[c]++; continue; }
       const data = { ...doc };
       if (data.submittedById && idMap[data.submittedById]) data.submittedById = idMap[data.submittedById];
-      else if (data.submittedById && !dry) {
-        // já foi associado a um e-mail pela tela Admin? então mantém a associação (a importação não a desfaz)
+      else if (data.submittedById) {
+        // já foi associado a um e-mail pela tela Admin? então mantém a associação
         const link = await col.get("legacy-links", data.submittedById);
         if (link?.userId) data.submittedById = link.userId;
       }
@@ -61,6 +65,7 @@ export async function runSeed({ log = console.log } = {}) {
   const assets = (await import("../lib/seed-assets.js")).default;
   for (const [id, a] of Object.entries(assets)) {
     try {
+      if (await store.hget("assets", id)) { out.kept.assets++; continue; }
       if (!dry) await putAssetWithId(id, { buf: Buffer.from(a.b64, "base64"), name: a.name, type: a.type });
       out.assets++;
     } catch (e) { out.assetsFailed++; log(`  ! anexo ${a.name}: ${e.message}`); }

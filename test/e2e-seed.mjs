@@ -43,6 +43,10 @@ const afterLink = await page.locator(".person", { hasText: "Lucas Albino" }).fir
 assert.match(afterLink, /lucas\.albino@wearedux\.com/);
 assert.doesNotMatch(afterLink, /Ainda não entrou/);
 console.log("associação por e-mail OK");
+await page.waitForFunction(() => /Última sincronização:/.test(document.getElementById("adminLinearText")?.textContent || ""), null, { timeout: 10000 });
+await page.click('#upstreamTabBtn');
+await page.waitForFunction(() => document.querySelectorAll("#upBoard .up-col").length > 0, null, { timeout: 10000 });
+console.log("cartão do Linear e board Upstream OK");
 // listas públicas também
 await page.click('.tab-btn[data-page="tools"]');
 await page.click('[data-subtab="inovacoes"]');
