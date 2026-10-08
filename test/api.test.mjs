@@ -271,3 +271,12 @@ test("REDIS_URL colada com o comando redis-cli ou com aspas é normalizada", asy
   assert.equal(normalizeRedisUrl(`  ${u}\n`), u);
   assert.equal(normalizeRedisUrl("rediss://default:x@h:1"), "rediss://default:x@h:1");
 });
+
+test("urlShape descreve o formato sem vazar senha", async () => {
+  const { urlShape } = await import("../lib/store.js");
+  const r = urlShape("redis://default:SEGREDO123@house-x.db.redis.io:11933");
+  assert.ok(!/SEGREDO123/.test(r));
+  assert.match(r, /início=redis:\/\//);
+  assert.match(r, /porta=11933/);
+  assert.match(urlShape("default:abc@host:1"), /sem redis/);
+});
