@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "description": "Cockpit de Projetos DUX — painel dos projetos (Linear em tempo real), levantamento de ferramentas e fechamento semanal.",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "node scripts/build-app.mjs",
     "build:seed": "node scripts/build-seed.mjs",
@@ -14,6 +16,7 @@
   },
   "dependencies": {
     "@vercel/blob": "^1.0.0",
-    "@vercel/functions": "^2.0.0"
+    "@vercel/functions": "^2.0.0",
+    "redis": "^4.7.1"
   }
 }

@@ -8,7 +8,7 @@ process.env.LINEAR_API_KEY = "mock";
 process.env.LINEAR_WEBHOOK_SECRET = "whsec_teste";
 process.env.CRON_SECRET = "cron_teste";
 process.env.ADMIN_EMAILS = "lucashenning@wearedux.com";
-delete process.env.KV_REST_API_URL; delete process.env.UPSTASH_REDIS_REST_URL;
+delete process.env.KV_REST_API_URL; delete process.env.UPSTASH_REDIS_REST_URL; delete process.env.REDIS_URL;
 
 export async function boot() {
   store._reset();

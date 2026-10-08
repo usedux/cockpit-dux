@@ -247,12 +247,12 @@ test("produção sem Redis: falha alto (503) em vez de guardar em memória por i
   process.env.VERCEL = "1";
   try {
     assert.equal(storageStatus().ok, false);
-    await assert.rejects(() => st.get("x"), /Upstash Redis/);
+    await assert.rejects(() => st.get("x"), /Redis/);
     await assert.rejects(() => col.list("reports"), (e) => e.status === 503);
   } finally { delete process.env.VERCEL; }
   assert.equal(usingMemory(), true);
   process.env.STORAGE_KV_REST_API_URL = "https://exemplo.upstash.io";
-  try { assert.equal(usingMemory(), false); assert.equal(storageStatus().kind, "redis"); } finally { delete process.env.STORAGE_KV_REST_API_URL; }
+  try { assert.equal(usingMemory(), false); assert.equal(storageStatus().kind, "redis-rest"); } finally { delete process.env.STORAGE_KV_REST_API_URL; }
 });
 
 test("build: botão Log out na área Admin (só aparece no site da Vercel)", () => {
