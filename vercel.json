@@ -30,7 +30,6 @@
       "maxDuration": 60
     },
     "api/seed.js": {
-      "includeFiles": "seed/**",
       "maxDuration": 60
     }
   },

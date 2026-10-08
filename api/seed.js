@@ -11,11 +11,15 @@ async function situation() {
   const [reports, innovations, upstream, seededAt] = await Promise.all([
     col.list("reports"), col.list("innovations"), col.list("upstream"), store.get("seed:done"),
   ]);
-  const bundled = bundleCounts();
+  const bundled = await bundleCounts();
   const present = { reports: reports.length, innovations: innovations.length, upstream: upstream.length };
   const hasBundle = bundled.reports + bundled.innovations + bundled.upstream > 0;
-  const needsImport = hasBundle && !seededAt && present.reports + present.innovations === 0;
-  return { bundled, present, seededAt: seededAt || null, needsImport };
+  // "já importou de verdade" = marca gravada com contagem > 0 (marcas antigas, sem contagem, não valem: a importação anterior pode ter trazido 0)
+  let mark = null;
+  try { mark = seededAt ? JSON.parse(seededAt) : null; } catch { mark = null; }
+  const didImport = !!(mark && (mark.reports > 0 || mark.innovations > 0));
+  const needsImport = hasBundle && !didImport && present.reports + present.innovations === 0;
+  return { bundled, present, seededAt: didImport ? mark.at : null, needsImport };
 }
 
 export default route(async (req, res) => {
@@ -27,6 +31,6 @@ export default route(async (req, res) => {
   if (body?.auto && !before.needsImport) return json(res, 200, { skipped: true, ...before });
   const logs = [];
   const out = await runSeed({ log: (m) => logs.push(m) });
-  await store.set("seed:done", new Date().toISOString());
+  if (out.reports + out.innovations > 0) await store.set("seed:done", JSON.stringify({ at: new Date().toISOString(), reports: out.reports, innovations: out.innovations }));
   json(res, 200, { imported: out, logs: logs.slice(-10), ...(await situation()) });
 });

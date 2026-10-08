@@ -7,6 +7,7 @@
   "engines": { "node": ">=22" },
   "scripts": {
     "build": "node scripts/build-app.mjs",
+    "build:seed": "node scripts/build-seed.mjs",
     "seed": "node --env-file-if-exists=.env.local scripts/seed.mjs",
     "test": "node --test test/*.test.mjs",
     "dev": "node scripts/build-app.mjs && node dev/server.mjs"

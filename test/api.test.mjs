@@ -207,3 +207,29 @@ test("/api/seed: só admin; banco vazio importa sozinho uma vez (auto) e depois 
   for (const r of await col.list("innovations")) await col.del("innovations", r.id);
   assert.equal((await (await call(env.base, "/api/seed", { cookie: admin })).json()).needsImport, false);
 });
+
+test("/api/seed: marca antiga (sem contagem) não bloqueia; /api/people link associa e-mail aos registros antigos e sobrevive a reimportar", async () => {
+  const { store, col } = await import("../lib/store.js");
+  const { idFromEmail } = await import("../lib/auth.js");
+  store._reset();
+  const admin = await env.cookieFor("lucashenning@wearedux.com", "Lucas Henning");
+  const user = await env.cookieFor("ana@wearedux.com", "Ana Teste");
+  await store.set("seed:done", new Date().toISOString()); // formato antigo: gravado mesmo sem ter importado nada
+  assert.equal((await (await call(env.base, "/api/seed", { cookie: admin })).json()).needsImport, true);
+  await call(env.base, "/api/seed", { cookie: admin, method: "POST", body: { auto: true } });
+  const legacy = "u_LdOBLbU5A1tIZkrhDGjqNA";
+  const before = (await col.list("innovations")).filter((r) => r.data.submittedById === legacy).length;
+  assert.ok(before > 0);
+  // só admin, só @wearedux.com
+  assert.equal((await call(env.base, "/api/people", { cookie: user, method: "POST", body: { op: "link", legacyId: legacy, email: "a@wearedux.com" } })).status, 403);
+  assert.equal((await call(env.base, "/api/people", { cookie: admin, method: "POST", body: { op: "link", legacyId: legacy, email: "x@gmail.com" } })).status, 400);
+  const r = await (await call(env.base, "/api/people", { cookie: admin, method: "POST", body: { op: "link", legacyId: legacy, email: "Lucas.Albino@wearedux.com", name: "Lucas Albino" } })).json();
+  assert.equal(r.moved, before);
+  assert.equal(r.userId, idFromEmail("lucas.albino@wearedux.com"));
+  assert.equal((await col.list("innovations")).filter((x) => x.data.submittedById === r.userId).length, before);
+  assert.equal((await col.get("users", r.userId)).email, "lucas.albino@wearedux.com");
+  // reimportar não desfaz a associação
+  await call(env.base, "/api/seed", { cookie: admin, method: "POST", body: {} });
+  assert.equal((await col.list("innovations")).filter((x) => x.data.submittedById === r.userId).length, before);
+  assert.equal((await col.list("innovations")).filter((x) => x.data.submittedById === legacy).length, 0);
+});

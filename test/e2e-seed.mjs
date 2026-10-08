@@ -34,6 +34,15 @@ assert.ok(Number(stats.people) >= 4, "lista de pessoas deve incluir quem reporto
 const peopleText = await page.locator("#adminPeopleBody").innerText();
 assert.match(peopleText, /Lucas Albino/);
 assert.match(peopleText, /Ainda não entrou/);
+// associar e-mail a um autor antigo pela tela
+const row = page.locator(".person", { hasText: "Lucas Albino" }).first();
+await row.locator("input[type=email]").fill("lucas.albino@wearedux.com");
+await row.locator("button[type=submit]").click();
+await page.waitForFunction(() => /lucas\.albino@wearedux\.com/.test(document.getElementById("adminPeopleBody")?.innerText || ""), null, { timeout: 20000 });
+const afterLink = await page.locator(".person", { hasText: "Lucas Albino" }).first().innerText();
+assert.match(afterLink, /lucas\.albino@wearedux\.com/);
+assert.doesNotMatch(afterLink, /Ainda não entrou/);
+console.log("associação por e-mail OK");
 // listas públicas também
 await page.click('.tab-btn[data-page="tools"]');
 await page.click('[data-subtab="inovacoes"]');

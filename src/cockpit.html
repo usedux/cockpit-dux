@@ -767,6 +767,10 @@
     display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px;
   }
   .person-main{flex:1 1 auto; min-width:0;}
+  .person-link{display:flex; gap:6px; align-items:center; flex:0 1 400px;}
+  .person-link .tools-action-btn{white-space:nowrap; flex:none;}
+  .person-link .admin-input{min-width:0; flex:1 1 auto; padding:6px 10px; font-size:12px;}
+  @media (max-width:720px){ .person{flex-wrap:wrap;} .person-link{flex:1 1 100%;} }
   .person-name{font-weight:700; font-size:13px;}
   .person-sub{font-size:11px; color:var(--ink-faint);}
   .btn-danger{
@@ -2940,6 +2944,26 @@
         clearTimeout(t);
         t = setTimeout(function(){ renderPeople($('adminPeopleSearch').value.trim()); }, 250);
       });
+      $('adminPeopleBody').addEventListener('submit', async function(ev){
+        var f = ev.target.closest ? ev.target.closest('form[data-link-id]') : null;
+        if (!f) return;
+        ev.preventDefault();
+        var input = f.querySelector('input'), btn = f.querySelector('button');
+        var email = input.value.trim().toLowerCase();
+        if (!/^[^\s@]+@wearedux\.com$/.test(email)) { input.setCustomValidity('Use um e-mail @wearedux.com'); input.reportValidity(); input.setCustomValidity(''); return; }
+        btn.disabled = true; btn.textContent = 'Associando…';
+        try {
+          var r = await fetch('/api/people', { method:'POST', credentials:'same-origin', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ op:'link', legacyId: f.getAttribute('data-link-id'), email: email, name: f.getAttribute('data-link-name') === 'Autor de registros antigos' ? '' : f.getAttribute('data-link-name') }) });
+          var out = await r.json();
+          if (!r.ok) throw new Error(out.error || ('HTTP ' + r.status));
+          btn.textContent = 'Associado (' + out.moved + ' registro(s))';
+          setTimeout(function(){ location.reload(); }, 900);
+        } catch(e) {
+          btn.disabled = false; btn.textContent = 'Associar e-mail';
+          input.setCustomValidity((e && e.message) || 'Não foi possível associar'); input.reportValidity(); input.setCustomValidity('');
+        }
+      });
       $('adminPeopleBody').addEventListener('click', function(ev){
         var b = ev.target.closest ? ev.target.closest('[data-invite-email]') : null;
         if (!b) return;
@@ -2987,8 +3011,25 @@
         // Quem reportou na versão anterior mas ainda não entrou com a conta Google: aparece pelo nome do registro.
         var authorNames = {};
         lastReports.concat(lastInnovations).forEach(function(r){ var id = r.data.submittedById; if (id && r.data.reportadoPor && !authorNames[id]) authorNames[id] = String(r.data.reportadoPor); });
+        var hints = {};
+        lastReports.forEach(function(r){
+          var id = r.data.submittedById; if (!id) return;
+          hints[id] = hints[id] || { who: {}, items: [] };
+          [r.data.responsavel, r.data.desenvolvidoPor].forEach(function(n){ if (n && String(n).trim()) hints[id].who[String(n).trim()] = 1; });
+          if (r.data.nome) hints[id].items.push(String(r.data.nome));
+        });
+        lastInnovations.forEach(function(r){
+          var id = r.data.submittedById; if (!id) return;
+          hints[id] = hints[id] || { who: {}, items: [] };
+          if (r.data.titulo) hints[id].items.push(String(r.data.titulo));
+        });
         Object.keys(counts).forEach(function(id){
-          if (!byId[id]) byId[id] = { id: id, name: authorNames[id] || 'Autor de registros antigos', pending: true };
+          if (!byId[id]) {
+            var h = hints[id] || { who: {}, items: [] };
+            var whoNames = Object.keys(h.who);
+            byId[id] = { id: id, name: authorNames[id] || (whoNames[0]) || 'Autor de registros antigos', pending: true,
+              hint: (whoNames.length ? 'Citado como: ' + whoNames.slice(0, 3).join(', ') + '. ' : '') + (h.items.length ? 'Reportou: ' + h.items.slice(0, 3).join(', ') + (h.items.length > 3 ? '…' : '') : '') };
+          }
         });
       }
       var rows = Object.keys(byId).map(function(id){ return byId[id]; });
@@ -3014,9 +3055,14 @@
         var sub = [];
         if (p.email) sub.push(p.email);
         sub.push(c.r + ' ferramenta(s) · ' + c.i + ' inovação(ões) reportadas');
+        if (p.pending && p.hint) sub.push(p.hint);
+        var linkForm = p.pending
+          ? '<form class="person-link" data-link-id="' + escapeHtml(p.id) + '" data-link-name="' + escapeHtml(p.name || '') + '"><input type="email" class="admin-input" placeholder="e-mail @wearedux.com" required><button type="submit" class="tools-action-btn primary">Associar e-mail</button></form>'
+          : '';
         html += '<div class="person"><span class="avatar">' + escapeHtml(initials(name)) + '</span>' +
           '<div class="person-main"><div class="person-name">' + escapeHtml(name) + ' ' + tags + '</div>' +
           '<div class="person-sub">' + escapeHtml(sub.join(' · ')) + '</div></div>' +
+          linkForm +
           (p.email && p.id !== myId ? '<button type="button" class="tools-action-btn" data-invite-email="' + escapeHtml(p.email) + '">Usar no convite</button>' : '') +
           '</div>';
       });
