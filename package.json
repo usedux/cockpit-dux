@@ -15,7 +15,7 @@
     "dev": "node scripts/build-app.mjs && node dev/server.mjs"
   },
   "dependencies": {
-    "@vercel/blob": "^1.0.0",
+    "@vercel/blob": "^2.8.1",
     "@vercel/functions": "^2.0.0",
     "redis": "^4.7.1"
   }
