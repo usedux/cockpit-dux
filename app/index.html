@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-08T11:27:39.005Z","sha":"3d87bd1","message":"Cockpit DUX: projetos por status (bloqueado/execução/construção), sub-abas do levantamento, Vercel (login Google, webhook Linear, fechamento","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-08T14:03:53.951Z","sha":"3d87bd1","message":"Cockpit DUX: projetos por status (bloqueado/execução/construção), sub-abas do levantamento, Vercel (login Google, webhook Linear, fechamento","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -755,6 +755,37 @@
   /* ---------- Área Admin (v27) ---------- */
   .modal.wide{max-width:780px;}
   .admin-stats{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px;}
+  /* Plano de padronização (Admin) */
+  .std-rule{background:var(--surface-muted); border-left:4px solid var(--accent); border-radius:8px; padding:12px 14px; font-size:13px; line-height:1.5; margin-bottom:14px;}
+  .std-kpis{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
+  .std-kpi{flex:1 1 130px; background:var(--surface); border:1px solid var(--line, rgba(128,128,128,.25)); border-radius:10px; padding:10px 12px;}
+  .std-kpi .n{font-family:"Roboto Mono",ui-monospace,monospace; font-size:24px; font-weight:600;}
+  .std-kpi .l{font-size:11px; color:var(--ink-faint); margin-top:2px;}
+  .std-kpi.red .n{color:var(--blk-ext);} .std-kpi.amber .n{color:var(--st-qa);} .std-kpi.green .n{color:var(--st-done);}
+  .std-h{font-family:"Space Grotesk",system-ui,sans-serif; font-size:13.5px; font-weight:600; margin:18px 0 8px; display:flex; align-items:center; gap:8px;}
+  .std-tier{font-family:"Roboto Mono",ui-monospace,monospace; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:6px; letter-spacing:.02em; white-space:nowrap;}
+  .std-tier.p0{background:var(--blk-ext-soft); color:var(--blk-ext);}
+  .std-tier.p1{background:var(--st-qa-soft); color:var(--st-qa);}
+  .std-tier.p2{background:var(--surface-muted); color:var(--ink-faint); border:1px solid var(--ink-faint);}
+  .std-tier.ok{background:var(--st-done-soft); color:var(--st-done);}
+  .std-tier.ter{background:var(--blk-int-soft); color:var(--blk-int);}
+  .std-flag{font-size:10.5px; padding:2px 8px; border-radius:100px; white-space:nowrap; display:inline-block; font-weight:600;}
+  .std-flag.bad{background:var(--blk-ext-soft); color:var(--blk-ext);}
+  .std-flag.good{background:var(--st-done-soft); color:var(--st-done);}
+  .std-flag.neutral{background:var(--surface-muted); color:var(--ink-faint);}
+  .std-action{font-size:12px; line-height:1.45; white-space:normal; min-width:200px; max-width:300px;}
+  .std-area-bars{display:flex; flex-direction:column; gap:7px;}
+  .std-area-row{display:grid; grid-template-columns:130px 1fr 150px; gap:10px; align-items:center; font-size:12px;}
+  .std-bar{display:flex; height:12px; border-radius:6px; overflow:hidden; background:var(--surface-muted);}
+  .std-bar i{display:block; height:100%;}
+  .std-phases{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px;}
+  .std-phase{border:1px solid var(--line, rgba(128,128,128,.25)); border-radius:10px; padding:12px 14px; background:var(--surface);}
+  .std-phase h4{margin:0 0 4px; font-family:"Space Grotesk",system-ui,sans-serif; font-size:13px;}
+  .std-phase p{margin:0 0 6px; font-size:12px; color:var(--ink-faint);}
+  .std-phase ul{margin:0; padding-left:18px; font-size:12.5px; line-height:1.5;}
+  .std-dod{margin:0; padding-left:20px; font-size:12.5px; line-height:1.65;}
+  @media (max-width:720px){ .std-area-row{grid-template-columns:100px 1fr;} .std-area-row .std-area-n{grid-column:1 / -1;} }
+
   .admin-stat{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 18px; box-shadow:var(--shadow); min-width:120px;}
   .admin-stat .n{font-family:"Roboto Mono",monospace; font-size:22px; font-weight:600;}
   .admin-stat .l{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin-top:2px;}
@@ -1564,6 +1595,14 @@
       <span class="tools-group-sub">alterações são salvas direto no banco do cockpit</span>
     </div>
     <div class="tools-table-wrap" id="adminInnovBody"><div class="reported-empty">Carregando…</div></div>
+  </div>
+
+  <div class="tools-group" id="adminPlanBox">
+    <div class="tools-group-head">
+      <h2>Plano de padronização das ferramentas</h2>
+      <span class="tools-group-sub">ferramentas reportadas, priorizadas por frequência de uso, ambiente e áreas envolvidas</span>
+    </div>
+    <div class="admin-pad" id="adminPlanBody"><div class="reported-empty">Carregando…</div></div>
   </div>
 
 </div>
@@ -3116,11 +3155,129 @@
       body.innerHTML = html;
     }
 
+
+    // ---- Plano de padronização: ferramentas reportadas × "ambiente comum da DUX" ----
+    // Regra (definida pelo Lucas, 08/10): ferramenta usada com frequência em produção precisa estar no ambiente comum da DUX.
+    // "Ambiente comum" aqui = rodando em Produção + código no GitHub da DUX. Prioridade = frequência de uso (diária > semanal > mensal),
+    // depois quem ainda está Local, quem ainda não tem GitHub e quantas áreas dependem da ferramenta.
+    function stdNorm(it){
+      var areas = (Array.isArray(it.area) ? it.area : String(it.area || 'Outro').split(/\s*[,;\/]\s*|\s+e\s+/)).map(function(a){ return String(a).trim(); }).filter(Boolean);
+      if (!areas.length) areas = ['Outro'];
+      var dev = String(it.desenvolvidoPor || '');
+      return {
+        nome: it.nome || '—',
+        areas: areas,
+        freq: freqBucket(it.frequenciaUso || it.frequencia),
+        freqTxt: it.frequenciaUso || '—',
+        prod: /produ/i.test(String(it.ambiente || '')),
+        ambiente: it.ambiente || '—',
+        gh: /^sim/i.test(String(it.disponivelGithub || '')),
+        integrada: /integr/i.test(String(it.atualizacaoDados || '')),
+        outras: /^sim/i.test(String(it.disponibilizarOutrasAreas || '')),
+        terceiro: /for[a-z]*edor|extern|terceir/i.test(dev),
+        resp: it.responsavel || '—'
+      };
+    }
+    function stdTier(t){
+      if (t.terceiro) return 'ter';
+      if (t.prod && t.gh) return 'ok';
+      if (t.freq === 'Diária') return 'p0';
+      if (t.freq === 'Semanal' || t.freq === 'Quinzenal') return 'p1';
+      return 'p2';
+    }
+    function stdAction(t){
+      if (t.terceiro) return 'Ferramenta de terceiro: não migrar. Formalizar dono, acessos (login @wearedux.com/SSO) e contrato; registrar no Tool Registry.';
+      var a = [];
+      if (!t.prod && !t.gh) a.push('Criar repositório na organização da DUX e subir o código');
+      else if (!t.prod) a.push('Código já está no GitHub: levar para produção no domínio da DUX');
+      else if (!t.gh) a.push('Já roda em produção: versionar o código no GitHub da DUX');
+      if (!t.prod && !t.gh) a.push('publicar em produção no domínio da DUX (login @wearedux.com)');
+      if (!t.integrada && !(t.prod && t.gh)) a.push('ligar os dados ao Core (hoje manual)');
+      if (!a.length) return 'Em conformidade — manter registro atualizado.';
+      return a.join('; ').replace(/^./, function(c){ return c.toUpperCase(); }) + '.';
+    }
+    function renderStdPlan(){
+      var box = $('adminPlanBody'); if (!box) return;
+      if (!lastReports.length) { box.innerHTML = '<div class="reported-empty">Nenhuma ferramenta reportada ainda — o plano aparece assim que houver reports.</div>'; return; }
+      var tools = lastReports.map(function(r){ var t = stdNorm(r.data); t.tier = stdTier(t); return t; });
+      var order = { p0:0, p1:1, p2:2, ter:3, ok:4 };
+      var fRank = { 'Diária':0, 'Semanal':1, 'Quinzenal':2, 'Mensal':3, 'Não informada':4 };
+      tools.sort(function(a, b){
+        return (order[a.tier] - order[b.tier]) || (fRank[a.freq] - fRank[b.freq]) ||
+          ((a.prod?1:0) - (b.prod?1:0)) || ((a.gh?1:0) - (b.gh?1:0)) ||
+          (b.areas.length - a.areas.length) || ((b.outras?1:0) - (a.outras?1:0)) || a.nome.localeCompare(b.nome);
+      });
+      var n = function(tier){ return tools.filter(function(t){ return t.tier === tier; }).length; };
+      var local = tools.filter(function(t){ return !t.prod; }).length;
+      var noGh = tools.filter(function(t){ return !t.gh; }).length;
+      var tierLabel = { p0:'P0 · migrar já', p1:'P1 · próxima onda', p2:'P2 · depois', ter:'Terceiro', ok:'No ambiente comum' };
+
+      var h = '<div class="std-rule"><b>Regra:</b> ferramenta usada com frequência em produção precisa estar no <b>ambiente comum da DUX</b>. Para este plano, “ambiente comum” = <b>rodando em Produção</b> no domínio da DUX <b>e</b> com o <b>código no GitHub</b> da empresa. As duas pontas são conferidas nos campos <i>Ambiente</i> e <i>Disponível no GitHub</i> que cada pessoa preencheu ao reportar.</div>';
+      h += '<div class="std-kpis">' +
+        '<div class="std-kpi"><div class="n">' + tools.length + '</div><div class="l">ferramentas reportadas</div></div>' +
+        '<div class="std-kpi red"><div class="n">' + n('p0') + '</div><div class="l">P0 · uso diário fora do ambiente comum</div></div>' +
+        '<div class="std-kpi amber"><div class="n">' + n('p1') + '</div><div class="l">P1 · uso semanal fora do ambiente comum</div></div>' +
+        '<div class="std-kpi"><div class="n">' + local + '</div><div class="l">rodando local</div></div>' +
+        '<div class="std-kpi"><div class="n">' + noGh + '</div><div class="l">sem código no GitHub</div></div>' +
+        '<div class="std-kpi green"><div class="n">' + n('ok') + '</div><div class="l">já no ambiente comum</div></div>' +
+        '</div>';
+
+      // 1) ranking
+      h += '<div class="std-h">1 · Ranking de prioridade</div>';
+      h += '<div class="tools-table-wrap"><table class="tools-table"><thead><tr><th>#</th><th>Ferramenta</th><th>Prioridade</th><th>Frequência</th><th>Ambiente</th><th>GitHub</th><th>Áreas</th><th>Próxima ação sugerida</th></tr></thead><tbody>';
+      tools.forEach(function(t, i){
+        h += '<tr><td class="tool-who">' + (i + 1) + '</td>' +
+          '<td class="tool-name">' + escapeHtml(t.nome) + '<span class="tool-sub" style="display:block;font-size:11px;color:var(--ink-faint);font-weight:400;">' + escapeHtml(t.resp) + '</span></td>' +
+          '<td><span class="std-tier ' + t.tier + '">' + tierLabel[t.tier] + '</span></td>' +
+          '<td class="tool-who">' + escapeHtml(t.freq) + '</td>' +
+          '<td><span class="std-flag ' + (t.prod ? 'good' : 'bad') + '">' + (t.prod ? 'Produção' : escapeHtml(t.ambiente)) + '</span></td>' +
+          '<td><span class="std-flag ' + (t.gh ? 'good' : 'bad') + '">' + (t.gh ? 'Sim' : 'Não') + '</span></td>' +
+          '<td>' + areaPills(t.areas) + '</td>' +
+          '<td class="std-action">' + escapeHtml(stdAction(t)) + '</td></tr>';
+      });
+      h += '</tbody></table></div>';
+
+      // 2) visão por área
+      var byArea = {};
+      tools.forEach(function(t){ t.areas.forEach(function(a){ var o = byArea[a] = byArea[a] || { p0:0, p1:0, p2:0, ter:0, ok:0, total:0 }; o[t.tier]++; o.total++; }); });
+      var areaNames = Object.keys(byArea).sort(function(a, b){ return (byArea[b].p0 - byArea[a].p0) || (byArea[b].p1 - byArea[a].p1) || (byArea[b].total - byArea[a].total); });
+      var seg = { p0:'var(--blk-ext)', p1:'var(--st-qa)', p2:'var(--ink-faint)', ter:'var(--blk-int)', ok:'var(--st-done)' };
+      var maxT = Math.max.apply(null, areaNames.map(function(a){ return byArea[a].total; }));
+      h += '<div class="std-h">2 · Quem mais sente o problema (por área)</div><div class="std-area-bars">';
+      areaNames.forEach(function(a){
+        var o = byArea[a];
+        h += '<div class="std-area-row"><span>' + areaPills(a) + '</span><div class="std-bar" style="width:' + Math.round(o.total / maxT * 100) + '%;">' +
+          ['p0','p1','p2','ter','ok'].map(function(k){ return o[k] ? '<i style="flex:' + o[k] + ';background:' + seg[k] + ';" title="' + tierLabel[k] + ': ' + o[k] + '"></i>' : ''; }).join('') +
+          '</div><span class="std-area-n" style="color:var(--ink-faint);">' + o.total + ' ferr. · ' + (o.p0 + o.p1) + ' a migrar</span></div>';
+      });
+      h += '</div><span class="hint" style="font-size:11px;color:var(--ink-faint);display:block;margin-top:6px;">Vermelho = P0 · âmbar = P1 · cinza = P2 · roxo = terceiro · verde = já no ambiente comum. Uma ferramenta usada por duas áreas conta nas duas.</span>';
+
+      // 3) plano em ondas
+      var names = function(tier){ return tools.filter(function(t){ return t.tier === tier; }).map(function(t){ return '<li>' + escapeHtml(t.nome) + '</li>'; }).join('') || '<li style="color:var(--ink-faint);">nenhuma</li>'; };
+      h += '<div class="std-h">3 · Plano em ondas</div><div class="std-phases">' +
+        '<div class="std-phase"><h4><span class="std-tier p0">P0</span> Onda 1 — uso diário</h4><p>Maior risco: o time depende todo dia e a ferramenta roda fora do ambiente comum.</p><ul>' + names('p0') + '</ul></div>' +
+        '<div class="std-phase"><h4><span class="std-tier p1">P1</span> Onda 2 — uso semanal</h4><p>Migrar depois da Onda 1, reaproveitando o mesmo roteiro (repositório, deploy, login, Core).</p><ul>' + names('p1') + '</ul></div>' +
+        '<div class="std-phase"><h4><span class="std-tier p2">P2</span> Onda 3 — uso eventual</h4><p>Migrar ou aposentar conforme o uso real.</p><ul>' + names('p2') + '</ul></div>' +
+        '<div class="std-phase"><h4><span class="std-tier ter">Terceiros</span> Governança</h4><p>SaaS e fornecedores: não se migra, mas precisa de dono, acessos e contrato claros.</p><ul>' + names('ter') + '</ul></div>' +
+        '</div>';
+
+      // 4) definição de pronto
+      h += '<div class="std-h">4 · O que significa “estar no ambiente comum” (proposta — ajuste à regra da DUX)</div><ol class="std-dod">' +
+        '<li>Código versionado no GitHub da organização da DUX, com responsável e pelo menos uma segunda pessoa com acesso.</li>' +
+        '<li>Rodando em ambiente de produção, no domínio da DUX, e não na máquina de uma pessoa.</li>' +
+        '<li>Acesso por login da DUX (@wearedux.com), sem senha ou arquivo compartilhado por fora.</li>' +
+        '<li>Dados lidos do Core (ou integrados ao Core), sem planilha atualizada à mão.</li>' +
+        '<li>Registrada no Tool Registry / Portal DUX, com dono, status e link de acesso.</li></ol>' +
+        '<span class="hint" style="font-size:11px;color:var(--ink-faint);display:block;margin-top:10px;">Próximo passo sugerido: transformar cada linha P0/P1 em uma issue no Linear (um projeto “Padronização de ferramentas”, com as etapas acima como checklist) para acompanhar a migração. O ranking é recalculado sempre que alguém edita ou reporta uma ferramenta.</span>';
+      box.innerHTML = h;
+    }
+
     async function renderAdmin(){
       if (!isAdmin) return;
       var token = ++adminToken;
       $('adminStatReports').textContent = lastReports.length;
       $('adminStatInnov').textContent = lastInnovations.length;
+      try { renderStdPlan(); } catch(e){ var pb = $('adminPlanBody'); if (pb) pb.innerHTML = '<div class="reported-empty">Não foi possível montar o plano agora.</div>'; }
 
       var ids = [];
       lastReports.concat(lastInnovations).forEach(function(r){
