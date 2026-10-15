@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-08T14:03:53.951Z","sha":"3d87bd1","message":"Cockpit DUX: projetos por status (bloqueado/execução/construção), sub-abas do levantamento, Vercel (login Google, webhook Linear, fechamento","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-15T13:47:44.637Z","sha":"e818742","message":"Admin: plano de padronização das ferramentas (ranking por frequência, ambiente, GitHub e áreas; ondas P0/P1/P2)","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -465,6 +465,15 @@
   .tab-btn:hover{background:rgba(255,255,255,.08); color:#fff;}
   .tab-btn:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
   .tab-btn.active{background:var(--accent); color:#000;}
+  .nav-ext{
+    display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+    border:1px solid rgba(255,255,255,.22); color:#fff; background:transparent;
+    font-family:"Exo 2",inherit; font-size:13px; font-weight:600; padding:7px 14px; border-radius:8px; margin-left:6px;
+    transition:background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .nav-ext:hover{border-color:var(--accent); color:var(--accent); background:rgba(255,255,255,.04);}
+  .nav-ext:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
+  .nav-ext .ext-mark{width:16px; height:16px; border-radius:4px; background:#E9FC00; display:inline-block; flex:0 0 auto;}
   .admin-icon-btn{
     width:30px; height:30px; margin-left:6px; border-radius:50%; border:1px solid transparent; background:transparent;
     color:rgba(255,255,255,.35); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; align-self:center;
@@ -739,8 +748,16 @@
     padding:11px 12px; text-decoration:none; color:inherit; box-shadow:0 1px 2px rgba(0,0,0,.04);
     transition:border-color .15s ease, transform .15s ease;
   }
+  .up-card{position:relative;}
   .up-card:hover{border-color:var(--accent); transform:translateY(-1px);}
-  .up-card:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
+  .up-card:focus-within{outline:2px solid var(--accent); outline-offset:1px;}
+  .up-card .up-main{color:inherit; text-decoration:none;}
+  .up-card .up-main:focus{outline:none;}
+  .up-card .up-main::after{content:""; position:absolute; inset:0; border-radius:10px;}
+  .up-acts{display:flex; gap:6px; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:8px; margin-top:2px;}
+  .up-acts .bib{font-size:11px; font-weight:700; color:var(--accent-strong);}
+  .up-acts .lin{position:relative; z-index:1; font-size:11px; color:var(--ink-faint); text-decoration:none; padding:2px 7px; border:1px solid var(--line); border-radius:6px;}
+  .up-acts .lin:hover{color:var(--ink); border-color:var(--accent);}
   .up-card-top{display:flex; justify-content:space-between; align-items:baseline; gap:8px;}
   .up-card .id{color:var(--ink-faint); font-size:10.5px; letter-spacing:.02em;}
   .up-card .go{font-size:11px; color:var(--ink-faint);}
@@ -842,6 +859,7 @@
       <button class="tab-btn active" data-page="projects" type="button">Painel de Projetos</button>
       <button class="tab-btn" data-page="tools" type="button">Levantamento de Ferramentas</button>
       <button class="tab-btn" data-page="upstream" id="upstreamTabBtn" type="button" title="Em construção — ainda não está pronto" hidden>Upstream · Novos Projetos <span class="tab-wip" aria-label="em construção">**</span></button>
+      <a class="nav-ext" href="https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE" target="_blank" rel="noopener" title="Product Library: painel com o Product Bible de cada produto em upstream, template em branco e guia de uso"><span class="ext-mark" aria-hidden="true"></span>Product Library ↗</a>
       <button class="admin-icon-btn" id="adminTabBtn" type="button" title="Painel de administração" aria-label="Painel de administração" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.2" fill="currentColor"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.2" fill="currentColor"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="18" r="2.2" fill="currentColor"/></svg></button>
     </div>
   </div>
@@ -1510,10 +1528,11 @@
     <h2>Upstream · Novos Projetos <span class="tab-wip" title="Em construção">**</span></h2>
     <div class="admin-row">
       <span class="tools-group-sub" id="upSynced"></span>
+      <a class="tools-action-btn primary" href="https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE" target="_blank" rel="noopener">Product Library ↗</a>
       <a class="tools-action-btn" id="upOpenLinear" target="_blank" rel="noopener" href="https://linear.app/wearedux/project/upstream-novos-projetos-e6787a72646c">Abrir projeto no Linear ↗</a>
     </div>
   </div>
-  <div class="subline" style="margin-bottom:16px;">Espelho do board do projeto <b>Upstream - Novos Projetos</b> no Linear. As raias são as fases do fluxo Upstream (label "Upstream" no Linear); clicar num card abre a issue direto no Linear. Visível só para o admin por enquanto. <b>** Em construção</b> — ainda não está pronto.</div>
+  <div class="subline" style="margin-bottom:16px;">Espelho do board do projeto <b>Upstream - Novos Projetos</b> no Linear. As raias são as fases do fluxo Upstream (label "Upstream" no Linear); clicar num card abre o <b>Product Bible</b> daquele produto; o botão "Linear ↗" no rodapé do card abre a issue. Visível só para o admin por enquanto. <b>** Em construção</b> — ainda não está pronto.</div>
   <div class="up-board" id="upBoard"><div class="reported-empty">Carregando…</div></div>
   <div class="tools-group-sub" style="margin-top:6px;" id="upFootnote"></div>
 
@@ -2792,6 +2811,7 @@
     function safeLinearUrl(u){
       return (typeof u === 'string' && /^https:\/\/linear\.app\//.test(u)) ? u : '#';
     }
+    var BIBLE_URL = 'https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE';
     function subscribeUpstream(){
       if (!dbApi) return;
       dbApi.collection('upstream').onSnapshot(function(snap){
@@ -2830,9 +2850,11 @@
         if (!col.length) html += '<div class="up-empty">Nenhum card nesta fase</div>';
         col.forEach(function(it){
           var chips = (Array.isArray(it.labels) ? it.labels : []).map(function(t){ return '<span class="env-pill">' + escapeHtml(t) + '</span>'; }).join('');
-          html += '<a class="up-card" href="' + escapeHtml(safeLinearUrl(it.url)) + '" target="_blank" rel="noopener" title="Abrir no Linear">' +
-            '<div class="up-card-top"><span class="id mono">' + escapeHtml(it.identifier || '') + '</span><span class="go">Abrir no Linear ↗</span></div>' +
-            '<div class="title">' + escapeHtml(it.title || '(sem título)') + '</div>' +
+          var slug = String(it.identifier || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+          var bibUrl = BIBLE_URL + (slug ? '#' + slug : '');
+          html += '<div class="up-card">' +
+            '<div class="up-card-top"><span class="id mono">' + escapeHtml(it.identifier || '') + '</span><span class="go">Product Bible ↗</span></div>' +
+            '<a class="up-main title" href="' + escapeHtml(bibUrl) + '" target="_blank" rel="noopener" title="Abrir o Product Bible deste produto">' + escapeHtml(it.title || '(sem título)') + '</a>' +
             '<div class="up-info">' +
               '<span class="k">Owner</span><span class="v">' + escapeHtml(it.assignee || 'Sem owner') + '</span>' +
               '<span class="k">Status</span><span class="v"><span class="status-pill ' + statusPillClass(it.statusType) + '">' + escapeHtml(it.status || '—') + '</span></span>' +
@@ -2840,7 +2862,9 @@
               '<span class="k">Na fase desde</span><span class="v">' + escapeHtml(fmtDay(it.laneSince)) + (it.laneSinceApprox ? ' <span title="O Linear não expõe a data exata da troca de fase; esta é uma estimativa a partir da última atualização.">(est.)</span>' : '') + '</span>' +
             '</div>' +
             (chips ? '<div class="up-chips">' + chips + '</div>' : '') +
-          '</a>';
+            '<div class="up-acts"><span class="bib">Abrir Product Bible</span>' +
+              '<a class="lin" href="' + escapeHtml(safeLinearUrl(it.url)) + '" target="_blank" rel="noopener" title="Abrir a issue no Linear">Linear ↗</a></div>' +
+          '</div>';
         });
         html += '</div>';
       });

@@ -167,7 +167,8 @@ test("closing via cron: grava no histórico, é idempotente e o /api/live devolv
 test("build: HTML de produção sem referências ao claude.ai, histórico zerado, todos os marcadores LIVE intactos", () => {
   const src = readFileSync(new URL("../src/cockpit.html", import.meta.url), "utf8");
   const { html } = transform(src);
-  assert.doesNotMatch(html, /claude\.ai/);
+  // única exceção permitida: o Product Library / Product Bible, que vive como artifact no claude.ai
+  assert.doesNotMatch(html.replaceAll("https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE", ""), /claude\.ai/);
   assert.match(html, /<script id="weekHistoryData" type="application\/json">\[\]<\/script>/);
   assert.equal(liveMarkerNames(html).length, 29);
   const filled = applyLiveBlocks(html, { "anti-sacado:areas": "<span>TESTE</span>" });
