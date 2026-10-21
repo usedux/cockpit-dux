@@ -196,6 +196,20 @@
   .sync-stamp .sync-dot{width:6px; height:6px; border-radius:50%; background:var(--ink-faint); flex:none;}
   .sync-stamp.fresh .sync-dot{background:var(--st-done);}
   .sync-stamp.stale .sync-dot{background:var(--st-qa);}
+  .sync-wrap{display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; padding-bottom:2px;}
+  .sync-wrap .sync-stamp{padding-bottom:0;}
+  /* Botão discreto "Update": força a sincronização com o Linear (só no site da Vercel, só admin) */
+  .update-btn{display:inline-flex; align-items:center; gap:5px; font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace; font-size:11px; font-weight:600; color:var(--ink-faint); background:transparent; border:1px solid var(--line); border-radius:100px; padding:2px 10px; cursor:pointer; transition:color .15s ease, border-color .15s ease;}
+  .update-btn:hover{color:var(--ink); border-color:var(--accent);}
+  .update-btn:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
+  .update-btn[hidden]{display:none;}
+  .update-btn .ic{display:inline-block; font-size:12px; line-height:1;}
+  .update-btn.busy{cursor:progress; opacity:.75;}
+  .update-btn.busy .ic{animation:upd-spin 1s linear infinite;}
+  .update-msg{font-size:11px; color:var(--ink-faint); font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace;}
+  .update-msg.ok{color:var(--st-done);} .update-msg.err{color:var(--blk-ext);}
+  @keyframes upd-spin{to{transform:rotate(360deg);}}
+  @media (prefers-reduced-motion: reduce){ .update-btn.busy .ic{animation:none;} }
 
   /* ---------- Legend ---------- */
   .legend{
@@ -867,9 +881,13 @@
 
 <div class="section-head">
   <h2>Principais Projetos</h2>
-  <div class="sync-stamp" id="syncStamp" title="Última vez que o cockpit recebeu dados do Linear">
-    <span class="sync-dot"></span><span id="syncStampText">Linear · última atualização: —</span>
-    <span id="syncSrc" hidden><!-- LIVE:meta:synced:start --><!-- LIVE:meta:synced:end --></span>
+  <div class="sync-wrap">
+    <div class="sync-stamp" id="syncStamp" title="Última vez que o cockpit recebeu dados do Linear">
+      <span class="sync-dot"></span><span id="syncStampText">Linear · última atualização: —</span>
+      <span id="syncSrc" hidden><!-- LIVE:meta:synced:start --><!-- LIVE:meta:synced:end --></span>
+    </div>
+    <button type="button" class="update-btn" data-update hidden title="Forçar agora a sincronização com o Linear"><span class="ic" aria-hidden="true">↻</span><span class="lbl">Update</span></button>
+    <span class="update-msg" data-update-msg role="status" aria-live="polite"></span>
   </div>
 </div>
 
@@ -1518,6 +1536,8 @@
     <h2>Upstream · Novos Projetos <span class="tab-wip" title="Em construção">**</span></h2>
     <div class="admin-row">
       <span class="tools-group-sub" id="upSynced"></span>
+      <button type="button" class="update-btn" data-update hidden title="Forçar agora a sincronização com o Linear"><span class="ic" aria-hidden="true">↻</span><span class="lbl">Update</span></button>
+      <span class="update-msg" data-update-msg role="status" aria-live="polite"></span>
       <a class="tools-action-btn primary" href="https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE" target="_blank" rel="noopener">Product Library ↗</a>
       <a class="tools-action-btn" id="upOpenLinear" target="_blank" rel="noopener" href="https://linear.app/wearedux/project/upstream-novos-projetos-e6787a72646c">Abrir projeto no Linear ↗</a>
     </div>
@@ -1991,6 +2011,67 @@
     render();
     if (window.MutationObserver) new MutationObserver(render).observe(src, { childList:true, subtree:true }); // só a fonte do dado (observar o próprio texto causaria laço)
     setInterval(render, 30000);
+  })();
+</script>
+
+<script>
+  // Botão "Update" (Painel de Projetos e Upstream): força a sincronização com o Linear, sem recarregar a página.
+  // Só aparece no site da Vercel (onde existe /api/refresh) e só para o admin.
+  (function(){
+    var btns = Array.prototype.slice.call(document.querySelectorAll('[data-update]'));
+    var msgs = Array.prototype.slice.call(document.querySelectorAll('[data-update-msg]'));
+    if (!btns.length) return;
+    var running = false, clearTimer = null;
+    function say(text, kind){
+      msgs.forEach(function(m){ m.textContent = text || ''; m.className = 'update-msg' + (kind ? ' ' + kind : ''); });
+      clearTimeout(clearTimer);
+      if (text && kind !== 'busy') clearTimer = setTimeout(function(){ say(''); }, kind === 'err' ? 12000 : 5000);
+    }
+    function busy(on){
+      running = on;
+      btns.forEach(function(b){ b.disabled = on; b.classList.toggle('busy', on); b.querySelector('.lbl').textContent = on ? 'Atualizando…' : 'Update'; });
+    }
+    async function reloadData(){
+      // traz o resultado novo: blocos do Linear (e o carimbo de data) + board do Upstream
+      if (typeof window.__cockpitLoadLive === 'function') await window.__cockpitLoadLive();
+      if (typeof window.__cockpitPullAll === 'function') await window.__cockpitPullAll();
+    }
+    async function run(){
+      if (running) return;
+      busy(true); say('Consultando o Linear…', 'busy');
+      try {
+        var r = await fetch('/api/refresh', { method:'POST', credentials:'same-origin' });
+        var out = await r.json().catch(function(){ return {}; });
+        if (r.status === 401) { location.href = '/auth/login'; return; }
+        if (r.status === 403) throw new Error('somente administradores podem forçar a atualização');
+        if (!r.ok || out.error) throw new Error(out.error || ('HTTP ' + r.status));
+        if (out.skipped) {
+          say('Já há uma atualização em andamento — trazendo o que estiver pronto…', 'busy');
+          await new Promise(function(ok){ setTimeout(ok, 6000); });
+          await reloadData();
+          say('Atualização em andamento concluída.', 'ok');
+        } else {
+          await reloadData();
+          var n = 0; Object.keys(out.summary || {}).forEach(function(k){ n += (out.summary[k] && out.summary[k].issues) || 0; });
+          var up = out.upstream && typeof out.upstream.issues === 'number' ? out.upstream.issues : null;
+          var parts = []; if (n) parts.push(n + ' tasks dos projetos'); if (up !== null) parts.push(up + ' no Upstream');
+          var warn = out.warnings && out.warnings.length ? ' · avisos: ' + out.warnings.join(' · ') : '';
+          say('Atualizado agora' + (parts.length ? ' (' + parts.join(', ') + ')' : '') + warn, out.warnings && out.warnings.length ? 'err' : 'ok');
+        }
+      } catch(e) {
+        var m = String((e && e.message) || e);
+        say('Não foi possível atualizar: ' + m + (/LINEAR_API_KEY/.test(m) ? ' — cadastre a variável LINEAR_API_KEY na Vercel e faça um Redeploy.' : ''), 'err');
+      } finally { busy(false); }
+    }
+    btns.forEach(function(b){ b.addEventListener('click', run); });
+    (async function(){
+      try {
+        if (!window.__DEPLOY__ || !window.claude) return; // fora da Vercel (Artifact) não há /api/refresh
+        var u = await window.claude.use('user');
+        if (!u || !(await u.isOwner())) return;
+        btns.forEach(function(b){ b.hidden = false; });
+      } catch(e) { /* sem botão */ }
+    })();
   })();
 </script>
 

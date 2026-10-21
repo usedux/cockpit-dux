@@ -141,6 +141,7 @@
     } catch (e) { /* tenta de novo no próximo ciclo */ }
   }
   window.__cockpitLoadLive = loadLive;
+  window.__cockpitPullAll = function () { return Promise.all(Object.keys(watchers).map(function (c) { return pull(c, false); })); };
   window.addEventListener('DOMContentLoaded', function () {
     loadLive();
     setInterval(function () { if (!document.hidden) loadLive(); }, LIVE_MS);
