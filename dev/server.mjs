@@ -17,7 +17,7 @@ export async function startServer({ port = 3000 } = {}) {
     if (u.pathname === "/") name = "page";
     else if (u.pathname.startsWith("/auth/")) { name = "auth"; extra = "action=" + u.pathname.slice(6); }
     else if (u.pathname.startsWith("/_blob/")) { name = "blob"; extra = "id=" + u.pathname.slice(7); }
-    else if (/^\/api\/[a-z-]+$/.test(u.pathname)) name = u.pathname.slice(5);
+    else if (/^\/api\/[a-z-]+(\/[a-z-]+)?$/.test(u.pathname)) name = u.pathname.slice(5);
     if (name && existsSync(join(root, "api", name + ".js"))) {
       const q = [u.search.replace(/^\?/, ""), extra].filter(Boolean).join("&");
       req.url = u.pathname + (q ? "?" + q : "");

@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import { route, json, redirect, setCookie, parseCookies, appUrl, isLocalDev } from "../lib/http.js";
+import { safePath } from "../lib/sso.js";
 import { googleAuthUrl, googleExchange, upsertUser, sessionCookieValue, SESSION, getSession, domainOk } from "../lib/auth.js";
 
 export default route(async (req, res) => {
@@ -19,11 +20,13 @@ export default route(async (req, res) => {
       const email = process.env.DEV_AUTH_EMAIL;
       const u = await upsertUser({ email, name: process.env.DEV_AUTH_NAME || "Dev" });
       setCookie(res, SESSION.COOKIE, sessionCookieValue(u), { maxAge: SESSION.MAX_AGE, secure: false });
-      return redirect(res, "/");
+      return redirect(res, safePath(url.searchParams.get("return")));
     }
     if (!process.env.GOOGLE_CLIENT_ID) return json(res, 500, { error: "GOOGLE_CLIENT_ID não configurado" });
     const state = crypto.randomBytes(16).toString("base64url");
     setCookie(res, "dux_oauth_state", state, { maxAge: 600, secure });
+    const back = safePath(url.searchParams.get("return"), "");
+    if (back) setCookie(res, "dux_return", back, { maxAge: 600, secure }); // para onde voltar depois do login (ex.: rota de SSO)
     return redirect(res, googleAuthUrl({ redirectUri: `${appUrl(req)}/auth/callback`, state }));
   }
 
@@ -38,7 +41,8 @@ export default route(async (req, res) => {
       const u = await upsertUser(g);
       setCookie(res, SESSION.COOKIE, sessionCookieValue(u), { maxAge: SESSION.MAX_AGE, secure });
       setCookie(res, "dux_oauth_state", "", { maxAge: 0, secure });
-      return redirect(res, "/");
+      setCookie(res, "dux_return", "", { maxAge: 0, secure });
+      return redirect(res, safePath(parseCookies(req).dux_return));
     } catch (e) {
       res.statusCode = e.status || 401;
       res.setHeader("Content-Type", "text/html; charset=utf-8");

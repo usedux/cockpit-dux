@@ -167,8 +167,13 @@ test("closing via cron: grava no histórico, é idempotente e o /api/live devolv
 test("build: HTML de produção sem referências ao claude.ai, histórico zerado, todos os marcadores LIVE intactos", () => {
   const src = readFileSync(new URL("../src/cockpit.html", import.meta.url), "utf8");
   const { html } = transform(src);
-  // única exceção permitida: o Product Library / Product Bible, que vive como artifact no claude.ai
-  assert.doesNotMatch(html.replaceAll("https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE", ""), /claude\.ai/);
+  // nenhuma referência ao claude.ai: os links do Product Library passam pela rota de SSO do Cockpit
+  assert.doesNotMatch(html, /claude\.ai/);
+  assert.equal((html.match(/href="\/api\/sso\/product-library\?next=%2F"/g) || []).length, 2, "link da navegação e botão do Upstream");
+  assert.match(html, /var BIBLE_URL = '\/api\/sso\/product-library\?next=';/);
+  assert.match(html, /var bibUrl = BIBLE_URL \+ encodeURIComponent\('\/' \+ \(slug \? '#' \+ slug : ''\)\);/);
+  // o Artifact (fonte) continua apontando para o artifact do Product Library
+  assert.match(src, /https:\/\/claude\.ai\/artifact\/8qicoqcWa8FuthABHjohgE/);
   assert.match(html, /<script id="weekHistoryData" type="application\/json">\[\]<\/script>/);
   assert.equal(liveMarkerNames(html).length, 29);
   const filled = applyLiveBlocks(html, { "anti-sacado:areas": "<span>TESTE</span>" });

@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-21T11:45:03.795Z","sha":"09fa7ca","message":"Upstream: card abre o Product Bible; atalho Product Library","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-21T13:21:53.030Z","sha":"1767cfc","message":"Botão \"Update\": força a sincronização com o Linear (Painel de Projetos e Upstream)","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -873,7 +873,7 @@
       <button class="tab-btn active" data-page="projects" type="button">Painel de Projetos</button>
       <button class="tab-btn" data-page="tools" type="button">Levantamento de Ferramentas</button>
       <button class="tab-btn" data-page="upstream" id="upstreamTabBtn" type="button" title="Em construção — ainda não está pronto" hidden>Upstream · Novos Projetos <span class="tab-wip" aria-label="em construção">**</span></button>
-      <a class="nav-ext" href="https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE" target="_blank" rel="noopener" title="Product Library: painel com o Product Bible de cada produto em upstream, template em branco e guia de uso"><span class="ext-mark" aria-hidden="true"></span>Product Library ↗</a>
+      <a class="nav-ext" href="/api/sso/product-library?next=%2F" target="_blank" rel="noopener" title="Product Library: painel com o Product Bible de cada produto em upstream, template em branco e guia de uso"><span class="ext-mark" aria-hidden="true"></span>Product Library ↗</a>
       <button class="admin-icon-btn" id="adminTabBtn" type="button" title="Painel de administração" aria-label="Painel de administração" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.2" fill="currentColor"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.2" fill="currentColor"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="18" r="2.2" fill="currentColor"/></svg></button>
     </div>
   </div>
@@ -1548,7 +1548,7 @@
       <span class="tools-group-sub" id="upSynced"></span>
       <button type="button" class="update-btn" data-update hidden title="Forçar agora a sincronização com o Linear"><span class="ic" aria-hidden="true">↻</span><span class="lbl">Update</span></button>
       <span class="update-msg" data-update-msg role="status" aria-live="polite"></span>
-      <a class="tools-action-btn primary" href="https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE" target="_blank" rel="noopener">Product Library ↗</a>
+      <a class="tools-action-btn primary" href="/api/sso/product-library?next=%2F" target="_blank" rel="noopener">Product Library ↗</a>
       <a class="tools-action-btn" id="upOpenLinear" target="_blank" rel="noopener" href="https://linear.app/wearedux/project/upstream-novos-projetos-e6787a72646c">Abrir projeto no Linear ↗</a>
     </div>
   </div>
@@ -2892,7 +2892,7 @@
     function safeLinearUrl(u){
       return (typeof u === 'string' && /^https:\/\/linear\.app\//.test(u)) ? u : '#';
     }
-    var BIBLE_URL = 'https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE';
+    var BIBLE_URL = '/api/sso/product-library?next=';
     function subscribeUpstream(){
       if (!dbApi) return;
       dbApi.collection('upstream').onSnapshot(function(snap){
@@ -2932,7 +2932,7 @@
         col.forEach(function(it){
           var chips = (Array.isArray(it.labels) ? it.labels : []).map(function(t){ return '<span class="env-pill">' + escapeHtml(t) + '</span>'; }).join('');
           var slug = String(it.identifier || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
-          var bibUrl = BIBLE_URL + (slug ? '#' + slug : '');
+          var bibUrl = BIBLE_URL + encodeURIComponent('/' + (slug ? '#' + slug : ''));
           html += '<div class="up-card">' +
             '<div class="up-card-top"><span class="id mono">' + escapeHtml(it.identifier || '') + '</span><span class="go">Product Bible ↗</span></div>' +
             '<a class="up-main title" href="' + escapeHtml(bibUrl) + '" target="_blank" rel="noopener" title="Abrir o Product Bible deste produto">' + escapeHtml(it.title || '(sem título)') + '</a>' +
@@ -3172,6 +3172,17 @@
       $('editForm').addEventListener('submit', saveEdit);
     }
 
+    // "Entrou em: Cockpit (21/10), Product Library (20/10)" — apps em que a pessoa já entrou (campo opcional apps da lista de Pessoas)
+    var APP_LABELS = { 'cockpit': 'Cockpit', 'product-library': 'Product Library' };
+    function appsText(apps){
+      if (!apps || typeof apps !== 'object') return '';
+      var parts = Object.keys(apps).filter(function(k){ return apps[k]; }).map(function(k){
+        var d = new Date(apps[k]);
+        return (APP_LABELS[k] || k) + (isNaN(d.getTime()) ? '' : ' (' + d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }) + ')');
+      });
+      return parts.length ? 'Entrou em: ' + parts.join(', ') : '';
+    }
+
     function initials(name){
       var p = String(name || '?').trim().split(/\s+/);
       return ((p[0] || '?').charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : '')).toUpperCase();
@@ -3246,6 +3257,8 @@
         var sub = [];
         if (p.email) sub.push(p.email);
         sub.push(c.r + ' ferramenta(s) · ' + c.i + ' inovação(ões) reportadas');
+        var appsTxt = appsText(p.apps); // só informação: onde a pessoa já entrou; não muda permissões
+        if (appsTxt) sub.push(appsTxt);
         if (p.pending && p.hint) sub.push(p.hint);
         var linkForm = p.pending
           ? '<form class="person-link" data-link-id="' + escapeHtml(p.id) + '" data-link-name="' + escapeHtml(p.name || '') + '"><input type="email" class="admin-input" placeholder="e-mail @wearedux.com" required><button type="submit" class="tools-action-btn primary">Associar e-mail</button></form>'

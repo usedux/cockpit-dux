@@ -20,7 +20,7 @@ export default route(async (req, res) => {
   if (!s.isAdmin) return json(res, 403, { error: "apenas admin" });
   const q = (new URL(req.url, "http://x").searchParams.get("q") || "").trim().toLowerCase();
   const list = users
-    .map((u) => ({ id: u.id, name: u.data.name, email: u.data.email, lastSeen: u.data.lastSeen }))
+    .map((u) => ({ id: u.id, name: u.data.name, email: u.data.email, lastSeen: u.data.lastSeen, apps: u.data.apps || {} }))
     .filter((u) => !q || `${u.name} ${u.email}`.toLowerCase().includes(q))
     .sort((a, b) => String(a.name).localeCompare(String(b.name)));
   json(res, 200, list);
@@ -37,7 +37,7 @@ async function linkLegacy(s, body, res) {
   const userId = idFromEmail(email);
   const prev = await col.get("users", userId);
   const name = String(body.name || "").trim().slice(0, 120) || prev?.name || email.split("@")[0];
-  await col.set("users", userId, { id: userId, email, name, firstSeen: prev?.firstSeen || new Date().toISOString(), lastSeen: prev?.lastSeen || null, imported: prev?.imported ?? true });
+  await col.set("users", userId, { ...prev, id: userId, email, name, firstSeen: prev?.firstSeen || new Date().toISOString(), lastSeen: prev?.lastSeen || null, imported: prev?.imported ?? true });
   await col.set("legacy-links", legacyId, { userId, email, at: new Date().toISOString(), by: s.email });
   let moved = 0;
   for (const c of ["reports", "innovations"]) {

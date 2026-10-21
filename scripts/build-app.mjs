@@ -34,6 +34,13 @@ export function transform(fragment, { appUrl = "https://cockpit-dux.vercel.app",
   // histórico semanal: o servidor injeta (api/page.js) e o shim atualiza
   must("weekHistoryData", /<script id="weekHistoryData" type="application\/json">[\s\S]*?<\/script>/, '<script id="weekHistoryData" type="application/json">[]</script>');
 
+  // Product Library: na Vercel os links entram pela rota de SSO do Cockpit (/api/sso/product-library) em vez do artifact.
+  // O hash do card (#dux-582) vai DENTRO do parâmetro next, codificado: /api/sso/product-library?next=%2F%23dux-582
+  const PL_ARTIFACT = "https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE";
+  must("link Product Library (nav e Upstream)", new RegExp(`href="${PL_ARTIFACT.replace(/[.*+?^${}()|[\]\\\/]/g, "\\$&")}"`, "g"), 'href="/api/sso/product-library?next=%2F"');
+  must("BIBLE_URL", new RegExp(`var BIBLE_URL = '${PL_ARTIFACT.replace(/[.*+?^${}()|[\]\\\/]/g, "\\$&")}';`), "var BIBLE_URL = '/api/sso/product-library?next=';");
+  must("link do card Upstream", /var bibUrl = BIBLE_URL \+ \(slug \? '#' \+ slug : ''\);/, "var bibUrl = BIBLE_URL + encodeURIComponent('/' + (slug ? '#' + slug : ''));");
+
   // textos que só faziam sentido dentro do claude.ai
   must("ARTIFACT_URL", /var ARTIFACT_URL = '[^']*';/, `var ARTIFACT_URL = '${appUrl}';`);
   must("tools-group-sub acesso", /você é admin · Colaborador reporta · Visualização só consulta/, "você é admin · toda conta @wearedux.com entra e reporta");

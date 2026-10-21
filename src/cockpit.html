@@ -3203,6 +3203,17 @@
       $('editForm').addEventListener('submit', saveEdit);
     }
 
+    // "Entrou em: Cockpit (21/10), Product Library (20/10)" — apps em que a pessoa já entrou (campo opcional apps da lista de Pessoas)
+    var APP_LABELS = { 'cockpit': 'Cockpit', 'product-library': 'Product Library' };
+    function appsText(apps){
+      if (!apps || typeof apps !== 'object') return '';
+      var parts = Object.keys(apps).filter(function(k){ return apps[k]; }).map(function(k){
+        var d = new Date(apps[k]);
+        return (APP_LABELS[k] || k) + (isNaN(d.getTime()) ? '' : ' (' + d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }) + ')');
+      });
+      return parts.length ? 'Entrou em: ' + parts.join(', ') : '';
+    }
+
     function initials(name){
       var p = String(name || '?').trim().split(/\s+/);
       return ((p[0] || '?').charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : '')).toUpperCase();
@@ -3277,6 +3288,8 @@
         var sub = [];
         if (p.email) sub.push(p.email);
         sub.push(c.r + ' ferramenta(s) · ' + c.i + ' inovação(ões) reportadas');
+        var appsTxt = appsText(p.apps); // só informação: onde a pessoa já entrou; não muda permissões
+        if (appsTxt) sub.push(appsTxt);
         if (p.pending && p.hint) sub.push(p.hint);
         var linkForm = p.pending
           ? '<form class="person-link" data-link-id="' + escapeHtml(p.id) + '" data-link-name="' + escapeHtml(p.name || '') + '"><input type="email" class="admin-input" placeholder="e-mail @wearedux.com" required><button type="submit" class="tools-action-btn primary">Associar e-mail</button></form>'
