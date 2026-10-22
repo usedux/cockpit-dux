@@ -30,7 +30,7 @@ await page.route("**/api/refresh", async (r) => {
   if (mode === "skipped") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ skipped: true }) });
   return r.fulfill({ status: 500, contentType: "application/json", body: JSON.stringify({ error: "LINEAR_API_KEY ausente" }) });
 });
-await page.goto(env.base + "/", { waitUntil: "domcontentloaded" });
+await page.goto(env.base + "/#projetos", { waitUntil: "domcontentloaded" });
 await page.waitForFunction(() => [...document.querySelectorAll("[data-update]")].every((b) => !b.hidden), null, { timeout: 15000 });
 assert.equal(await page.locator("[data-update]").count(), 2, "um botão no painel e um no Upstream");
 const startNavs = navs;

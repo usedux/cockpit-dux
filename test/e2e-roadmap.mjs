@@ -27,13 +27,20 @@ async function open(opts, hash = "") {
 {
   const { ctx, page, errors } = await open({ viewport: { width: 1280, height: 900 }, colorScheme: "light" });
   await page.waitForSelector('.tab-btn[data-page="roadmap"]');
-  await page.click('.tab-btn[data-page="roadmap"]');
+  // abre direto no Roadmap, que é a primeira aba
   assert.equal(await page.locator("#page-roadmap").isVisible(), true);
   assert.equal(await page.locator("#page-projects").isVisible(), false);
+  assert.deepEqual(await page.$$eval(".tabs > *", (els) => els.map((e) => e.getAttribute("data-page") || (e.classList.contains("nav-ext") ? "ext" : "admin"))), ["roadmap", "projects", "tools", "upstream", "ext", "admin"]);
+  assert.equal(await page.locator('.tab-btn.active').getAttribute("data-page"), "roadmap");
+  await page.click('.tab-btn[data-page="projects"]');
+  assert.equal(await page.locator("#page-projects").isVisible(), true);
+  assert.match(page.url(), /#projetos$/);
+  await page.click('.tab-btn[data-page="roadmap"]');
+  assert.equal(await page.locator("#page-roadmap").isVisible(), true);
   assert.equal(await page.locator("#page-roadmap figure.rm-fig").count(), 2);
-  assert.equal(await page.locator("#page-roadmap .rm-lanes .rm-rowhead").count(), 6);
+  assert.equal(await page.locator("#page-roadmap .rm-lanes .rm-rowhead").count(), 8);
   assert.equal(await page.locator("#page-roadmap .rm-matrix .mp").count(), 6);
-  assert.match(page.url(), /#roadmap$/);
+  assert.doesNotMatch(page.url(), /#/);
   await page.locator("#page-roadmap").screenshot({ path: `${out}/roadmap-light.png` });
   assert.deepEqual(errors, []);
   await ctx.close();
@@ -43,6 +50,7 @@ async function open(opts, hash = "") {
   const { ctx, page, errors } = await open({ viewport: { width: 1280, height: 900 }, colorScheme: "dark" }, "#roadmap");
   await page.waitForSelector("#page-roadmap:not([hidden])");
   await page.locator("#page-roadmap").screenshot({ path: `${out}/roadmap-dark.png` });
+  await page.screenshot({ path: `${out}/nav-dark.png`, clip: { x: 0, y: 0, width: 1280, height: 120 } });
   assert.deepEqual(errors, []);
   await ctx.close();
 }
