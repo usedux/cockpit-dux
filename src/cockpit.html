@@ -849,6 +849,65 @@
   .check-grid{display:flex; flex-wrap:wrap; gap:6px 14px;}
   .check-grid label{font-weight:500; display:inline-flex; gap:6px; align-items:center; margin:0; font-size:12.5px;}
   .tools-action-btn:disabled{opacity:.6; cursor:not-allowed;}
+
+  /* ---------- Roadmap de Produtos ---------- */
+  .rm-wave-now{--wc:var(--st-done); --wcs:var(--st-done-soft);}
+  .rm-wave-1{--wc:var(--st-progress); --wcs:var(--st-progress-soft);}
+  .rm-wave-2{--wc:var(--st-priorized); --wcs:var(--st-priorized-soft);}
+  .rm-wave-vis{--wc:var(--st-build); --wcs:var(--st-build-soft);}
+  .rm-h3{font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:16px; font-weight:700; margin:30px 0 4px; color:var(--ink); text-wrap:balance;}
+  .rm-lead{margin:0 0 12px; font-size:13px; color:var(--ink-soft); max-width:760px;}
+  .rm-fig{margin:0; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 16px;}
+  .rm-fig figcaption{margin-top:10px; font-size:12.5px; color:var(--ink-soft); max-width:760px;}
+  .rm-scroll{overflow-x:auto;}
+  .rm-svg{display:block; width:100%; min-width:700px; height:auto; color:var(--ink-faint); font-family:"Exo 2","Helvetica Neue",Arial,sans-serif;}
+  .rm-svg .box{fill:var(--surface-muted); stroke:var(--line-strong); stroke-width:1.2;}
+  .rm-svg .hub{fill:var(--accent-soft); stroke:var(--accent); stroke-width:1.5;}
+  .rm-svg .node{fill:var(--wcs); stroke:var(--wc); stroke-width:1.6;}
+  .rm-svg .dash{stroke-dasharray:6 4;}
+  .rm-svg .chip{fill:var(--surface); stroke:var(--line-strong); stroke-width:1;}
+  .rm-svg .chip.wip{stroke-dasharray:3 3;}
+  .rm-svg .tag{fill:var(--wcs); stroke:var(--wc); stroke-width:1.2;}
+  .rm-svg .tag-t{fill:var(--wc); font-size:10.5px; font-weight:700; text-anchor:middle; letter-spacing:.03em;}
+  .rm-svg .t{fill:var(--ink); font-size:13.5px; font-weight:700;}
+  .rm-svg .s{fill:var(--ink-soft); font-size:11.5px;}
+  .rm-svg .c{fill:var(--ink); font-size:11px; font-weight:600; text-anchor:middle;}
+  .rm-svg .lab{fill:var(--ink-faint); font-size:10.5px; letter-spacing:.1em; font-weight:700; text-transform:uppercase;}
+  .rm-svg .note{fill:var(--ink-faint); font-size:11px; font-style:italic;}
+  .rm-svg .mid{text-anchor:middle;}
+  .rm-svg .ln{stroke:currentColor; stroke-width:1.6; fill:none;}
+  .rm-svg .ln-hub{stroke:var(--accent-strong); stroke-width:1.8; fill:none; stroke-dasharray:6 5;}
+  .rm-legend{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:12px; font-size:12px; color:var(--ink-soft); align-items:center;}
+  .rm-legend span{display:inline-flex; align-items:center; gap:6px;}
+  .rm-pill{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.03em; padding:2px 8px; border-radius:999px; background:var(--wcs); color:var(--wc); border:1px solid var(--wc);}
+  .rm-pill.dashed{border-style:dashed;}
+
+  .rm-lanes{display:grid; grid-template-columns:150px repeat(4, minmax(150px, 1fr)); gap:6px; min-width:760px; font-size:12.5px;}
+  .rm-colhead{padding:8px 10px; border-radius:8px; background:var(--wcs); border-bottom:3px solid var(--wc);}
+  .rm-colhead b{display:block; color:var(--wc); font-size:12.5px; letter-spacing:.02em;}
+  .rm-colhead span{display:block; color:var(--ink-soft); font-size:11.5px; margin-top:1px;}
+  .rm-rowhead{padding:10px 8px 10px 0; align-self:start;}
+  .rm-rowhead b{display:block; font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:13.5px; color:var(--ink);}
+  .rm-rowhead span{display:block; color:var(--ink-faint); font-size:11.5px; margin-top:2px;}
+  .rm-cell{padding:9px 10px; border-radius:8px; background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--wc); color:var(--ink); line-height:1.4; min-width:0;}
+  .rm-cell.empty{background:transparent; border:1px dashed var(--line); border-left:1px dashed var(--line); color:var(--ink-faint); text-align:center;}
+  .rm-lanes .sep{grid-column:1 / -1; height:1px; background:var(--line); margin:2px 0;}
+
+  .rm-matrix{display:grid; grid-template-columns:170px repeat(4, minmax(130px, 1fr)); gap:0; min-width:720px; font-size:12.5px; border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .rm-matrix > div{padding:9px 10px; border-bottom:1px solid var(--line); border-right:1px solid var(--line); min-width:0;}
+  .rm-matrix > div:nth-child(5n){border-right:0;}
+  .rm-matrix > .last{border-bottom:0;}
+  .rm-matrix .mh{background:var(--surface-muted); font-weight:700; font-size:12px; color:var(--ink);}
+  .rm-matrix .mh small{display:block; font-weight:500; color:var(--ink-faint); font-size:11px;}
+  .rm-matrix .mp{font-weight:700; font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; color:var(--ink); background:var(--surface);}
+  .rm-matrix .mp small{display:block; font-weight:500; font-family:"Exo 2",inherit; color:var(--ink-faint); font-size:11px;}
+  .rm-matrix .mc{background:var(--surface); display:flex; flex-direction:column; gap:5px;}
+  .rm-matrix .it{display:flex; gap:7px; align-items:flex-start; line-height:1.35;}
+  .rm-dot{flex:0 0 auto; width:11px; height:11px; border-radius:50%; margin-top:3px; background:var(--wc); border:2px solid var(--wc);}
+  .rm-dot.ring{background:transparent;}
+  .rm-dot.dashed{background:transparent; border-style:dashed;}
+  .rm-matrix .none{color:var(--ink-faint);}
+  .rm-foot{margin-top:18px; font-size:12px; color:var(--ink-faint); max-width:760px;}
 </style>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Exo+2:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap">
@@ -862,6 +921,7 @@
     <div class="tabs">
       <button class="tab-btn active" data-page="projects" type="button">Painel de Projetos</button>
       <button class="tab-btn" data-page="tools" type="button">Levantamento de Ferramentas</button>
+      <button class="tab-btn" data-page="roadmap" type="button">Roadmap de Produtos</button>
       <button class="tab-btn" data-page="upstream" id="upstreamTabBtn" type="button" title="Em construção — ainda não está pronto" hidden>Upstream · Novos Projetos <span class="tab-wip" aria-label="em construção">**</span></button>
       <a class="nav-ext" href="https://claude.ai/artifact/8qicoqcWa8FuthABHjohgE" target="_blank" rel="noopener" title="Product Library: painel com o Product Bible de cada produto em upstream, template em branco e guia de uso"><span class="ext-mark" aria-hidden="true"></span>Product Library ↗</a>
       <button class="admin-icon-btn" id="adminTabBtn" type="button" title="Painel de administração" aria-label="Painel de administração" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.2" fill="currentColor"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.2" fill="currentColor"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="18" r="2.2" fill="currentColor"/></svg></button>
@@ -1530,6 +1590,277 @@
 
 </div>
 
+<div class="page" id="page-roadmap" hidden>
+
+  <div class="section-head">
+    <h2>Roadmap de Produtos</h2>
+    <span class="tools-group-sub">Sem datas: a ordem é a sequência lógica, do que existe hoje ao que vem depois.</span>
+  </div>
+  <div class="subline" style="margin-bottom:6px;">Quais são os produtos, para onde cada um vai e como se encaixam. A ideia central é separar <b>produto</b> (o que a DUX oferece) de <b>canal</b> (onde o cliente acessa).</div>
+
+  <h3 class="rm-h3">1. Hoje: plataformas soltas, ligadas à mão</h3>
+  <p class="rm-lead">Cada plataforma carrega o seu próprio produto, e o time comercial faz a ponte entre elas.</p>
+  <figure class="rm-fig">
+    <div class="rm-scroll">
+    <svg class="rm-svg" viewBox="0 0 960 340" role="img" aria-label="Hoje cada plataforma carrega um produto e o time comercial liga as quatro à mão">
+      <!-- Portal Anti -->
+      <rect class="box" x="20" y="20" width="250" height="130" rx="10"/>
+      <text class="t" x="36" y="48">Portal Anti · web</text>
+      <text class="s" x="36" y="67">Cliente com CNPJ</text>
+      <rect class="chip" x="36" y="84" width="92" height="28" rx="14"/><text class="c" x="82" y="102">Cedente</text>
+      <rect class="chip wip" x="136" y="84" width="120" height="28" rx="14"/><text class="c" x="196" y="102">Sacado · piloto</text>
+      <text class="note" x="36" y="136">produto e canal juntos</text>
+      <!-- Portal DUX -->
+      <rect class="box" x="690" y="20" width="250" height="130" rx="10"/>
+      <text class="t" x="706" y="48">Portal DUX · interno</text>
+      <text class="s" x="706" y="67">Time da DUX</text>
+      <rect class="chip" x="706" y="84" width="76" height="28" rx="14"/><text class="c" x="744" y="102">Operações</text>
+      <rect class="chip" x="790" y="84" width="60" height="28" rx="14"/><text class="c" x="820" y="102">Fundos</text>
+      <rect class="chip" x="858" y="84" width="66" height="28" rx="14"/><text class="c" x="891" y="102">Crédito</text>
+      <text class="note" x="706" y="136">de onde nasce toda operação</text>
+      <!-- App -->
+      <rect class="box" x="20" y="190" width="250" height="130" rx="10"/>
+      <text class="t" x="36" y="218">App Anti</text>
+      <text class="s" x="36" y="237">Aplicativo do cliente</text>
+      <rect class="chip" x="36" y="254" width="104" height="28" rx="14"/><text class="c" x="88" y="272">Anti Banking</text>
+      <rect class="chip wip" x="148" y="254" width="108" height="28" rx="14"/><text class="c" x="202" y="272">1ª conta · obra</text>
+      <text class="note" x="36" y="306">separado do Portal Anti</text>
+      <!-- Decentral -->
+      <rect class="box" x="690" y="190" width="250" height="130" rx="10"/>
+      <text class="t" x="706" y="218">Decentral</text>
+      <text class="s" x="706" y="237">Produto separado</text>
+      <rect class="chip" x="706" y="254" width="96" height="28" rx="14"/><text class="c" x="754" y="272">Investidores</text>
+      <rect class="chip wip" x="810" y="254" width="104" height="28" rx="14"/><text class="c" x="862" y="272">V3 · migração</text>
+      <text class="note" x="706" y="306">sem visão diária da operação</text>
+      <!-- Hub -->
+      <rect class="hub" x="350" y="105" width="260" height="120" rx="12"/>
+      <text class="t mid" x="480" y="140">Time comercial</text>
+      <text class="s mid" x="480" y="162">Liga as plataformas à mão</text>
+      <text class="s mid" x="480" y="181">Risco Sacado depende daqui</text>
+      <text class="s mid" x="480" y="200">Cedente pede ajuda aqui</text>
+      <path class="ln-hub" d="M270 85 L350 130"/>
+      <path class="ln-hub" d="M690 85 L610 130"/>
+      <path class="ln-hub" d="M270 255 L350 200"/>
+      <path class="ln-hub" d="M690 255 L610 200"/>
+    </svg>
+    </div>
+    <figcaption>Linha tracejada é ponte manual. Nada se conversa sozinho: o Risco Sacado, por exemplo, só anda se o comercial operar.</figcaption>
+  </figure>
+
+  <h3 class="rm-h3">2. Alvo: o canal separado do produto</h3>
+  <p class="rm-lead">Os produtos ficam iguais em qualquer canal. O Portal Anti é o balcão do cliente (hoje na web, depois também no app) e tudo pousa no mesmo Core.</p>
+  <figure class="rm-fig">
+    <div class="rm-scroll">
+    <svg class="rm-svg" viewBox="0 0 960 450" role="img" aria-label="Canais (Portal Anti e App Anti) oferecem os mesmos produtos, que registram tudo no Core DUX; o Decentral troca fundos com o Core">
+      <defs>
+        <marker id="rmArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 z" fill="currentColor"/></marker>
+      </defs>
+      <text class="lab" x="20" y="64">Canais</text>
+      <text class="lab" x="20" y="240">Produtos</text>
+      <text class="lab" x="20" y="394">Base</text>
+
+      <!-- Canais -->
+      <g class="rm-wave-now"><rect class="node" x="110" y="20" width="380" height="80" rx="10"/>
+        <text class="t" x="126" y="46">Portal Anti · web</text>
+        <text class="s" x="126" y="66">Qualquer cliente com CNPJ</text>
+        <text class="s" x="126" y="84">Área admin libera quem acessa o Risco Sacado</text>
+        <rect class="tag" x="424" y="11" width="56" height="18" rx="9"/><text class="tag-t" x="452" y="24">Hoje</text></g>
+      <g class="rm-wave-2"><rect class="node dash" x="510" y="20" width="260" height="80" rx="10"/>
+        <text class="t" x="526" y="46">App Anti</text>
+        <text class="s" x="526" y="66">Novo canal do Portal Anti</text>
+        <text class="s" x="526" y="84">Os mesmos serviços, no celular</text>
+        <rect class="tag" x="704" y="11" width="56" height="18" rx="9"/><text class="tag-t" x="732" y="24">Onda 2</text></g>
+      <rect class="box dash" x="790" y="20" width="150" height="80" rx="10"/>
+      <text class="t" x="806" y="46">Time comercial</text>
+      <text class="s" x="806" y="66">Apoio quando o</text>
+      <text class="s" x="806" y="84">self-service não fecha</text>
+
+      <!-- barramento canais -> produtos -->
+      <path class="ln" d="M300 100 V140"/>
+      <path class="ln dash" d="M640 100 V140"/>
+      <path class="ln dash" d="M865 100 V140"/>
+      <path class="ln" d="M190 140 H865"/>
+      <text class="note mid" x="470" y="133">mesmos produtos, em qualquer canal</text>
+      <path class="ln" d="M190 140 V178" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M415 140 V178" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M650 140 V178" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M850 140 V178" marker-end="url(#rmArr)"/>
+
+      <!-- Produtos -->
+      <g class="rm-wave-now"><rect class="node" x="110" y="180" width="160" height="110" rx="10"/>
+        <text class="t" x="124" y="208">Cedente</text>
+        <text class="s" x="124" y="230">Fluxo automatizado</text>
+        <text class="s" x="124" y="247">(self-service)</text>
+        <text class="s" x="124" y="270">Se travar: comercial</text>
+        <rect class="tag" x="212" y="171" width="48" height="18" rx="9"/><text class="tag-t" x="236" y="184">Hoje</text></g>
+      <g class="rm-wave-now"><rect class="node" x="290" y="180" width="250" height="110" rx="10"/>
+        <text class="t" x="306" y="208">Sacado · Risco Sacado</text>
+        <rect class="chip" x="306" y="222" width="100" height="28" rx="14"/><text class="c" x="356" y="240">Fornecedor</text>
+        <rect class="chip" x="424" y="222" width="100" height="28" rx="14"/><text class="c" x="474" y="240">Parceiro</text>
+        <path class="ln" d="M410 236 H420" style="stroke-width:1.4"/>
+        <text class="note" x="306" y="276">Um CNPJ pode ocupar as duas cadeiras</text>
+        <rect class="tag" x="482" y="171" width="48" height="18" rx="9"/><text class="tag-t" x="506" y="184">Hoje</text></g>
+      <g class="rm-wave-2"><rect class="node dash" x="560" y="180" width="180" height="110" rx="10"/>
+        <text class="t" x="574" y="208">Conta DUX</text>
+        <text class="s" x="574" y="228">Para cedente ou sacado</text>
+        <text class="s" x="574" y="245">Recebe as garantias</text>
+        <text class="s" x="574" y="262">DUX monitora prazos</text>
+        <text class="s" x="574" y="279">Taxa menor p/ quem abre</text>
+        <rect class="tag" x="676" y="171" width="56" height="18" rx="9"/><text class="tag-t" x="704" y="184">Onda 2</text></g>
+      <g class="rm-wave-vis"><rect class="node dash" x="760" y="180" width="180" height="110" rx="10"/>
+        <text class="t" x="774" y="208">Antecipação AdSense</text>
+        <text class="s" x="774" y="230">Criadores no YouTube</text>
+        <text class="s" x="774" y="247">depois TikTok e outras</text>
+        <text class="s" x="774" y="264">streamings</text>
+        <rect class="tag" x="880" y="171" width="52" height="18" rx="9"/><text class="tag-t" x="906" y="184">Visão</text></g>
+
+      <!-- barramento produtos -> base -->
+      <path class="ln" d="M850 290 V320"/>
+      <path class="ln" d="M190 320 H850"/>
+      <text class="note mid" x="540" y="313">toda operação é registrada no Core</text>
+      <path class="ln" d="M190 290 V320"/>
+      <path class="ln" d="M415 290 V320"/>
+      <path class="ln" d="M650 290 V320"/>
+      <path class="ln" d="M190 320 V348" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M415 320 V348" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M650 320 V348" marker-end="url(#rmArr)"/>
+
+      <!-- Base -->
+      <g class="rm-wave-now"><rect class="node" x="110" y="350" width="580" height="80" rx="10"/>
+        <text class="t" x="126" y="378">Core DUX · Portal DUX interno</text>
+        <text class="s" x="126" y="398">Cadastro, análise de crédito, operações e fundos</text>
+        <text class="s" x="126" y="415">A mesma base serve todos os canais</text>
+        <rect class="tag" x="624" y="341" width="56" height="18" rx="9"/><text class="tag-t" x="652" y="354">Hoje</text></g>
+      <g class="rm-wave-1"><rect class="node" x="770" y="350" width="170" height="80" rx="10"/>
+        <text class="t" x="784" y="378">Decentral</text>
+        <text class="s" x="784" y="398">Para investidores</text>
+        <text class="s" x="784" y="415">Acompanhamento diário</text>
+        <rect class="tag" x="872" y="341" width="58" height="18" rx="9"/><text class="tag-t" x="901" y="354">Onda 1</text></g>
+      <path class="ln" d="M692 392 H768" marker-start="url(#rmArr)" marker-end="url(#rmArr)"/>
+      <text class="note mid" x="730" y="384">fundos</text>
+      <text class="note mid" x="730" y="408">retorno</text>
+    </svg>
+    </div>
+    <figcaption>Os investidores do Decentral financiam as operações que nascem nos produtos; o Core devolve o valor disponível e o andamento, dia a dia. O time comercial deixa de ser a ponte e vira apoio.</figcaption>
+    <div class="rm-legend" aria-label="Legenda">
+      <span><span class="rm-pill rm-wave-now">Hoje</span> existe</span>
+      <span><span class="rm-pill rm-wave-1">Onda 1</span> próxima evolução</span>
+      <span><span class="rm-pill rm-wave-2 dashed">Onda 2</span> depois</span>
+      <span><span class="rm-pill rm-wave-vis dashed">Visão</span> ideia futura</span>
+    </div>
+  </figure>
+
+  <h3 class="rm-h3">3. Evolução de cada produto</h3>
+  <p class="rm-lead">Leia cada linha da esquerda para a direita: o que é hoje e o que vem na sequência.</p>
+  <div class="rm-scroll">
+  <div class="rm-lanes" role="table" aria-label="Evolução por produto">
+    <div></div>
+    <div class="rm-colhead rm-wave-now"><b>Hoje</b><span>como opera agora</span></div>
+    <div class="rm-colhead rm-wave-1"><b>Onda 1</b><span>Portal Anti vira o balcão</span></div>
+    <div class="rm-colhead rm-wave-2"><b>Onda 2</b><span>conta e app</span></div>
+    <div class="rm-colhead rm-wave-vis"><b>Visão</b><span>novos produtos</span></div>
+
+    <div class="rm-rowhead"><b>Cedente</b><span>quem antecipa os próprios recebíveis</span></div>
+    <div class="rm-cell rm-wave-now">Operação com apoio do time comercial; consulta no Portal Anti</div>
+    <div class="rm-cell rm-wave-1">Fluxo automatizado, self-service. Se não conseguir concluir, chama o comercial</div>
+    <div class="rm-cell rm-wave-2">Abre conta DUX e ganha condição especial de taxa</div>
+    <div class="rm-cell rm-wave-vis">Faz tudo também pelo app</div>
+    <div class="sep"></div>
+
+    <div class="rm-rowhead"><b>Sacado</b><span>Risco Sacado, com fornecedor e parceiro</span></div>
+    <div class="rm-cell rm-wave-now">Operação manual, depende do time comercial (piloto com o primeiro cliente)</div>
+    <div class="rm-cell rm-wave-1">O CNPJ pede pelo Portal Anti. Admin libera como parceiro ou fornecedor; o mesmo CNPJ pode ser os dois</div>
+    <div class="rm-cell rm-wave-2">A conta recebe as garantias dos contratos e a DUX monitora vencimentos e pagamentos</div>
+    <div class="rm-cell rm-wave-vis">Pedidos e acompanhamento pelo app</div>
+    <div class="sep"></div>
+
+    <div class="rm-rowhead"><b>Abertura de conta</b><span>conta dentro da plataforma DUX</span></div>
+    <div class="rm-cell rm-wave-now">Primeira conta em construção</div>
+    <div class="rm-cell empty rm-wave-1">·</div>
+    <div class="rm-cell rm-wave-2">Conta para cedente ou sacado. Quem abre conta ganha condição especial de antecipação (taxa menor)</div>
+    <div class="rm-cell rm-wave-vis">Estrutura bancária mínima, por exemplo isenção de tarifa em X antecipações por mês</div>
+    <div class="sep"></div>
+
+    <div class="rm-rowhead"><b>App Anti</b><span>canal do Portal Anti</span></div>
+    <div class="rm-cell rm-wave-now">Aplicativo atual (Anti Banking), separado do Portal Anti</div>
+    <div class="rm-cell empty rm-wave-1">·</div>
+    <div class="rm-cell rm-wave-2">Remodelado para oferecer Sacado, Cedente e abertura de conta, com os serviços que já existem no anti-web</div>
+    <div class="rm-cell rm-wave-vis">Com conta aberta, passa a ter a estrutura bancária mínima</div>
+    <div class="sep"></div>
+
+    <div class="rm-rowhead"><b>Decentral</b><span>produto separado, para investidores</span></div>
+    <div class="rm-cell rm-wave-now">V3 em migração</div>
+    <div class="rm-cell rm-wave-1">Mais previsibilidade e acompanhamento diário da operação</div>
+    <div class="rm-cell rm-wave-2">Visão do valor disponível por fundo e operação, como já existe no Portal DUX interno</div>
+    <div class="rm-cell empty rm-wave-vis">·</div>
+    <div class="sep"></div>
+
+    <div class="rm-rowhead"><b>Antecipação AdSense</b><span>produto novo</span></div>
+    <div class="rm-cell empty rm-wave-now">·</div>
+    <div class="rm-cell empty rm-wave-1">·</div>
+    <div class="rm-cell empty rm-wave-2">·</div>
+    <div class="rm-cell rm-wave-vis">Criadores fortes no YouTube; depois TikTok e outras plataformas de streaming</div>
+  </div>
+  </div>
+
+  <h3 class="rm-h3">4. Onde cada produto é oferecido</h3>
+  <p class="rm-lead">A mesma lista de produtos, agora cruzada com os canais. Sacado e Cedente passam pelo Portal Anti; no futuro, também pelo app.</p>
+  <div class="rm-scroll">
+  <div class="rm-matrix" role="table" aria-label="Produtos por canal">
+    <div class="mh">Produto</div>
+    <div class="mh">Time comercial<small>atendimento manual</small></div>
+    <div class="mh">Portal Anti · web<small>cliente com CNPJ</small></div>
+    <div class="mh">App Anti<small>canal futuro</small></div>
+    <div class="mh">Portal Decentral<small>investidor</small></div>
+
+    <div class="mp">Cedente</div>
+    <div class="mc"><div class="it rm-wave-now"><span class="rm-dot"></span>Operação assistida</div></div>
+    <div class="mc"><div class="it rm-wave-now"><span class="rm-dot"></span>Consulta de dados</div><div class="it rm-wave-1"><span class="rm-dot"></span>Self-service</div></div>
+    <div class="mc"><div class="it rm-wave-2"><span class="rm-dot dashed"></span>Onda 2</div></div>
+    <div class="mc none">·</div>
+
+    <div class="mp">Sacado · Fornecedor</div>
+    <div class="mc"><div class="it rm-wave-now"><span class="rm-dot"></span>Operação manual</div></div>
+    <div class="mc"><div class="it rm-wave-1"><span class="rm-dot"></span>CNPJ pede sozinho</div></div>
+    <div class="mc"><div class="it rm-wave-2"><span class="rm-dot dashed"></span>Onda 2</div></div>
+    <div class="mc none">·</div>
+
+    <div class="mp">Sacado · Parceiro</div>
+    <div class="mc"><div class="it rm-wave-now"><span class="rm-dot"></span>Operação manual</div></div>
+    <div class="mc"><div class="it rm-wave-1"><span class="rm-dot"></span>CNPJ pede sozinho</div></div>
+    <div class="mc"><div class="it rm-wave-2"><span class="rm-dot dashed"></span>Onda 2</div></div>
+    <div class="mc none">·</div>
+
+    <div class="mp">Abertura de conta</div>
+    <div class="mc none">·</div>
+    <div class="mc"><div class="it rm-wave-2"><span class="rm-dot dashed"></span>Abertura online</div></div>
+    <div class="mc"><div class="it rm-wave-2"><span class="rm-dot dashed"></span>Abertura no app</div></div>
+    <div class="mc none">·</div>
+
+    <div class="mp">Antecipação AdSense</div>
+    <div class="mc none">·</div>
+    <div class="mc"><div class="it rm-wave-vis"><span class="rm-dot dashed"></span>Canal a definir</div></div>
+    <div class="mc"><div class="it rm-wave-vis"><span class="rm-dot dashed"></span>Canal a definir</div></div>
+    <div class="mc none">·</div>
+
+    <div class="mp last">Investimento (Decentral)</div>
+    <div class="mc none last">·</div>
+    <div class="mc none last">·</div>
+    <div class="mc none last">·</div>
+    <div class="mc last"><div class="it rm-wave-now"><span class="rm-dot"></span>V3 em migração</div><div class="it rm-wave-1"><span class="rm-dot"></span>Acompanhamento diário</div></div>
+  </div>
+  </div>
+  <div class="rm-legend">
+    <span class="rm-wave-now"><span class="rm-dot"></span> existe hoje</span>
+    <span class="rm-wave-1"><span class="rm-dot"></span> Onda 1</span>
+    <span class="rm-wave-2"><span class="rm-dot dashed"></span> Onda 2</span>
+    <span class="rm-wave-vis"><span class="rm-dot dashed"></span> visão futura</span>
+  </div>
+
+  <p class="rm-foot">Montado a partir do planejamento do Lucas. O Portal Anti já está preparado para hospedar o Risco Sacado; falta a área admin que define quais CNPJs entram, como parceiro ou fornecedor. As ondas indicam ordem lógica, sem prazo de desenvolvimento.</p>
+
+</div>
+
 <div class="page" id="page-upstream" hidden>
 
   <div class="section-head">
@@ -1952,6 +2283,7 @@
     var pages = {
       projects: document.getElementById('page-projects'),
       tools: document.getElementById('page-tools'),
+      roadmap: document.getElementById('page-roadmap'),
       upstream: document.getElementById('page-upstream'),
       admin: document.getElementById('page-admin')
     };
@@ -1966,7 +2298,7 @@
         var key = btn.getAttribute('data-page');
         showPage(key);
         // Reflete a aba atual na URL, pra dar pra copiar/compartilhar o link direto (ver setHash no script mais abaixo).
-        if (window.__cockpitSetHash) window.__cockpitSetHash(key === 'tools' ? 'tools' : '');
+        if (window.__cockpitSetHash) window.__cockpitSetHash(key === 'tools' ? 'tools' : (key === 'roadmap' ? 'roadmap' : ''));
       });
     });
     var adminIconBtn = document.getElementById('adminTabBtn');
@@ -3600,6 +3932,7 @@
       if (!hash) return;
       var goesToTools = ['tools', 'ferramentas', 'levantamento', 'reportar-ferramenta', 'reportar-inovacao', 'inovacao'];
       if (goesToTools.indexOf(hash) !== -1 && window.__cockpitShowPage) window.__cockpitShowPage('tools');
+      if ((hash === 'roadmap' || hash === 'roadmap-de-produtos') && window.__cockpitShowPage) window.__cockpitShowPage('roadmap');
       if (hash === 'reportar-ferramenta') openModal('reportToolModalOverlay');
       if ((hash === 'reportar-inovacao' || hash === 'inovacao') && window.__cockpitShowSubtab) window.__cockpitShowSubtab('inovacoes');
       if (hash === 'reportar-ferramenta' && window.__cockpitShowSubtab) window.__cockpitShowSubtab('ferramentas');
