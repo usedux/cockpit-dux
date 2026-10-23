@@ -909,6 +909,20 @@
   .rm-matrix .none{color:var(--ink-faint);}
   .rm-qband{padding-top:5px; border-top:2px solid var(--line-strong); font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);}
   .rm-qband.cur{border-top-color:var(--accent); color:var(--accent-strong);}
+  .rm-p-ced{--wc:var(--area-com); --wcs:var(--area-com-soft);}
+  .rm-p-sac{--wc:var(--area-fin); --wcs:var(--area-fin-soft);}
+  .rm-p-nov{--wc:var(--area-mkt); --wcs:var(--area-mkt-soft);}
+  .rm-svg .ax{stroke:var(--line-strong); stroke-width:1.2; fill:none;}
+  .rm-svg .axl{fill:var(--ink-faint); font-size:11px; font-weight:600;}
+  .rm-cards{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px; margin-top:12px;}
+  .rm-card{background:var(--surface); border:1px solid var(--line); border-top:4px solid var(--wc); border-radius:10px; padding:14px 14px 12px; min-width:0; font-size:12.5px; color:var(--ink); display:flex; flex-direction:column; gap:10px;}
+  .rm-card h4{margin:0; font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:15px; color:var(--ink);}
+  .rm-card .prof{display:inline-block; align-self:flex-start; font-size:11px; font-weight:700; padding:2px 9px; border-radius:999px; background:var(--wcs); color:var(--wc); border:1px solid var(--wc);}
+  .rm-card .r b{display:block; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:2px;}
+  .rm-card .r p{margin:0; line-height:1.45;}
+  .rm-card .r ul{margin:0; padding-left:16px; display:flex; flex-direction:column; gap:3px; line-height:1.4;}
+  .rm-card .r.todo{background:var(--surface-muted); border-radius:8px; padding:8px 10px;}
+  @media (max-width:900px){ .rm-cards{grid-template-columns:1fr;} }
   .rm-foot{margin-top:18px; font-size:12px; color:var(--ink-faint); max-width:760px;}
 </style>
 
@@ -1901,6 +1915,79 @@
     <span class="rm-wave-1"><span class="rm-dot"></span> Onda 1</span>
     <span class="rm-wave-2"><span class="rm-dot dashed"></span> Onda 2</span>
     <span class="rm-wave-vis"><span class="rm-dot dashed"></span> Onda 3</span>
+  </div>
+
+  <h3 class="rm-h3">5. Cliente e estratégia de cada produto</h3>
+  <p class="rm-lead">Quem a DUX atende com cada produto e para onde a estratégia aponta.</p>
+  <figure class="rm-fig">
+    <div class="rm-scroll">
+    <svg class="rm-svg" viewBox="0 0 960 330" role="img" aria-label="Cedente atende muitos clientes de ticket baixo e pode ganhar uma trilha de ticket alto com conta escrow; o Risco Sacado atende poucos parceiros de ticket alto; novas frentes ainda estão em exploração">
+      <defs>
+        <marker id="rmArr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 z" fill="currentColor"/></marker>
+      </defs>
+      <path class="ax" d="M70 20 V280 H935"/>
+      <text class="axl" transform="rotate(-90 36 150)" x="36" y="150" text-anchor="middle">nº de clientes</text>
+      <text class="axl" x="70" y="300">ticket baixo</text>
+      <text class="axl" x="935" y="300" text-anchor="end">ticket alto</text>
+      <text class="axl" x="502" y="318" text-anchor="middle">ticket da operação</text>
+
+      <g class="rm-p-ced"><ellipse class="node" cx="215" cy="90" rx="135" ry="52"/>
+        <text class="t mid" x="215" y="86">Cedente · varejo</text>
+        <text class="s mid" x="215" y="106">influenciadores pequenos</text></g>
+      <path class="ln" d="M335 116 L425 148" marker-end="url(#rmArr2)"/>
+      <text class="note" x="318" y="158">trilha por ticket</text>
+      <g class="rm-p-ced"><ellipse class="node dash" cx="525" cy="172" rx="110" ry="44"/>
+        <text class="t mid" x="525" y="168">Cedente · ticket alto</text>
+        <text class="s mid" x="525" y="188">com conta escrow</text></g>
+      <g class="rm-p-sac"><ellipse class="node" cx="800" cy="232" rx="118" ry="42"/>
+        <text class="t mid" x="800" y="228">Risco Sacado</text>
+        <text class="s mid" x="800" y="248">grandes parceiros</text></g>
+      <g class="rm-p-nov"><ellipse class="node dash" cx="330" cy="236" rx="105" ry="34"/>
+        <text class="t mid" x="330" y="233">Novas frentes</text>
+        <text class="s mid" x="330" y="250">a explorar · ex.: AdSense</text></g>
+    </svg>
+    </div>
+    <figcaption>O Cedente é um produto popular, de volume; o Risco Sacado é de atacado. Ticket mais alto sobe o risco de calote, então pede mais segurança (conta escrow), que também custa mais.</figcaption>
+  </figure>
+
+  <div class="rm-cards">
+    <div class="rm-card rm-p-ced">
+      <h4>Risco Cedente</h4>
+      <span class="prof">Varejo · muitos clientes, ticket baixo</span>
+      <div class="r"><b>Cliente</b><p>Influenciadores e criadores pequenos.</p></div>
+      <div class="r"><b>Hoje</b><p>Ticket muito baixo não compensa: conta escrow e manutenção têm custo fixo. Precisa de um ticket mínimo.</p></div>
+      <div class="r"><b>Estratégia</b><ul>
+        <li>Porta de entrada para novos influenciadores (a demanda apareceu na feira Opus).</li>
+        <li>Ganhar no volume, com operação mais barata e sem abrir precedente de risco.</li>
+        <li>Duas trilhas: ticket baixo com operação enxuta; ticket alto com conta escrow (mais custo, mais segurança).</li>
+      </ul></div>
+      <div class="r todo"><b>Levantar</b><ul>
+        <li>Ticket mínimo viável (ex.: R$ 1.000).</li>
+        <li>Quantas operações rodam hoje com o mecanismo mais seguro (escrow).</li>
+      </ul></div>
+    </div>
+    <div class="rm-card rm-p-sac">
+      <h4>Risco Sacado</h4>
+      <span class="prof">Atacado · poucos parceiros, ticket alto</span>
+      <div class="r"><b>Cliente</b><p>Grandes parceiros e empresas. Hoje, mercado publicitário (Mind e Print).</p></div>
+      <div class="r"><b>Estratégia</b><p>Levar o produto a outros segmentos da economia criativa:</p><ul>
+        <li>Produtores de show, que pagam vários profissionais em cascata, em 15 ou 30 dias.</li>
+        <li>Bilheteria, que só recebe depois do fechamento.</li>
+        <li>Outros prestadores de serviço do setor.</li>
+      </ul></div>
+      <div class="r todo"><b>Levantar</b><ul>
+        <li>Quais segmentos priorizar primeiro.</li>
+      </ul></div>
+    </div>
+    <div class="rm-card rm-p-nov">
+      <h4>Novas frentes de negócio</h4>
+      <span class="prof">A explorar</span>
+      <div class="r"><b>Ideia</b><p>Outras fontes de receita como garantia da operação.</p></div>
+      <div class="r"><b>Primeiro exemplo</b><p>Antecipação AdSense: a receita do YouTube como garantia. Entra na Onda 3 do roadmap.</p></div>
+      <div class="r todo"><b>Levantar</b><ul>
+        <li>Que outras fontes de receita servem de garantia.</li>
+      </ul></div>
+    </div>
   </div>
 
   <p class="rm-foot">Montado a partir do planejamento do Lucas, com foco no curto prazo. O Portal Anti já está preparado para hospedar o Risco Sacado; falta a área admin que define quais CNPJs entram, como parceiro ou fornecedor. Os quarters são só uma referência de visão, sem compromisso de prazo de desenvolvimento.</p>

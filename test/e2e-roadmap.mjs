@@ -37,7 +37,8 @@ async function open(opts, hash = "") {
   assert.match(page.url(), /#projetos$/);
   await page.click('.tab-btn[data-page="roadmap"]');
   assert.equal(await page.locator("#page-roadmap").isVisible(), true);
-  assert.equal(await page.locator("#page-roadmap figure.rm-fig").count(), 2);
+  assert.equal(await page.locator("#page-roadmap figure.rm-fig").count(), 3);
+  assert.equal(await page.locator("#page-roadmap .rm-card").count(), 3);
   assert.equal(await page.locator("#page-roadmap .rm-lanes .rm-rowhead").count(), 8);
   assert.equal(await page.locator("#page-roadmap .rm-matrix .mp").count(), 6);
   assert.doesNotMatch(page.url(), /#/);
