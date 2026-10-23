@@ -923,6 +923,23 @@
   .rm-card .r ul{margin:0; padding-left:16px; display:flex; flex-direction:column; gap:3px; line-height:1.4;}
   .rm-card .r.todo{background:var(--surface-muted); border-radius:8px; padding:8px 10px;}
   @media (max-width:900px){ .rm-cards{grid-template-columns:1fr;} }
+
+  /* ---------- Ferramentas do repositório ---------- */
+  .rp-kpis{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin:4px 0 18px;}
+  .rp-kpi{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:10px 12px; border-top:3px solid var(--k, var(--line-strong));}
+  .rp-kpi .n{font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:26px; font-weight:700; line-height:1.1; font-variant-numeric:tabular-nums; color:var(--ink);}
+  .rp-kpi .l{font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+  .rp-kpi.ok{--k:var(--st-done);} .rp-kpi.warn{--k:var(--st-qa);} .rp-kpi.gap{--k:var(--blk-ext);}
+  .rp-pill{display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:999px; white-space:nowrap; background:var(--surface-muted); color:var(--ink-soft); border:1px solid var(--line-strong);}
+  .rp-pill.ok{background:var(--st-done-soft); color:var(--st-done); border-color:var(--st-done);}
+  .rp-pill.warn{background:var(--st-qa-soft); color:var(--st-qa); border-color:var(--st-qa);}
+  .rp-pill.gap{background:var(--blk-ext-soft); color:var(--blk-ext); border-color:var(--blk-ext);}
+  .rp-repo a{color:var(--ink); font-weight:700; text-decoration:none; font-family:"Roboto Mono",monospace; font-size:12px;}
+  .rp-repo a:hover{color:var(--accent-strong); text-decoration:underline;}
+  .rp-topic{display:inline-block; font-family:"Roboto Mono",monospace; font-size:10px; color:var(--ink-faint); border:1px solid var(--line); border-radius:4px; padding:0 5px; margin:2px 3px 0 0;}
+  .rp-hint{font-size:12px; color:var(--ink-soft); margin:0 0 10px; max-width:760px;}
+  .rp-foot{margin-top:14px; font-size:12px; color:var(--ink-faint); max-width:760px;}
+  .rp-desc{color:var(--ink-soft); font-size:12.5px;}
   .rm-foot{margin-top:18px; font-size:12px; color:var(--ink-faint); max-width:760px;}
 </style>
 
@@ -1374,6 +1391,7 @@
     <div class="subtabs" role="tablist" aria-label="Seções do levantamento">
       <button type="button" class="subtab-btn active" role="tab" data-subtab="portal" aria-selected="true">Portal DUX</button>
       <button type="button" class="subtab-btn" role="tab" data-subtab="ferramentas" aria-selected="false">Ferramentas reportadas<span class="count" id="subtabCountTools"></span></button>
+      <button type="button" class="subtab-btn" role="tab" data-subtab="repos" aria-selected="false">Ferramentas do repositório<span class="count" id="subtabCountRepos"></span></button>
       <button type="button" class="subtab-btn" role="tab" data-subtab="inovacoes" aria-selected="false">Inovações reportadas<span class="count" id="subtabCountInnov"></span></button>
     </div>
     <div class="tools-actions">
@@ -1569,6 +1587,17 @@
     </div>
   </div>
 
+  </div>
+
+  <div class="subpanel" id="subpanel-repos" hidden>
+  <div class="tools-group" id="repoGroup">
+    <div class="tools-group-head">
+      <h2>Ferramentas do repositório</h2>
+      <span class="tools-group-sub">organização <a href="https://github.com/usedux" target="_blank" rel="noopener">github.com/usedux ↗</a> · lista conferida em 23/10/2026</span>
+    </div>
+    <p class="rp-hint">Os repositórios da DUX no GitHub, divididos entre os que já foram reportados em "Ferramentas reportadas" (o link do GitHub do report aponta para o repositório) e os que ainda não foram. A comparação com os reports é feita ao vivo; a lista de repositórios é um retrato do GitHub.</p>
+    <div id="repoBody"><div class="reported-empty">Carregando reports…</div></div>
+  </div>
   </div>
 
   <div class="subpanel" id="subpanel-inovacoes" hidden>
@@ -2547,6 +2576,7 @@
     var panels = {
       portal: document.getElementById('subpanel-portal'),
       ferramentas: document.getElementById('subpanel-ferramentas'),
+      repos: document.getElementById('subpanel-repos'),
       inovacoes: document.getElementById('subpanel-inovacoes')
     };
     function showSub(key){
@@ -2572,6 +2602,7 @@
       if (i) i.textContent = inn ? String(inn) : '';
     }
     updateCounts();
+    var rc = document.getElementById('subtabCountRepos'); if (rc) rc.textContent = '97';
     ['reportedToolsBody','reportedInnovationsBody'].forEach(function(id){
       var el = document.getElementById(id);
       if (el && window.MutationObserver) new MutationObserver(updateCounts).observe(el, {childList:true});
@@ -2588,6 +2619,98 @@
         (core ? 'Alimenta o Core' : 'Ainda não alimenta o Core') + '</span></div>';
       if (typeof window.__cockpitOpenDetail === 'function') window.__cockpitOpenDetail(b.getAttribute('data-name'), html);
     });
+  })();
+</script>
+
+<script>
+  // Ferramentas do repositório: repositórios da organização usedux no GitHub x ferramentas reportadas.
+  // A lista de repositórios é um retrato do GitHub (23/10/2026); os reports vêm ao vivo do bloco "Reportar Ferramenta".
+  (function(){
+    var REPOS = [{"n":"decentral_v3_contracts","g":"prod","l":"Solidity","d":"","t":["decentral-v3"],"u":0,"a":0},{"n":"decentral-frontend","g":"prod","l":"TypeScript","d":"","t":["decentral-v3"],"u":0,"a":0},{"n":"back-end-new-decentral","g":"prod","l":"TypeScript","d":"","t":["decentral-v3"],"u":0,"a":0},{"n":"dux-data-core","g":"tool","l":"Python","d":"Estrutura de dados centralizada DUX — schemas das ferramentas, ERD do Core e decisões","t":[],"u":0,"a":0},{"n":"dux-demos","g":"tool","l":"TypeScript","d":"Demos das ferramentas da DUX (painel, AI Assistant e demos guiadas) — demos.wearedux.com","t":[],"u":0,"a":0},{"n":"anti-hst","g":"tool","l":"TypeScript","d":"Painel interno da Anti — hst.sejaanti.com.br","t":["cms","marketing","anti","citizen-dev","data-confidential","dux-tool"],"u":0,"a":0},{"n":"decentral-site","g":"prod","l":"HTML","d":"Site institucional da Decentral (usedecentral.com) — self-host estático, migrado do Framer em set/2026","t":[],"u":0,"a":0},{"n":"dux-tool-registry","g":"tool","l":"Shell","d":"","t":["registry","tool","governance","dux-tool"],"u":0,"a":0},{"n":"dux-data-mcp","g":"tool","l":"JavaScript","d":"","t":["platform","finance","bi","tool","mcp","dux-tool","data-financial"],"u":0,"a":0},{"n":"anti-exiva","g":"tool","l":"TypeScript","d":"","t":["sales","ai","crm","anti","citizen-dev","dux-tool","data-financial"],"u":0,"a":0},{"n":"demands-pipeline-tool","g":"tool","l":"TypeScript","d":"","t":["platform","ai","tool","origination","citizen-dev","data-pii","dux-tool","credit-ops"],"u":0,"a":0},{"n":"captacao-app","g":"tool","l":"JavaScript","d":"Wiki de captação ANTI (Cloudflare Pages + D1)","t":[],"u":0,"a":0},{"n":"anti-naoespere","g":"prod","l":"JavaScript","d":"LP de campanha ANTI 'Não espere uma vida' — naoespere.sejaanti.com.br","t":[],"u":0,"a":0},{"n":"app","g":"prod","l":"TypeScript","d":"Dux Web","t":[],"u":0,"a":0},{"n":"decentral-v3-guide","g":"prod","l":"HTML","d":"Guia Decentral V3 para quem já investe / Guide for current investors (PT/EN)","t":[],"u":0,"a":0},{"n":"product-library","g":"tool","l":"HTML","d":"Repositório para marcar os avanços de definições dos projetos","t":[],"u":0,"a":0},{"n":"anti-site","g":"tool","l":"Astro","d":"ANTI Creative Finance — site + CMS","t":["marketing","anti","citizen-dev","data-pii","dux-tool"],"u":0,"a":0},{"n":"cockpit-dux","g":"tool","l":"HTML","d":"","t":[],"u":1,"a":0},{"n":"decentralprotocol","g":"leg","l":"Solidity","d":"","t":[],"u":0,"a":0},{"n":"hst-ui","g":"tbd","l":"Astro","d":"","t":[],"u":0,"a":0},{"n":"cnab-maker","g":"tool","l":"TypeScript","d":"","t":["platform","finance","tool","fidc","citizen-dev","dux-tool","credit-ops","data-financial"],"u":0,"a":0},{"n":"anti-counter","g":"prod","l":"JavaScript","d":"Contador da economia criativa brasileira — sejaanti.com.br/counter (página estática, Vercel anti-counter)","t":[],"u":0,"a":0},{"n":"llm-router","g":"tool","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"anti-core","g":"prod","l":"Python","d":"","t":[],"u":0,"a":0},{"n":"agent-box","g":"tbd","l":"Python","d":"","t":[],"u":0,"a":0},{"n":"basqui","g":"tool","l":"HTML","d":"Basqui — quadro branco interno da DUX (Cloudflare Pages + D1)","t":[],"u":0,"a":0},{"n":"antibank-app","g":"prod","l":"Dart","d":"Anti Bank Mobile App","t":[],"u":0,"a":0},{"n":"anti-backoffice","g":"tool","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"people-app","g":"tool","l":"JavaScript","d":"","t":["platform","ai","hr","citizen-dev","data-pii","dux-tool"],"u":0,"a":0},{"n":"dux-infra","g":"tbd","l":"HCL","d":"","t":[],"u":0,"a":0},{"n":"dux-brandbook","g":"prod","l":"HTML","d":"Brandbook DUX — site estático publicado em brandbook.wearedux.com","t":[],"u":0,"a":0},{"n":"drawee-risk","g":"tool","l":"TypeScript","d":"","t":["platform","finance","origination","citizen-dev","dux-tool","data-financial","risco-sacado"],"u":0,"a":0},{"n":"dux-erp-fred","g":"tbd","l":"JavaScript","d":"","t":[],"u":0,"a":0},{"n":"anti-comunicacoes","g":"prod","l":"HTML","d":"Guideline e templates das réguas de email transacional do ANTI (Grupo DUX)","t":[],"u":1,"a":0},{"n":"anti-partners","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"anti-muchochat","g":"tool","l":"TypeScript","d":"MuchoChat — automação Instagram: comentou palavra-chave → DM → follow check → código de convite do Anti Tools (vive em hst.sejaanti.com.br/muchochat)","t":[],"u":0,"a":0},{"n":"base-site","g":"tool","l":"HTML","d":"Spin-off do Grupo DUX - brand book vivo e assets do projeto BASE","t":["site","base","institutional","data-internal","citizen-dev","dux-tool"],"u":0,"a":0},{"n":"nimbus-dux-loop","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"dux-tech-board","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"dux-site","g":"prod","l":"HTML","d":"Site institucional da DUX (wearedux.com) — self-host estático, migrado do Framer em set/2026","t":[],"u":0,"a":0},{"n":"anti-tools","g":"tool","l":"JavaScript","d":"ANTI Tools — anti.tools (Next.js 16 + Supabase)","t":["marketing","acquisition","anti","citizen-dev","data-pii","dux-tool"],"u":0,"a":0},{"n":"yields-comissions-control","g":"tbd","l":"JavaScript","d":"","t":[],"u":0,"a":0},{"n":"anti-app-handoff","g":"prod","l":"HTML","d":"","t":[],"u":0,"a":0},{"n":"anti-core-docs","g":"prod","l":"","d":"External documentation for the Anti Core","t":[],"u":0,"a":0},{"n":"anti-brandbook","g":"tool","l":"HTML","d":"Brandbook vivo da ANTI Creative Finance — brandbook.sejaanti.com.br","t":["marketing","brand","site","anti","data-public","citizen-dev","dux-tool"],"u":0,"a":0},{"n":"anti-tools-notifications","g":"leg","l":"TypeScript","d":"Painel interno da ANTI/DUX para insights e disparo das push notifications do anti.tools.","t":[],"u":0,"a":1},{"n":"proposal-generator","g":"tool","l":"Python","d":"","t":["platform","finance","tool","operations","commercial","citizen-dev","dux-tool","data-financial"],"u":0,"a":0},{"n":"intranet","g":"tool","l":"JavaScript","d":"","t":[],"u":0,"a":0},{"n":"dux-hub-tools","g":"tool","l":"HTML","d":"","t":["platform","catalog","tool","governance","citizen-dev","data-pii","dux-tool"],"u":0,"a":0},{"n":"financehub","g":"tool","l":"TypeScript","d":"","t":["platform","finance","site","governance","credit-policy","citizen-dev","data-confidential","dux-tool"],"u":0,"a":0},{"n":"yields-comissions-control_DELETE_ME","g":"leg","l":"HTML","d":"","t":["platform","funding","finance","citizen-dev","dux-tool","data-financial"],"u":0,"a":0},{"n":"influencers-portal","g":"leg","l":"HTML","d":"","t":["platform","superseded","origination","citizen-dev","data-pii","dux-tool","risco-sacado"],"u":0,"a":0},{"n":"revolvencia-fred","g":"tbd","l":"","d":"","t":[],"u":0,"a":0},{"n":"anti-legal-rep-web","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"dux-map","g":"tool","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"anti-app","g":"prod","l":"HTML","d":"","t":[],"u":0,"a":0},{"n":"anti-assets","g":"prod","l":"","d":"","t":[],"u":1,"a":0},{"n":"drawee-acceptance-tool","g":"tool","l":"","d":"","t":[],"u":0,"a":0},{"n":"charges-calculator-tool","g":"tool","l":"","d":"","t":[],"u":0,"a":0},{"n":"credit-analysis-tool","g":"tool","l":"","d":"","t":[],"u":0,"a":0},{"n":"report-maker","g":"tool","l":"JavaScript","d":"Ferramenta para criação de relatórios e dashboards conectados direto ao banco de dados das operações.","t":["platform","bi","tool","data-internal","citizen-dev","dux-tool"],"u":0,"a":0},{"n":"proposal-generator-legacy","g":"leg","l":"Python","d":"","t":["tool"],"u":0,"a":0},{"n":"dux-crm-interno","g":"tool","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"dux-ops","g":"tool","l":"TypeScript","d":"DUX Ops M1 — gestão do ciclo de vida de cedentes","t":[],"u":0,"a":0},{"n":"anti-news-legacy","g":"leg","l":"Astro","d":"","t":[],"u":0,"a":1},{"n":"esteira-de-credito","g":"tool","l":"HTML","d":"","t":[],"u":0,"a":0},{"n":"decentral","g":"leg","l":"TypeScript","d":"Creators Protocol","t":[],"u":0,"a":0},{"n":"luucasalbino","g":"leg","l":"","d":"","t":[],"u":0,"a":0},{"n":"decentral-starknet","g":"leg","l":"Cairo","d":"","t":[],"u":0,"a":0},{"n":"the-office","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"decentral-v2","g":"leg","l":"TypeScript","d":"Repositório oficial da nova arquitetura da Decentral, projetado para sustentar a evolução do protocolo com padrões sólidos de engenharia e Web3.","t":[],"u":0,"a":0},{"n":"anti-core-docs-legacy","g":"leg","l":"","d":"Documentation repository for Anti Core and API","t":[],"u":0,"a":0},{"n":"decentral-solana","g":"leg","l":"Rust","d":"src, deployment history and tooling for Decentral protocol on Solana","t":[],"u":0,"a":0},{"n":"receb-veis-hub","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"dux-receive-flow","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"anti-hub-operacional-23319","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"anti-core-poc","g":"leg","l":"Python","d":"Documentation and POC for the ANTI Core","t":[],"u":0,"a":0},{"n":"report-proxy","g":"tool","l":"Python","d":"Proxy server for QUOD API and report generation","t":[],"u":0,"a":0},{"n":"wearedux-onboarding","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"advancements-app","g":"tbd","l":"","d":"","t":[],"u":0,"a":0},{"n":"decentral-app","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"score-api","g":"tbd","l":"Python","d":"","t":[],"u":0,"a":0},{"n":"creator-protocol","g":"leg","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"old-decentral","g":"leg","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"claimer","g":"leg","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"docs","g":"tbd","l":"","d":"","t":[],"u":0,"a":0},{"n":"starter","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"nft-do-bem","g":"leg","l":"TypeScript","d":"NFT do Bem Application","t":[],"u":0,"a":0},{"n":"api","g":"tbd","l":"TypeScript","d":"Dux API","t":[],"u":0,"a":0},{"n":"legacy-dux-web","g":"leg","l":"JavaScript","d":"","t":[],"u":0,"a":0},{"n":"legacy-dux-server","g":"leg","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"design-system","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"old-monorepo","g":"leg","l":"TypeScript","d":"Dux Monorepo","t":[],"u":0,"a":1},{"n":"old-docs","g":"leg","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"poc-allianz-parque","g":"leg","l":"TypeScript","d":"","t":[],"u":0,"a":0},{"n":"campaign-adriano","g":"leg","l":"TypeScript","d":"Aplicação de Waitlist para Adriano Imperador","t":[],"u":0,"a":1},{"n":"monorepo","g":"tbd","l":"TypeScript","d":"","t":[],"u":0,"a":0}];
+    var GROUPS = [
+      { key:'tool', title:'Ferramentas internas', hint:'Têm o tópico dux-tool no GitHub ou são claramente ferramentas da equipe. São as candidatas a reportar primeiro.', pill:['warn','Reportar'] },
+      { key:'prod', title:'Produtos, sites e apps', hint:'Produtos e canais voltados a clientes e ao público, sites e documentação de produto.', pill:['','Produto'] },
+      { key:'tbd',  title:'Sem descrição, a classificar', hint:'Repositórios sem descrição nem tópicos: vale alguém dizer o que são.', pill:['','A classificar'] },
+      { key:'leg',  title:'Legado, arquivados e versões antigas', hint:'Versões antigas do Decentral, repositórios marcados como legacy, old, POC, arquivados ou substituídos.', pill:['','Legado'] }
+    ];
+    var box = document.getElementById('repoBody');
+    if (!box) return;
+    function esc(t){ return String(t == null ? '' : t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function repoOf(link){
+      var m = /github\.com\/[^\/\s]+\/([^\/#?\s]+)/i.exec(String(link || ''));
+      return m ? m[1].replace(/\.git$/i, '').toLowerCase() : '';
+    }
+    function repoLink(r){ return '<span class="rp-repo"><a href="https://github.com/usedux/' + esc(r.n) + '" target="_blank" rel="noopener">' + esc(r.n) + '</a></span>'; }
+    function flags(r){
+      var s = '<span class="rp-pill">' + (r.u ? 'Público' : 'Privado') + '</span>';
+      if (r.a) s += ' <span class="rp-pill warn">Arquivado</span>';
+      return s;
+    }
+    function topics(r){ return (r.t || []).map(function(t){ return '<span class="rp-topic">' + esc(t) + '</span>'; }).join(''); }
+    function table(head, rows){
+      return '<div class="tools-table-wrap"><table class="tools-table"><thead><tr>' + head.map(function(h){ return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' + rows.join('') + '</tbody></table></div>';
+    }
+
+    function render(){
+      var list = window.__cockpitReportsList;
+      if (!Array.isArray(list)) return;
+      var reports = list.map(function(r){ return r && r.data ? r.data : r; }).filter(Boolean);
+      var byRepo = {}, orphans = [];
+      reports.forEach(function(it){
+        var key = repoOf(it.linkGithub);
+        var known = key && REPOS.some(function(r){ return r.n.toLowerCase() === key; });
+        if (known) { (byRepo[key] = byRepo[key] || []).push(it); }
+        else orphans.push({ it:it, key:key });
+      });
+      var done = REPOS.filter(function(r){ return byRepo[r.n.toLowerCase()]; });
+      var todo = REPOS.filter(function(r){ return !byRepo[r.n.toLowerCase()]; });
+      var candidates = todo.filter(function(r){ return r.g === 'tool' && !r.a; }).length;
+
+      var html = '<div class="rp-kpis">' +
+        '<div class="rp-kpi"><div class="n">' + REPOS.length + '</div><div class="l">repositórios no GitHub</div></div>' +
+        '<div class="rp-kpi ok"><div class="n">' + done.length + '</div><div class="l">já reportados</div></div>' +
+        '<div class="rp-kpi warn"><div class="n">' + candidates + '</div><div class="l">ferramentas internas ainda sem report</div></div>' +
+        '<div class="rp-kpi"><div class="n">' + (todo.length - candidates) + '</div><div class="l">outros sem report (produtos, legado, a classificar)</div></div>' +
+        '<div class="rp-kpi gap"><div class="n">' + orphans.length + '</div><div class="l">reportadas sem repositório na lista</div></div>' +
+        '</div>';
+
+      // 1) Já reportados
+      html += '<details class="reported-area" open><summary class="reported-area-head">Já reportados (no GitHub e em Ferramentas reportadas)<span class="count">' + done.length + '</span></summary>';
+      if (!done.length) html += '<div class="reported-empty">Nenhum repositório está ligado a um report ainda.</div>';
+      else html += table(['Repositório','Ferramenta reportada','Ambiente','Uso','Acesso'], done.map(function(r){
+        var it = byRepo[r.n.toLowerCase()][0];
+        return '<tr><td>' + repoLink(r) + '</td><td class="tool-name">' + esc(it.nome) + '</td><td><span class="env-pill">' + esc(it.ambiente || '') + '</span></td><td class="rp-desc">' + esc(it.frequenciaUso || '') + '</td><td>' + flags(r) + '</td></tr>';
+      }));
+      html += '</details>';
+
+      // 2) Não reportados, por tipo
+      html += '<div class="tools-group-head" style="margin-top:22px;"><h2>Ainda não reportados</h2><span class="tools-group-sub">' + todo.length + ' repositórios · classificação sugerida a partir de nome, descrição e tópicos do GitHub</span></div>';
+      GROUPS.forEach(function(g){
+        var rows = todo.filter(function(r){ return r.g === g.key; });
+        if (!rows.length) return;
+        html += '<details class="reported-area"' + (g.key === 'tool' ? ' open' : '') + '><summary class="reported-area-head">' + g.title + '<span class="count">' + rows.length + '</span></summary>';
+        html += '<p class="rp-hint">' + g.hint + '</p>';
+        html += table(['Repositório','O que é','Tecnologia','Acesso'], rows.map(function(r){
+          var tag = (g.key === 'tool' && !r.a) ? ' <span class="rp-pill warn">Reportar</span>' : '';
+          return '<tr><td>' + repoLink(r) + tag + '</td><td class="rp-desc">' + (r.d ? esc(r.d) : '<span style="color:var(--ink-faint)">Sem descrição</span>') + (r.t.length ? '<div>' + topics(r) + '</div>' : '') + '</td><td class="rp-desc">' + esc(r.l || '') + '</td><td>' + flags(r) + '</td></tr>';
+        }));
+        html += '</details>';
+      });
+
+      // 3) Reportadas sem repositório na lista
+      html += '<div class="tools-group-head" style="margin-top:22px;"><h2>Reportadas sem repositório na lista</h2><span class="tools-group-sub">ferramentas reportadas cujo link do GitHub não aponta para um repositório da organização</span></div>';
+      if (!orphans.length) html += '<div class="reported-empty">Todas as ferramentas reportadas estão ligadas a um repositório.</div>';
+      else html += table(['Ferramenta reportada','No GitHub?','Motivo','Ambiente','Uso'], orphans.map(function(o){
+        var it = o.it, sim = String(it.disponivelGithub || '').toLowerCase().indexOf('sim') === 0;
+        var why = o.key ? 'O link aponta para "' + esc(o.key) + '", que não está na organização.' : (sim ? 'Disse que está no GitHub, mas não informou o link.' : 'Não está no GitHub.');
+        return '<tr><td class="tool-name">' + esc(it.nome) + '</td><td><span class="rp-pill ' + (sim ? 'warn' : 'gap') + '">' + (sim ? 'Sim, sem link' : esc(it.disponivelGithub || 'Não')) + '</span></td><td class="rp-desc">' + why + '</td><td><span class="env-pill">' + esc(it.ambiente || '') + '</span></td><td class="rp-desc">' + esc(it.frequenciaUso || '') + '</td></tr>';
+      }));
+
+      html += '<p class="rp-foot">O vínculo é feito pelo link do GitHub preenchido no report. Para uma ferramenta sair de "ainda não reportados", reporte com o link do repositório.</p>';
+      box.innerHTML = html;
+    }
+    window.addEventListener('cockpit:reports', render);
+    render();
   })();
 </script>
 
@@ -2962,6 +3085,8 @@
       dbApi.collection('reports').onSnapshot(function(snap){
         lastReports = snap.docs.map(function(d){ return { id: d.id, data: d.data() }; });
         renderReported(lastReports.map(function(r){ return r.data; }));
+        window.__cockpitReportsList = lastReports;
+        try { window.dispatchEvent(new Event('cockpit:reports')); } catch(e){}
         if (isAdmin) renderAdmin();
       }, function(){
         $('reportedToolsBody').innerHTML = '<div class="reported-empty">Não foi possível carregar os reports agora.</div>';
@@ -4069,6 +4194,7 @@
       if ((hash === 'projetos' || hash === 'painel') && window.__cockpitShowPage) window.__cockpitShowPage('projects');
       if (hash === 'reportar-ferramenta') openModal('reportToolModalOverlay');
       if ((hash === 'reportar-inovacao' || hash === 'inovacao') && window.__cockpitShowSubtab) window.__cockpitShowSubtab('inovacoes');
+      if ((hash === 'repositorio' || hash === 'ferramentas-do-repositorio') && window.__cockpitShowPage) { window.__cockpitShowPage('tools'); if (window.__cockpitShowSubtab) window.__cockpitShowSubtab('repos'); }
       if (hash === 'reportar-ferramenta' && window.__cockpitShowSubtab) window.__cockpitShowSubtab('ferramentas');
       if (hash === 'reportar-inovacao' || hash === 'inovacao') openModal('reportInnovationModalOverlay');
     }
