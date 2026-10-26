@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T13:20:50.478Z","sha":"9d55928","message":"Painel de Projetos: um projeto por linha","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T13:37:09.884Z","sha":"4b519ed","message":"Detalhamento de produtos: sub-aba \"Objetivos da área de produtos\" (perguntas abertas + estratégico, tático e operacional)","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -945,6 +945,21 @@
   .ly-est{--wc:var(--area-mkt); --wcs:var(--area-mkt-soft);}
   .ly-tat{--wc:var(--area-com); --wcs:var(--area-com-soft);}
   .ly-op{--wc:var(--area-ops); --wcs:var(--area-ops-soft);}
+  .oq-list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:10px;}
+  .oq-list li{display:flex; gap:10px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:11px 14px;}
+  .oq-list .n{flex:0 0 auto; width:22px; height:22px; border-radius:50%; background:var(--accent-soft); color:var(--accent-strong); font-family:"Roboto Mono",monospace; font-size:11.5px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .oq-list p{margin:0; font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.4;}
+  .ob-layer{margin-top:18px; border:1px solid var(--line); border-top:4px solid var(--wc); border-radius:10px; background:var(--surface); overflow:hidden;}
+  .ob-head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; padding:12px 16px 8px;}
+  .ob-head h3{margin:0; font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:16px; color:var(--wc);}
+  .ob-head span{font-size:12px; color:var(--ink-faint);}
+  .ob-table{width:100%; border-collapse:collapse; font-size:13px;}
+  .ob-table th{text-align:left; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-muted); padding:7px 16px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .ob-table td{padding:10px 16px; border-bottom:1px solid var(--line); color:var(--ink); vertical-align:top; line-height:1.45;}
+  .ob-table tr:last-child td{border-bottom:0;}
+  .ob-table th:nth-child(n+2), .ob-table td:nth-child(n+2){width:110px; white-space:nowrap;}
+  .ob-table td.tbd{color:var(--ink-faint); font-style:italic;}
+  @media (max-width:640px){ .ob-table th:nth-child(n+2), .ob-table td:nth-child(n+2){width:72px; white-space:normal;} }
   .vg-table{width:100%; border-collapse:collapse; font-size:13px; background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; min-width:520px;}
   .vg-table th{text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-muted); padding:9px 12px; border-bottom:1px solid var(--line);}
   .vg-table td{padding:9px 12px; border-bottom:1px solid var(--line); color:var(--ink);}
@@ -1881,11 +1896,13 @@
   <div class="rd-bar">
     <div class="rd-tabs" role="tablist" aria-label="Seções do detalhamento">
       <button type="button" class="rd-tab active" role="tab" data-rd="visao" aria-selected="true">Visão geral</button>
+      <button type="button" class="rd-tab" role="tab" data-rd="objetivos" aria-selected="false">Objetivos da área de produtos</button>
       <button type="button" class="rd-tab" role="tab" data-rd="produtos" aria-selected="false">Produtos</button>
       <button type="button" class="rd-tab" role="tab" data-rd="metodologia" aria-selected="false">Metodologia de produto</button>
     </div>
   </div>
   <div id="rdPanelVisao"><div class="reported-empty">Carregando…</div></div>
+  <div id="rdPanelObjetivos" hidden><div class="reported-empty">Carregando…</div></div>
   <div id="rdPanelProdutos" hidden><div class="reported-empty">Carregando…</div></div>
   <div id="rdPanelMetodologia" hidden><div class="reported-empty">Carregando…</div></div>
 
@@ -4113,7 +4130,9 @@
         var tmp = document.createElement('div');
         tmp.innerHTML = html;
         var pv = tmp.querySelector('[data-rd-panel="visao"]'), pp = tmp.querySelector('[data-rd-panel="produtos"]');
+        var po = tmp.querySelector('[data-rd-panel="objetivos"]');
         $('rdPanelVisao').innerHTML = pv ? pv.innerHTML : '';
+        $('rdPanelObjetivos').innerHTML = po ? po.innerHTML : '';
         $('rdPanelProdutos').innerHTML = pp ? pp.innerHTML : (pv ? '' : html);
         detailLoaded = true;
       }
@@ -4157,6 +4176,7 @@
           var on = x === tb; x.classList.toggle('active', on); x.setAttribute('aria-selected', on ? 'true' : 'false');
         });
         $('rdPanelVisao').hidden = which !== 'visao';
+        $('rdPanelObjetivos').hidden = which !== 'objetivos';
         $('rdPanelProdutos').hidden = which !== 'produtos';
         $('rdPanelMetodologia').hidden = which !== 'metodologia';
       });

@@ -935,6 +935,21 @@
   .ly-est{--wc:var(--area-mkt); --wcs:var(--area-mkt-soft);}
   .ly-tat{--wc:var(--area-com); --wcs:var(--area-com-soft);}
   .ly-op{--wc:var(--area-ops); --wcs:var(--area-ops-soft);}
+  .oq-list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:10px;}
+  .oq-list li{display:flex; gap:10px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:11px 14px;}
+  .oq-list .n{flex:0 0 auto; width:22px; height:22px; border-radius:50%; background:var(--accent-soft); color:var(--accent-strong); font-family:"Roboto Mono",monospace; font-size:11.5px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .oq-list p{margin:0; font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.4;}
+  .ob-layer{margin-top:18px; border:1px solid var(--line); border-top:4px solid var(--wc); border-radius:10px; background:var(--surface); overflow:hidden;}
+  .ob-head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; padding:12px 16px 8px;}
+  .ob-head h3{margin:0; font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:16px; color:var(--wc);}
+  .ob-head span{font-size:12px; color:var(--ink-faint);}
+  .ob-table{width:100%; border-collapse:collapse; font-size:13px;}
+  .ob-table th{text-align:left; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-muted); padding:7px 16px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .ob-table td{padding:10px 16px; border-bottom:1px solid var(--line); color:var(--ink); vertical-align:top; line-height:1.45;}
+  .ob-table tr:last-child td{border-bottom:0;}
+  .ob-table th:nth-child(n+2), .ob-table td:nth-child(n+2){width:110px; white-space:nowrap;}
+  .ob-table td.tbd{color:var(--ink-faint); font-style:italic;}
+  @media (max-width:640px){ .ob-table th:nth-child(n+2), .ob-table td:nth-child(n+2){width:72px; white-space:normal;} }
   .vg-table{width:100%; border-collapse:collapse; font-size:13px; background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; min-width:520px;}
   .vg-table th{text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-muted); padding:9px 12px; border-bottom:1px solid var(--line);}
   .vg-table td{padding:9px 12px; border-bottom:1px solid var(--line); color:var(--ink);}
@@ -2018,7 +2033,7 @@
   </div>
 
   <h3 class="rm-h3">5. Objetivo de cada camada</h3>
-  <p class="rm-lead">O que cada camada persegue neste momento.</p>
+  <p class="rm-lead">O que cada camada persegue neste momento. Os objetivos da área de produtos, camada a camada, estão na aba Objetivos da área de produtos.</p>
   <div class="rm-cards">
     <div class="rm-card ly-est">
       <h4>Estratégica</h4>
@@ -2043,7 +2058,7 @@
       <h4>Operacional</h4>
       <span class="prof">Como construímos</span>
       <div class="r"><ul>
-        <li>Evoluir o DevOps dos produtos que já estão rodando.</li>
+        <li>Evoluir o DoD (definição de pronto) dos produtos que já estão rodando.</li>
         <li>Padronizar e dar visibilidade ao que está sendo construído, com uma ferramenta interna.</li>
         <li>Compartilhar dados conectados à base de dados, e não só planilhas inseridas à mão.</li>
         <li>Tirar os produtos importantes do ambiente local e centralizá-los na Vercel, com o código disponível para apuração no GitHub.</li>
@@ -2051,6 +2066,64 @@
     </div>
   </div>
   <p class="rm-foot">Os detalhamentos do upstream e do downstream entram em seguida, na aba Metodologia de produto.</p>
+</section>
+<section data-rd-panel="objetivos">
+  <h3 class="rm-h3" style="margin-top:4px;">Perguntas abertas</h3>
+  <p class="rm-lead">As perguntas que apareceram ao longo do último mês e serviram de norte para tudo o que está sendo feito na área de produtos. Ficam separadas dos objetivos porque ainda não têm resposta fechada.</p>
+  <ol class="oq-list">
+    <li><span class="n">1</span><p>Como os produtos nascem?</p></li>
+    <li><span class="n">2</span><p>Como acompanhamos os produtos?</p></li>
+    <li><span class="n">3</span><p>Como temos maior visibilidade do status de cada produto?</p></li>
+    <li><span class="n">4</span><p>Como sabemos que estamos evoluindo?</p></li>
+    <li><span class="n">5</span><p>Como lançar produtos mais rápido e validá-los mais rápido?</p></li>
+    <li><span class="n">6</span><p>Como os produtos se conectam?</p></li>
+    <li><span class="n">7</span><p>Como centralizamos num só lugar as documentações e tudo o que geramos sobre os produtos, de forma acessível a quem precisa dessas informações?</p></li>
+  </ol>
+
+  <h3 class="rm-h3">Objetivos por camada</h3>
+  <p class="rm-lead">O que a área de produtos busca em cada uma das três camadas. Por enquanto são só os objetivos; o próximo passo é medir cada um: como está hoje e aonde queremos chegar.</p>
+
+  <div class="ob-layer ly-est">
+    <div class="ob-head"><h3>Estratégico</h3><span>visão, indicadores e definições</span></div>
+    <table class="ob-table">
+      <thead><tr><th>Objetivo</th><th>Hoje</th><th>Meta</th></tr></thead>
+      <tbody>
+        <tr><td>Fornecer a visão geral do que está acontecendo na empresa.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Fornecer indicadores e formas de acompanhar o andamento dos projetos em curso.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Centralizar as definições e os objetivos que temos para cada um dos produtos.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Definir melhor o DoR e o fluxo de upstream: como nascem as novas ideias e o que é considerado um produto pronto para ser construído.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ob-layer ly-tat">
+    <div class="ob-head"><h3>Tático</h3><span>owners, metodologia e prioridades</span></div>
+    <table class="ob-table">
+      <thead><tr><th>Objetivo</th><th>Hoje</th><th>Meta</th></tr></thead>
+      <tbody>
+        <tr><td>Definir os owners de cada um dos projetos.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Propor e implementar uma metodologia sistêmica de acompanhamento para os responsáveis de cada projeto (Tech Lead e Business Owner).</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Organizar as prioridades: o que é must-have e o que queremos ter no futuro, hierarquizando os pedidos das diferentes áreas.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Terminar o mapeamento das ferramentas internas.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Criar uma metodologia para melhorar a visibilidade dessas ferramentas e definir os próximos passos.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ob-layer ly-op">
+    <div class="ob-head"><h3>Operacional</h3><span>downstream, DoD e ferramentas</span></div>
+    <table class="ob-table">
+      <thead><tr><th>Objetivo</th><th>Hoje</th><th>Meta</th></tr></thead>
+      <tbody>
+        <tr><td>Melhorar o fluxo de downstream: a forma e a cadência com que as coisas são desenvolvidas.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Terminar as definições do DoD.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Plano de padronização e visibilidade das ferramentas já desenvolvidas e em uso hoje.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+        <tr><td>Com o time técnico, garantir que as ferramentas usadas todo dia e de maior criticidade estão no repositório, no ambiente compartilhado do GitHub, e que cumprem o mínimo do DoD.</td><td class="tbd">a definir</td><td class="tbd">a definir</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="rm-foot"><b>Próximo passo:</b> definir a métrica de cada objetivo, com o ponto de partida de hoje e a meta que queremos alcançar. As colunas Hoje e Meta ficam como "a definir" até lá.</p>
 </section>
 <section data-rd-panel="produtos">
   <h3 class="rm-h3">1. Hoje: plataformas soltas, ligadas à mão</h3>
@@ -2300,11 +2373,13 @@
   <div class="rd-bar">
     <div class="rd-tabs" role="tablist" aria-label="Seções do detalhamento">
       <button type="button" class="rd-tab active" role="tab" data-rd="visao" aria-selected="true">Visão geral</button>
+      <button type="button" class="rd-tab" role="tab" data-rd="objetivos" aria-selected="false">Objetivos da área de produtos</button>
       <button type="button" class="rd-tab" role="tab" data-rd="produtos" aria-selected="false">Produtos</button>
       <button type="button" class="rd-tab" role="tab" data-rd="metodologia" aria-selected="false">Metodologia de produto</button>
     </div>
   </div>
   <div id="rdPanelVisao"><div class="reported-empty">Carregando…</div></div>
+  <div id="rdPanelObjetivos" hidden><div class="reported-empty">Carregando…</div></div>
   <div id="rdPanelProdutos" hidden><div class="reported-empty">Carregando…</div></div>
   <div id="rdPanelMetodologia" hidden><div class="reported-empty">Carregando…</div></div>
 
@@ -4573,7 +4648,9 @@
         var tmp = document.createElement('div');
         tmp.innerHTML = html;
         var pv = tmp.querySelector('[data-rd-panel="visao"]'), pp = tmp.querySelector('[data-rd-panel="produtos"]');
+        var po = tmp.querySelector('[data-rd-panel="objetivos"]');
         $('rdPanelVisao').innerHTML = pv ? pv.innerHTML : '';
+        $('rdPanelObjetivos').innerHTML = po ? po.innerHTML : '';
         $('rdPanelProdutos').innerHTML = pp ? pp.innerHTML : (pv ? '' : html);
         detailLoaded = true;
       }
@@ -4617,6 +4694,7 @@
           var on = x === tb; x.classList.toggle('active', on); x.setAttribute('aria-selected', on ? 'true' : 'false');
         });
         $('rdPanelVisao').hidden = which !== 'visao';
+        $('rdPanelObjetivos').hidden = which !== 'objetivos';
         $('rdPanelProdutos').hidden = which !== 'produtos';
         $('rdPanelMetodologia').hidden = which !== 'metodologia';
       });
