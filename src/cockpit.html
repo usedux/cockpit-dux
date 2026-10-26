@@ -220,12 +220,19 @@
   .dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
 
   /* ---------- Grid ---------- */
+  /* Um projeto por linha (mais folga). Em tela larga o conteúdo do card corre em duas colunas: pessoas e objetivos no topo, o quadro de milestones em largura total e as métricas logo abaixo. */
   .grid{
     display:grid;
-    grid-template-columns:repeat(2, 1fr);
+    grid-template-columns:1fr;
     gap:22px;
   }
-  @media (max-width:860px){ .grid{grid-template-columns:1fr;} }
+  @media (min-width:1000px){
+    .grid > .card:not(.building){display:block; column-count:2; column-gap:44px; column-rule:1px solid var(--line);}
+    .grid > .card:not(.building) > *{break-inside:avoid; margin-bottom:16px;}
+    .grid > .card:not(.building) > .card-head, .grid > .card:not(.building) > .blockers.hl, .grid > .card:not(.building) > .ms-wrap{column-span:all;}
+    .grid > .card:not(.building) > .card-head{margin-bottom:14px;}
+    .grid > .card:not(.building) > :last-child{margin-bottom:0;}
+  }
 
   .card{
     background:var(--surface);

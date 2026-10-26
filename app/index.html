@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T13:04:07.711Z","sha":"2a28091","message":"Roadmap enxuto + Detalhamento de produtos (acesso em dois níveis) + Metodologia de produto","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T13:06:09.348Z","sha":"f3c8c98","message":"Roadmap: Evolução de cada produto vira o item 1; novo bloco Estratégia de produto","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -230,12 +230,19 @@
   .dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
 
   /* ---------- Grid ---------- */
+  /* Um projeto por linha (mais folga). Em tela larga o conteúdo do card corre em duas colunas: pessoas e objetivos no topo, o quadro de milestones em largura total e as métricas logo abaixo. */
   .grid{
     display:grid;
-    grid-template-columns:repeat(2, 1fr);
+    grid-template-columns:1fr;
     gap:22px;
   }
-  @media (max-width:860px){ .grid{grid-template-columns:1fr;} }
+  @media (min-width:1000px){
+    .grid > .card:not(.building){display:block; column-count:2; column-gap:44px; column-rule:1px solid var(--line);}
+    .grid > .card:not(.building) > *{break-inside:avoid; margin-bottom:16px;}
+    .grid > .card:not(.building) > .card-head, .grid > .card:not(.building) > .blockers.hl, .grid > .card:not(.building) > .ms-wrap{column-span:all;}
+    .grid > .card:not(.building) > .card-head{margin-bottom:14px;}
+    .grid > .card:not(.building) > :last-child{margin-bottom:0;}
+  }
 
   .card{
     background:var(--surface);
