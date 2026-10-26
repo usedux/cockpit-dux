@@ -7,7 +7,7 @@ const byProject = { "anti-banking": F.bancking, "anti-sacado": F.sacado, decentr
 const TYPE_OF = { "Done / In Prod": "completed", Canceled: "canceled", Backlog: "backlog", "In Progress": "started", "In Review": "started", "QA - In Test": "started" };
 
 export function createMock() {
-  const state = { calls: 0, issues: {}, milestones: {}, upstream: [{ identifier: "DUX-900", title: "Ideia de teste", lane: "1. Backlog de Ideias" }] };
+  const state = { calls: 0, updates: {}, issues: {}, milestones: {}, upstream: [{ identifier: "DUX-900", title: "Ideia de teste", lane: "1. Backlog de Ideias" }] };
   for (const [key, fx] of Object.entries(byProject)) {
     const id = PROJECTS[key].linearProjectId;
     state.issues[id] = fx.issues.map((i) => ({ ...i, createdAt: i.createdAt || "2026-09-20T12:00:00.000Z", updatedAt: i.completedAt || "2026-10-05T12:00:00.000Z" }));
@@ -23,6 +23,10 @@ export function createMock() {
   const respond = (query, v) => {
     if (/issues\(filter: \{ project: \{ id: \{ eq: \$id \} \} \}/.test(query) && /projectMilestone/.test(query)) {
       return { issues: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: (state.issues[v.id] || []).map(node) } };
+    }
+    if (/projectUpdates/.test(query)) {
+      const u = state.updates[v.id];
+      return { project: { projectUpdates: { nodes: u ? [u] : [] } } };
     }
     if (/projectMilestones/.test(query)) return { project: { projectMilestones: { nodes: (state.milestones[v.id] || []).map((m) => ({ id: m.id, name: m.name, progress: m.progress, targetDate: m.targetDate, sortOrder: m.sortOrder })) } } };
     if (/slugId/.test(query)) return { projects: { nodes: [{ id: "up-1", name: "Upstream - Novos Projetos", url: "https://linear.app/wearedux/project/upstream-novos-projetos-e6787a72646c", state: "started" }] } };

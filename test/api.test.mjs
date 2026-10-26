@@ -124,9 +124,14 @@ test("webhook: assinatura inválida/ausente → 401; replay antigo → 401", asy
 
 test("webhook: evento irrelevante é ignorado; evento de Issue atualiza o cockpit", async () => {
   assert.equal((await (await hook({ type: "Reaction", webhookTimestamp: Date.now() })).json()).ignored, "Reaction");
+  const { PROJECTS } = await import("../lib/config.js");
+  env.mock.state.updates[PROJECTS["anti-sacado"].linearProjectId] = { body: "Reunião 26 de Outubro\n\n* Definido o piloto", health: "onTrack", createdAt: "2026-10-26T13:00:00.000Z", url: "https://linear.app/x/activity#u", user: { name: "Lucas Henning" } };
   const r = await hook({ type: "Issue", action: "update", webhookTimestamp: Date.now() });
   assert.equal(r.status, 202);
   const live = await (await call(env.base, "/api/live", { cookie: ana })).json();
+  // última atualização do projeto (status update do Linear) entra no card; projeto sem atualização mostra o aviso
+  assert.match(live.blocks["anti-sacado:update"], /Reunião 26 de Outubro.*Definido o piloto.*Abrir no Linear/s);
+  assert.match(live.blocks["decentral:update"], /Nenhuma atualização publicada/);
   assert.match(live.blocks["anti-sacado:milestones"], /Piloto Risco Sacado/);
   assert.equal(live.meta.warnings.length > 0, true); // DUX-510/511 ocultos
   assert.match(live.blocks["meta:synced"], /<time datetime="\d{4}-\d{2}-\d{2}T[^"]+Z"><\/time>/); // carimbo "última atualização do Linear"
@@ -175,9 +180,9 @@ test("build: HTML de produção sem referências ao claude.ai, histórico zerado
   // o Artifact (fonte) continua apontando para o artifact do Product Library
   assert.match(src, /https:\/\/claude\.ai\/artifact\/8qicoqcWa8FuthABHjohgE/);
   assert.match(html, /<script id="weekHistoryData" type="application\/json">\[\]<\/script>/);
-  assert.equal(liveMarkerNames(html).length, 29);
-  const filled = applyLiveBlocks(html, { "anti-sacado:areas": "<span>TESTE</span>" });
-  assert.match(filled, /LIVE:anti-sacado:areas:start -->\n<span>TESTE<\/span>\n<!-- LIVE:anti-sacado:areas:end/);
+  assert.equal(liveMarkerNames(html).length, 17);
+  const filled = applyLiveBlocks(html, { "anti-sacado:update": "<span>TESTE</span>" });
+  assert.match(filled, /LIVE:anti-sacado:update:start -->\n<span>TESTE<\/span>\n<!-- LIVE:anti-sacado:update:end/);
 });
 
 test("closing?dry=1 não grava nada (dá pra testar no meio da semana sem travar o fechamento de sexta)", async () => {

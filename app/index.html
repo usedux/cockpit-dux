@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T13:37:09.884Z","sha":"4b519ed","message":"Detalhamento de produtos: sub-aba \"Objetivos da área de produtos\" (perguntas abertas + estratégico, tático e operacional)","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T14:12:57.345Z","sha":"246498d","message":"Detalhamento de produtos: sub-aba \"Objetivos da área de produtos\" (perguntas abertas + estratégico, tático e operacional)","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -230,19 +230,45 @@
   .dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
 
   /* ---------- Grid ---------- */
-  /* Um projeto por linha (mais folga). Em tela larga o conteúdo do card corre em duas colunas: pessoas e objetivos no topo, o quadro de milestones em largura total e as métricas logo abaixo. */
+  /* Um projeto por linha (mais folga). O card é uma coluna só: cabeçalho, topo (pessoas/objetivos + última atualização), milestone e o resto. */
   .grid{
     display:grid;
     grid-template-columns:1fr;
     gap:22px;
   }
+  .card-top{display:grid; grid-template-columns:1fr; gap:16px 36px;}
+  .card-top-l{display:flex; flex-direction:column; gap:16px; min-width:0;}
+  .card-top-r{min-width:0; display:flex; flex-direction:column; gap:7px;}
   @media (min-width:1000px){
-    .grid > .card:not(.building){display:block; column-count:2; column-gap:44px; column-rule:1px solid var(--line);}
-    .grid > .card:not(.building) > *{break-inside:avoid; margin-bottom:16px;}
-    .grid > .card:not(.building) > .card-head, .grid > .card:not(.building) > .blockers.hl, .grid > .card:not(.building) > .ms-wrap{column-span:all;}
-    .grid > .card:not(.building) > .card-head{margin-bottom:14px;}
-    .grid > .card:not(.building) > :last-child{margin-bottom:0;}
+    .card-top{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); align-items:start;}
+    .card-top-r{border-left:1px solid var(--line); padding-left:28px;}
   }
+  @media (max-width:999px){
+    .card-top-r{border-top:1px solid var(--line); padding-top:14px;}
+  }
+  .upd-head{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--ink-faint);}
+  .upd{display:flex; flex-direction:column; gap:7px;}
+  .upd-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  .upd-title{font-size:13.5px; font-weight:700; color:var(--ink);}
+  .upd-meta{display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--ink-faint); font-family:"Roboto Mono",monospace;}
+  .upd-health{font-family:inherit; font-size:10px; font-weight:700; padding:1px 8px; border-radius:100px; background:var(--surface-muted); color:var(--ink-soft);}
+  .upd-health.ok{background:var(--st-done-soft,var(--surface-muted)); color:var(--st-done);}
+  .upd-health.risk{background:var(--blk-int-soft); color:var(--blk-int);}
+  .upd-health.off{background:var(--blk-ext-soft); color:var(--blk-ext);}
+  .upd-body{
+    font-size:12.5px; line-height:1.5; color:var(--ink); max-height:21em; overflow:auto; padding:2px 8px 2px 0;
+    /* sombras que só aparecem quando há mais texto para rolar */
+    background:
+      linear-gradient(var(--surface) 30%, transparent) top, linear-gradient(transparent, var(--surface) 70%) bottom,
+      radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.16), transparent) top, radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.16), transparent) bottom;
+    background-repeat:no-repeat; background-size:100% 34px, 100% 34px, 100% 9px, 100% 9px; background-attachment:local, local, scroll, scroll;
+  }
+  .upd-body p{margin:0 0 5px;}
+  .upd-body ul{margin:0; padding-left:17px; display:flex; flex-direction:column; gap:3px;}
+  .upd-body ul ul{margin-top:3px;}
+  .upd-body a, .upd-link{color:var(--accent-strong); text-decoration:none;}
+  .upd-body a:hover, .upd-link:hover{text-decoration:underline;}
+  .upd-link{font-size:11.5px; font-weight:600; align-self:flex-start;}
 
   .card{
     background:var(--surface);
@@ -355,12 +381,42 @@
   .ms-bar div{height:100%; background:var(--accent); border-radius:100px;}
   .ms-meta{display:flex; justify-content:space-between; align-items:baseline; gap:8px; font-size:11.5px; color:var(--ink-soft);}
   .ms-meta .date{font-family:"Roboto Mono",monospace; font-size:10.5px; font-weight:600; color:var(--accent-strong); white-space:nowrap;}
-  .ms-board{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:2px;}
-  @media (max-width:620px){ .ms-board{grid-template-columns:1fr;} }
-  .ms-board .col{background:var(--surface);}
-  .ms-board .task{background:var(--surface-muted);}
-  .ms-board .col.todo .col-head{color:var(--ink-soft);}
   .col-head .n{margin-left:auto; font-family:"Roboto Mono",monospace; font-size:11px; font-weight:600; color:var(--ink-faint);}
+
+  /* Visão macro do milestone: faixa de status, contadores e tasks por área / tipo */
+  .ms-metrics{background:var(--surface); border-radius:10px; padding:12px 14px 11px; display:flex; flex-direction:column; gap:10px;}
+  .ms-metrics .distro{margin-top:0; height:10px;}
+  .ms-stats{display:flex; flex-wrap:wrap; gap:6px 18px;}
+  .ms-stat{display:inline-flex; align-items:baseline; gap:6px; font-size:11.5px; color:var(--ink-soft);}
+  .ms-stat i{width:8px; height:8px; border-radius:50%; display:inline-block; align-self:center;}
+  .ms-stat b{font-family:"Roboto Mono",monospace; font-size:17px; font-weight:600; color:var(--ink);}
+  .ms-chiprow{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .ms-chiprow .k{flex:0 0 38px; font-size:10px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--ink-faint);}
+  .ms-chiprow .chips{display:flex; flex-wrap:wrap; gap:6px;}
+
+  /* Em destaque: o que está acontecendo agora */
+  .ms-hot{display:grid; grid-template-columns:3fr 2fr; gap:10px; align-items:start;}
+  @media (max-width:760px){ .ms-hot{grid-template-columns:1fr;} }
+  .ms-hot .col{background:var(--surface); border:1px solid var(--line-strong);}
+  .ms-hot .col.progress{border-top:3px solid var(--st-progress);}
+  .ms-hot .col.qa{border-top:3px solid var(--st-qa);}
+  .ms .task{background:var(--surface-muted);}
+  .ms .col.todo .col-head{color:var(--ink-soft);}
+
+  /* Menos destaque, recolhidos: o que falta entregar e o que já está em produção */
+  .ms-cold{display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start;}
+  @media (max-width:760px){ .ms-cold{grid-template-columns:1fr;} }
+  .cold{background:transparent; border:1px solid var(--line-strong); border-radius:9px; padding:0;}
+  .cold > summary, .cold .cold-sum{display:flex; align-items:center; gap:7px; cursor:pointer; list-style:none; padding:8px 11px; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--ink-soft);}
+  .cold > summary::-webkit-details-marker{display:none;}
+  .cold > summary::after{content:"▸"; font-size:11px; color:var(--ink-faint);}
+  .cold[open] > summary::after{content:"▾";}
+  .cold .dot{width:7px; height:7px;}
+  .cold .n{margin-left:auto; font-family:"Roboto Mono",monospace; font-size:11px; font-weight:600; color:var(--ink-faint);}
+  .cold > summary .n{margin-right:2px;}
+  .cold .cold-list{display:flex; flex-direction:column; gap:6px; padding:0 9px 9px; max-height:22em; overflow:auto;}
+  .cold.is-empty .cold-sum{cursor:default;}
+  .cold.is-empty .empty{padding:0 11px 9px;}
   details.more{margin-top:1px;}
   details.more > summary{cursor:pointer; font-size:11px; font-weight:600; color:var(--ink-soft); list-style:none; padding:2px 2px 4px;}
   details.more > summary::-webkit-details-marker{display:none;}
@@ -1075,7 +1131,9 @@
   <div class="sync-wrap">
     <div class="sync-stamp" id="syncStamp" title="Última vez que o cockpit recebeu dados do Linear">
       <span class="sync-dot"></span><span id="syncStampText">Linear · última atualização: —</span>
-      <span id="syncSrc" hidden><!-- LIVE:meta:synced:start --><!-- LIVE:meta:synced:end --></span>
+      <span id="syncSrc" hidden><!-- LIVE:meta:synced:start -->
+<time datetime="2026-10-26T14:11:39.776Z"></time>
+<!-- LIVE:meta:synced:end --></span>
     </div>
     <button type="button" class="update-btn" data-update hidden title="Forçar agora a sincronização com o Linear"><span class="ic" aria-hidden="true">↻</span><span class="lbl">Update</span></button>
     <span class="update-msg" data-update-msg role="status" aria-live="polite"></span>
@@ -1130,10 +1188,12 @@
     <div class="blockers hl">
       <div class="blockers-head">⛔ O que está travando o avanço</div>
       <!-- LIVE:anti-banking:blockers:start -->
-    <div class="blocker"><span class="blocker-tag externo">Externo</span><p>Aguardando resposta da Hiperbanco — testando a API de feedback de abertura de conta.<span class="blocker-ref"><span class="mono">DUX-523</span> · Abertura da Primeira Conta</span></p></div>
-    <!-- LIVE:anti-banking:blockers:end -->
+<div class="blocker"><span class="blocker-tag externo">Externo</span><p>Aguardando resposta da Hiperbanco — testando a API de feedback de abertura de conta.<span class="blocker-ref"><span class="mono">DUX-523</span> · Abertura da Primeira Conta</span></p></div>
+<!-- LIVE:anti-banking:blockers:end -->
     </div>
 
+    <div class="card-top">
+      <div class="card-top-l">
     <div class="people">
       <div><span class="k">Tech Lead</span><b>André</b></div>
       <div><span class="k">Business Owner</span><b>Lucas H.</b></div>
@@ -1146,50 +1206,25 @@
       </ol></div>
       <div class="goal-row"><span class="k">Próximo goal</span><p>Realizar a abertura de conta.</p></div>
     </div>
+      </div>
+      <div class="card-top-r">
+        <div class="upd-head">Última atualização do projeto</div>
+        <!-- LIVE:anti-banking:update:start -->
+<div class="upd"><div class="upd-top"><span class="upd-title">Update 26/Outubro</span><span class="upd-meta"><span class="upd-health ok">No prazo</span><time datetime="2026-10-26T13:28:51.721Z">26/10</time> · Lucas H.</span></div><div class="upd-body"><ul><li>A abertura de conta segue bloqueada, nos foi informado na semana passada que o banco liquidante que opera junto com o Hiperbanco não vai seguir com eles , então teriamos que buscar um novo parceiro</li><li>Aproveitamos o momento para repensar a idéia do aplicativo e separar a abertura de conta de um novo canal , estratégicamente</li></ul></div><a class="upd-link" href="https://linear.app/wearedux/project/anti-app-186d98074f2d/activity#project-update-434f1b1a" target="_blank" rel="noopener">Abrir no Linear ↗</a></div>
+<!-- LIVE:anti-banking:update:end -->
+      </div>
+    </div>
 
     <!-- LIVE:anti-banking:milestones:start -->
-    <div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms-empty">Nenhum milestone em execução no momento — veja os próximos mais abaixo.</div><div class="ms-outside-note">Fora de milestone · 21 tasks · 0 em execução · 0 em teste · 1 em produção · 20 no backlog/refino</div></div>
-    <!-- LIVE:anti-banking:milestones:end -->
+<div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms-empty">Nenhum milestone em execução no momento — veja os próximos mais abaixo.</div><div class="ms-outside-note">Fora de milestone · 21 tasks · 0 em execução · 0 em teste · 2 em produção · 19 no backlog/refino</div></div>
+<!-- LIVE:anti-banking:milestones:end -->
 
 
-    <div class="metrics-head">Principais métricas dos milestones</div>
-    <div class="distro" title="Distribuição das tasks dos milestones por etapa">
-      <!-- LIVE:anti-banking:distro-bars:start -->
-    <div style="width:100.0%; background:var(--ink-faint)"></div>
-    <!-- LIVE:anti-banking:distro-bars:end -->
-    </div>
-    <div class="distro-legend">
-      <!-- LIVE:anti-banking:distro-legend:start -->
-    <span><span class="dot" style="background:var(--ink-faint)"></span>Backlog · 1</span>
-    <!-- LIVE:anti-banking:distro-legend:end -->
-    </div>
-    <div class="areas">
-      <div class="areas-head">Área</div>
-      <div class="area-chips">
-        <!-- LIVE:anti-banking:areas:start -->
-    <span class="chip mkt">Marketing · 0</span>
-<span class="chip fin">Financeiro · 0</span>
-<span class="chip ops">Operações · 0</span>
-<span class="chip other" title="Tasks sem label de área">Sem área · 1</span>
-    <!-- LIVE:anti-banking:areas:end -->
-      </div>
-    </div>
-    <div class="types">
-      <div class="types-head">Tipo de task</div>
-      <div class="type-chips">
-        <!-- LIVE:anti-banking:types:start -->
-    <span class="tchip bug">Bug · 0</span>
-<span class="tchip melhoria">Melhoria · 0</span>
-<span class="tchip feature">Nova Funcionalidade · 1</span>
-<span class="tchip outros">Outros · 0</span>
-    <!-- LIVE:anti-banking:types:end -->
-      </div>
-    </div>
     <div class="next-ms">
       <div class="next-ms-head">Próximos milestones</div>
       <!-- LIVE:anti-banking:next-milestones:start -->
-    <div class="next-ms-item"><div class="next-ms-name">Abertura da Primeira Conta</div><div class="next-ms-meta"><span>1 task mapeada · nenhuma pronta p/ dev ainda</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div>
-    <!-- LIVE:anti-banking:next-milestones:end -->
+<div class="next-ms-item"><div class="next-ms-name">Abertura da Primeira Conta</div><div class="next-ms-meta"><span>1 task mapeada · nenhuma pronta p/ dev ainda</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div>
+<!-- LIVE:anti-banking:next-milestones:end -->
     </div>
   </div>
 
@@ -1205,6 +1240,8 @@
       <span class="pill progress">Em execução</span>
     </div>
 
+    <div class="card-top">
+      <div class="card-top-l">
     <div class="people">
       <div><span class="k">Tech Lead</span><b>Zaidan</b></div>
       <div><span class="k">Business Owner</span><b>— —</b></div>
@@ -1217,62 +1254,37 @@
       </ol></div>
       <div class="goal-row"><span class="k">Próximo goal</span><p>Finalizar a implementação e iniciar os testes locais.</p></div>
     </div>
+      </div>
+      <div class="card-top-r">
+        <div class="upd-head">Última atualização do projeto</div>
+        <!-- LIVE:anti-sacado:update:start -->
+<div class="upd"><div class="upd-top"><span class="upd-title">Reunião 5 de Outubro</span><span class="upd-meta"><span class="upd-health ok">No prazo</span><time datetime="2026-10-05T14:48:37.202Z">05/10</time> · Lucas H.</span></div><div class="upd-body"><ul><li>Aguardar assinatura com a Base (Pós Eleição) - Semana de 5 de Outubro (Thiago)<ul><li>Expectativa de fechar até sexta feira (09/10)</li><li>Validar se vai ser segundo turno </li></ul></li><li>Agendar apresentação do Produto com Fornecedor - Luma</li><li>Agendar apresentação do Produto com Parceiro  - Luma</li><li>Selecionar o fornecedor que vai ser utilizado com a Print  </li><li>Ainda sem definição de data de disponibilização e uso de produto</li><li><b>Próxima Agenda</b> <ul><li>Aguardar assinatura do parceiro para próxima reunião do Projeto (Thiago)</li><li>Ajustes finais da experiência</li><li>Aguardar o Miro compartilhado, e o Lucas Albino fica no aguardo das atualizaçoes das areas envolvidas</li></ul></li></ul></div><a class="upd-link" href="https://linear.app/wearedux/project/anti-web-sacado-e8791924463f/activity#project-update-303a8375" target="_blank" rel="noopener">Abrir no Linear ↗</a></div>
+<!-- LIVE:anti-sacado:update:end -->
+      </div>
+    </div>
 
     <!-- LIVE:anti-sacado:milestones:start -->
-    <div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms"><div class="ms-top"><div><div class="ms-label">🎯 Milestone</div><div class="ms-name">Piloto Risco Sacado- Cliente 1</div></div><div class="ms-pct">67<small>%</small></div></div><div class="ms-bar"><div style="width:67%"></div></div><div class="ms-meta"><span>9 de 16 tasks em produção · 1 cancelada fora da conta</span><span class="date">Meta 28/09</span></div><div class="ms-board"><div class="col progress"><div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução / revisão<span class="n">7</span></div><div class="task"><span class="id mono">DUX-572</span><span class="title">Mapear fluxo operacional do Risco Sacado (cadastro de fornecedor até operação no dia a dia)</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-555</span><span class="title">Adicionar ícone de inbox/notificação de mudança de etapa para o fornecedor</span><span class="who">Zaidan · em review</span></div><div class="task"><span class="id mono">DUX-527</span><span class="title">Revisar remetente das réguas de comunicação</span><span class="who">Lucas H. · em andamento</span></div><details class="more"><summary>+4 mais</summary><div class="task"><span class="id mono">DUX-570</span><span class="title">Estrutura de política de privacidade, termos de uso e cookies validada</span><span class="who">Thiago · em andamento</span></div><div class="task"><span class="id mono">DUX-503</span><span class="title">Revisão do manual do produto (HTML) para o cliente</span><span class="who">Felipe · em review</span></div><div class="task"><span class="id mono">DUX-465</span><span class="title">Separar ambientes de produção e QA/desenvolvimento</span><span class="who">Zaidan · em andamento</span></div><div class="task"><span class="id mono">DUX-500</span><span class="title">Configurar suporte comercial via WhatsApp - Risco Sacado</span><span class="who">Luma · em review</span></div></details></div><div class="col qa"><div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>Em teste<span class="n">0</span></div><div class="empty">Nada em teste</div></div><div class="col done"><div class="col-head"><span class="dot" style="background:var(--st-done)"></span>Em produção<span class="n">9</span></div><div class="task"><span class="id mono">DUX-558</span><span class="title">Permitir que fornecedor edite cadastro de e-mail</span><span class="who">Zaidan · 05/10</span></div><div class="task"><span class="id mono">DUX-554</span><span class="title">Dar visibilidade ao fornecedor sobre pendências</span><span class="who">Zaidan · 05/10</span></div><div class="task"><span class="id mono">DUX-499</span><span class="title">Atualização do Figma com a jornada mais recente</span><span class="who">Lucas H. · 01/10</span></div><details class="more"><summary>+6 mais</summary><div class="task"><span class="id mono">DUX-556</span><span class="title">Melhorar visão do parceiro para gestão de operações</span><span class="who">Zaidan · 28/09</span></div><div class="task"><span class="id mono">DUX-559</span><span class="title">Criar visão do parceiro controle</span><span class="who">Zaidan · 28/09</span></div><div class="task"><span class="id mono">DUX-463</span><span class="title">Implementação da régua de comunicação transacional - Email (Risco Sacado)</span><span class="who">Zaidan · 25/09</span></div><div class="task"><span class="id mono">DUX-505</span><span class="title">Definir prazo de assinatura do contrato - D4Sign</span><span class="who">Lucas H. · 23/09</span></div><div class="task"><span class="id mono">DUX-501</span><span class="title">Liberar suporte@sejaanti.com.br para Luma</span><span class="who">Zaidan · 23/09</span></div><div class="task"><span class="id mono">DUX-462</span><span class="title">Concepção da régua de comunicação transacional - Email (Risco Sacado)</span><span class="who">Lucas H. · 23/09</span></div></details></div><div class="col todo"><div class="col-head"><span class="dot" style="background:var(--ink-faint)"></span>Faltam entregar<span class="n">0</span></div><div class="empty">Nada pendente</div></div></div></div><details class="ms-outside"><summary>Fora de milestone · 16 tasks · 1 em execução · 1 em teste · 0 em produção · 14 no backlog/refino</summary><div class="task"><span class="id mono">DUX-571</span><span class="title">Ata 01/ Outubro</span><span class="who">sem responsável · em review</span></div><div class="task"><span class="id mono">DUX-464</span><span class="title">Ajustar o fluxo de cadastro para ser feito em duas etapas</span><span class="who">Zaidan · em teste</span></div></details></div>
-    <!-- LIVE:anti-sacado:milestones:end -->
+<div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms"><div class="ms-top"><div><div class="ms-label">🎯 Milestone</div><div class="ms-name">Piloto Risco Sacado- Cliente 1</div></div><div class="ms-pct">77<small>%</small></div></div><div class="ms-bar"><div style="width:77%"></div></div><div class="ms-meta"><span>11 de 16 tasks em produção · 1 cancelada fora da conta</span><span class="date">Meta 28/09</span></div><div class="ms-metrics"><div class="distro" title="Distribuição das tasks do milestone por etapa"><div style="width:23.5%; background:var(--st-progress)"></div><div style="width:5.9%; background:var(--blk-int)"></div><div style="width:64.7%; background:var(--st-done)"></div><div style="width:5.9%; background:var(--st-build)"></div></div><div class="ms-stats"><span class="ms-stat"><i style="background:var(--st-progress)"></i><b>4</b>Em execução</span><span class="ms-stat"><i style="background:var(--blk-int)"></i><b>1</b>Em revisão</span><span class="ms-stat"><i style="background:var(--st-done)"></i><b>11</b>Produção</span><span class="ms-stat"><i style="background:var(--st-build)"></i><b>1</b>Cancelado</span></div><div class="ms-chiprow"><span class="k">Área</span><div class="chips"><span class="chip mkt">Marketing · 0</span>
+<span class="chip fin">Financeiro · 0</span>
+<span class="chip ops">Operações · 8</span>
+<span class="chip other" title="Tasks sem label de área">Sem área · 9</span></div></div><div class="ms-chiprow"><span class="k">Tipo</span><div class="chips"><span class="tchip bug">Bug · 0</span>
+<span class="tchip melhoria">Melhoria · 3</span>
+<span class="tchip feature">Nova Funcionalidade · 13</span>
+<span class="tchip outros">Outros · 1</span></div></div></div><div class="ms-hot"><div class="col progress"><div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução / revisão<span class="n">5</span></div><div class="task"><span class="id mono">DUX-572</span><span class="title">Mapear fluxo operacional do Risco Sacado (cadastro de fornecedor até operação no dia a dia)</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-570</span><span class="title">Estrutura de política de privacidade, termos de uso e cookies validada</span><span class="who">Thiago · em andamento</span></div><div class="task"><span class="id mono">DUX-555</span><span class="title">Adicionar ícone de inbox/notificação de mudança de etapa para o fornecedor</span><span class="who">Zaidan · em review</span></div><div class="task"><span class="id mono">DUX-527</span><span class="title">Revisar remetente das réguas de comunicação</span><span class="who">Lucas H. · em andamento</span></div><details class="more"><summary>+1 mais</summary><div class="task"><span class="id mono">DUX-465</span><span class="title">Separar ambientes de produção e QA/desenvolvimento</span><span class="who">Zaidan · em andamento</span></div></details></div><div class="col qa"><div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>Em teste<span class="n">0</span></div><div class="empty">Nada em teste</div></div></div><div class="ms-cold"><div class="cold todo is-empty"><div class="cold-sum"><span class="dot" style="background:var(--ink-faint)"></span>Faltam entregar<span class="n">0</span></div><div class="empty">Nada pendente</div></div><details class="cold done"><summary><span class="dot" style="background:var(--st-done)"></span>Em produção<span class="n">11</span></summary><div class="cold-list"><div class="task"><span class="id mono">DUX-503</span><span class="title">Revisão do manual do produto (HTML) para o cliente</span><span class="who">Felipe · 07/10</span></div><div class="task"><span class="id mono">DUX-500</span><span class="title">Configurar suporte comercial via WhatsApp - Risco Sacado</span><span class="who">Luma · 07/10</span></div><div class="task"><span class="id mono">DUX-558</span><span class="title">Permitir que fornecedor edite cadastro de e-mail</span><span class="who">Zaidan · 05/10</span></div><div class="task"><span class="id mono">DUX-554</span><span class="title">Dar visibilidade ao fornecedor sobre pendências</span><span class="who">Zaidan · 05/10</span></div><div class="task"><span class="id mono">DUX-499</span><span class="title">Atualização do Figma com a jornada mais recente</span><span class="who">Lucas H. · 01/10</span></div><div class="task"><span class="id mono">DUX-559</span><span class="title">Criar visão do parceiro controle</span><span class="who">Zaidan · 28/09</span></div><div class="task"><span class="id mono">DUX-556</span><span class="title">Melhorar visão do parceiro para gestão de operações</span><span class="who">Zaidan · 28/09</span></div><div class="task"><span class="id mono">DUX-463</span><span class="title">Implementação da régua de comunicação transacional - Email (Risco Sacado)</span><span class="who">Zaidan · 25/09</span></div><div class="task"><span class="id mono">DUX-505</span><span class="title">Definir prazo de assinatura do contrato - D4Sign</span><span class="who">Lucas H. · 23/09</span></div><div class="task"><span class="id mono">DUX-501</span><span class="title">Liberar suporte@sejaanti.com.br para Luma</span><span class="who">Zaidan · 23/09</span></div><div class="task"><span class="id mono">DUX-462</span><span class="title">Concepção da régua de comunicação transacional - Email (Risco Sacado)</span><span class="who">Lucas H. · 23/09</span></div></div></details></div></div><details class="ms-outside"><summary>Fora de milestone · 16 tasks · 1 em execução · 1 em teste · 0 em produção · 14 no backlog/refino</summary><div class="task"><span class="id mono">DUX-571</span><span class="title">Ata 01/ Outubro</span><span class="who">sem responsável · em review</span></div><div class="task"><span class="id mono">DUX-464</span><span class="title">Ajustar o fluxo de cadastro para ser feito em duas etapas</span><span class="who">Zaidan · em teste</span></div></details></div>
+<!-- LIVE:anti-sacado:milestones:end -->
 
     <div class="blockers">
       <div class="blockers-head">Blockers</div>
       <!-- LIVE:anti-sacado:blockers:start -->
-    <div class="empty">Nenhum blocker nos milestones no momento</div>
-    <!-- LIVE:anti-sacado:blockers:end -->
+<div class="empty">Nenhum blocker nos milestones no momento</div>
+<!-- LIVE:anti-sacado:blockers:end -->
     </div>
 
-    <div class="metrics-head">Principais métricas dos milestones</div>
-    <div class="distro" title="Distribuição das tasks dos milestones por etapa">
-      <!-- LIVE:anti-sacado:distro-bars:start -->
-    <div style="width:23.5%; background:var(--st-progress)"></div>
-<div style="width:17.6%; background:var(--blk-int)"></div>
-<div style="width:52.9%; background:var(--st-done)"></div>
-<div style="width:5.9%; background:var(--st-build)"></div>
-    <!-- LIVE:anti-sacado:distro-bars:end -->
-    </div>
-    <div class="distro-legend">
-      <!-- LIVE:anti-sacado:distro-legend:start -->
-    <span><span class="dot" style="background:var(--st-progress)"></span>Em execução · 4</span>
-<span><span class="dot" style="background:var(--blk-int)"></span>Em revisão · 3</span>
-<span><span class="dot" style="background:var(--st-done)"></span>Produção · 9</span>
-<span><span class="dot" style="background:var(--st-build)"></span>Cancelado · 1</span>
-    <!-- LIVE:anti-sacado:distro-legend:end -->
-    </div>
-    <div class="areas">
-      <div class="areas-head">Área</div>
-      <div class="area-chips">
-        <!-- LIVE:anti-sacado:areas:start -->
-    <span class="chip mkt">Marketing · 0</span>
-<span class="chip fin">Financeiro · 0</span>
-<span class="chip ops">Operações · 8</span>
-<span class="chip other" title="Tasks sem label de área">Sem área · 9</span>
-    <!-- LIVE:anti-sacado:areas:end -->
-      </div>
-    </div>
-    <div class="types">
-      <div class="types-head">Tipo de task</div>
-      <div class="type-chips">
-        <!-- LIVE:anti-sacado:types:start -->
-    <span class="tchip bug">Bug · 0</span>
-<span class="tchip melhoria">Melhoria · 3</span>
-<span class="tchip feature">Nova Funcionalidade · 13</span>
-<span class="tchip outros">Outros · 1</span>
-    <!-- LIVE:anti-sacado:types:end -->
-      </div>
-    </div>
     <div class="next-ms">
       <div class="next-ms-head">Próximos milestones</div>
       <!-- LIVE:anti-sacado:next-milestones:start -->
-    <div class="next-ms-empty">Nenhum milestone mapeado além dos que já estão em execução. Quando um novo milestone for criado no Linear, ele aparece aqui.</div>
-    <!-- LIVE:anti-sacado:next-milestones:end -->
+<div class="next-ms-empty">Nenhum milestone mapeado além dos que já estão em execução. Quando um novo milestone for criado no Linear, ele aparece aqui.</div>
+<!-- LIVE:anti-sacado:next-milestones:end -->
     </div>
   </div>
   <!-- DECENTRAL NEW -->
@@ -1285,6 +1297,8 @@
       <span class="pill progress">Em execução</span>
     </div>
 
+    <div class="card-top">
+      <div class="card-top-l">
     <div class="people">
       <div><span class="k">Tech Lead</span><b>Hyago</b></div>
       <div><span class="k">Business Owner</span><b>Lucas A.</b></div>
@@ -1297,66 +1311,37 @@
       </ol></div>
       <div class="goal-row"><span class="k">Próximo goal</span><p class="draft">Rascunho — concluir o milestone "Liberação V3".</p></div>
     </div>
+      </div>
+      <div class="card-top-r">
+        <div class="upd-head">Última atualização do projeto</div>
+        <!-- LIVE:decentral:update:start -->
+<div class="upd"><div class="upd-top"><span class="upd-title">23 / Outubro - Checkpoint e Apresentação V3 para Financeiro</span><span class="upd-meta"><span class="upd-health ok">No prazo</span><time datetime="2026-10-23T14:54:40.453Z">23/10</time> · Lucas H.</span></div><div class="upd-body"><ul><li>Foi feita a apresentação da Wiki do Decentral montado pelo Lucas para o time financeiro, juntamente com o Yield </li><li>Foi levantada a possibilidade de abrir uma janela mensal para novos aportes, e normalizar os pagamentos em um dia só por mês - Vamos discutir isso na agenda de terça feira (27/10)</li><li>Desenhamos novas datas para o lançamento, por conta da disponibilidade do ambiente de produção de KYC e KYB - Por conta disso temos que atualizar a wiki e também as informações do nosso site  <ul><li>Lançamento V3: <b>3 de Novembro</b></li><li>Janelas de Adequação<b>: 3 a 26 de Novembro</b></li><li>Inicio do Desembolso : <b>27 de Novembro</b></li></ul></li><li>Foram levantados também pontos a respeito da transparência, aonde o valor está alocado na economia criativa</li></ul></div><a class="upd-link" href="https://linear.app/wearedux/project/web-decentral-e321451152df/activity#project-update-4a59f715" target="_blank" rel="noopener">Abrir no Linear ↗</a></div>
+<!-- LIVE:decentral:update:end -->
+      </div>
+    </div>
 
     <!-- LIVE:decentral:milestones:start -->
-    <div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms"><div class="ms-top"><div><div class="ms-label">🎯 Milestone</div><div class="ms-name">Liberação V3 - Decentral</div></div><div class="ms-pct">25<small>%</small></div></div><div class="ms-bar"><div style="width:25%"></div></div><div class="ms-meta"><span>4 de 21 tasks em produção</span><span class="date">Sem meta definida</span></div><div class="ms-board"><div class="col progress"><div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução / revisão<span class="n">5</span></div><div class="task"><span class="id mono">DUX-513</span><span class="title">Relatório Fact Finance atualizado para o modelo V3</span><span class="who">Hyago · em andamento</span></div><div class="task"><span class="id mono">DUX-529</span><span class="title">Revisão dos termos de uso e aporte</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-524</span><span class="title">Criar painel de controle para acompanhar o desembolso</span><span class="who">Lucas A. · em andamento</span></div><details class="more"><summary>+2 mais</summary><div class="task"><span class="id mono">DUX-526</span><span class="title">Formalizar acordo com LP para recompra de Principal</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-509</span><span class="title">Script de migração legada + ajustes na aplicação</span><span class="who">Hyago · em andamento</span></div></details></div><div class="col qa"><div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>Em teste<span class="n">0</span></div><div class="empty">Nada em teste</div></div><div class="col done"><div class="col-head"><span class="dot" style="background:var(--st-done)"></span>Em produção<span class="n">4</span></div><div class="task"><span class="id mono">DUX-510</span><span class="title">Preço definido para a saída via suporte</span><span class="who">Lucas A. · 05/10</span></div><div class="task"><span class="id mono">DUX-518</span><span class="title">Issues Financeiro</span><span class="who">Lucas A. · 05/10</span></div><div class="task"><span class="id mono">DUX-516</span><span class="title">Issues MKT</span><span class="who">Hyago · 05/10</span></div><details class="more"><summary>+1 mais</summary><div class="task"><span class="id mono">DUX-506</span><span class="title">Estimativa de esforço da migração legada (v2 → v3)</span><span class="who">Hyago · 05/10</span></div></details></div><div class="col todo"><div class="col-head"><span class="dot" style="background:var(--ink-faint)"></span>Faltam entregar<span class="n">12</span></div><div class="task"><span class="id mono">DUX-517</span><span class="title">Benchmark de Melhoria de Design e Experiência</span><span class="who">Lucas A. · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-525</span><span class="title">Criar documentação/tutorial de como funciona a movimentação financeira</span><span class="who">Hyago · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-551</span><span class="title">Criação de Board de Migração de V2 para V3</span><span class="who">Hyago · Pronto p/ dev</span></div><details class="more"><summary>+9 mais</summary><div class="task"><span class="id mono">DUX-521</span><span class="title">Idealizar reuniões (AMA/Live) para grupos e indicações</span><span class="who">JP · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-507</span><span class="title">Contrato novo Hydration</span><span class="who">Hyago · Priorizado</span></div><div class="task"><span class="id mono">DUX-512</span><span class="title">Dados de controle financeiro da V3 por chain e consolidado</span><span class="who">Hyago · Priorizado</span></div><div class="task"><span class="id mono">DUX-520</span><span class="title">Estruturar comunicação para clientes da plataforma legacy (V2 → V3)</span><span class="who">JP · Refinamento</span></div><div class="task"><span class="id mono">DUX-519</span><span class="title">Atualizar site público da Decentral (usedecentral.com)</span><span class="who">JP · Refinamento</span></div><div class="task"><span class="id mono">DUX-528</span><span class="title">Rever experiência tela de transações para adicionar status, e botão retry de cada linha</span><span class="who">Hyago · Backlog</span></div><div class="task"><span class="id mono">DUX-515</span><span class="title">Corrigir falhas intermitentes na aprovação do depósito</span><span class="who">Hyago · Backlog</span></div><div class="task"><span class="id mono">DUX-508</span><span class="title">Revisão geral de UI/UX da aplicação</span><span class="who">Lucas H. · Backlog</span></div><div class="task"><span class="id mono">DUX-514</span><span class="title">Bloquear código de indicação próprio ou inválido</span><span class="who">Hyago · Backlog</span></div></details></div></div></div><div class="ms-outside-note">Fora de milestone · 4 tasks · 0 em execução · 0 em teste · 2 em produção · 2 no backlog/refino</div></div>
-    <!-- LIVE:decentral:milestones:end -->
+<div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms"><div class="ms-top"><div><div class="ms-label">🎯 Milestone</div><div class="ms-name">Liberação V3 - Decentral</div></div><div class="ms-pct">60<small>%</small></div></div><div class="ms-bar"><div style="width:60%"></div></div><div class="ms-meta"><span>5 de 26 tasks em produção · 1 cancelada fora da conta</span><span class="date">Sem meta definida</span></div><div class="ms-metrics"><div class="distro" title="Distribuição das tasks do milestone por etapa"><div style="width:3.7%; background:var(--ink-faint)"></div><div style="width:3.7%; background:var(--ink-soft)"></div><div style="width:14.8%; background:var(--st-progress-soft);outline:1px solid var(--ink-faint)"></div><div style="width:14.8%; background:var(--st-progress)"></div><div style="width:7.4%; background:var(--blk-int)"></div><div style="width:33.3%; background:var(--st-qa)"></div><div style="width:18.5%; background:var(--st-done)"></div><div style="width:3.7%; background:var(--st-build)"></div></div><div class="ms-stats"><span class="ms-stat"><i style="background:var(--ink-faint)"></i><b>1</b>Backlog</span><span class="ms-stat"><i style="background:var(--ink-soft)"></i><b>1</b>Refinamento</span><span class="ms-stat"><i style="background:var(--st-progress-soft);outline:1px solid var(--ink-faint)"></i><b>4</b>Pronto p/ dev</span><span class="ms-stat"><i style="background:var(--st-progress)"></i><b>4</b>Em execução</span><span class="ms-stat"><i style="background:var(--blk-int)"></i><b>2</b>Em revisão</span><span class="ms-stat"><i style="background:var(--st-qa)"></i><b>9</b>Em teste</span><span class="ms-stat"><i style="background:var(--st-done)"></i><b>5</b>Produção</span><span class="ms-stat"><i style="background:var(--st-build)"></i><b>1</b>Cancelado</span></div><div class="ms-chiprow"><span class="k">Área</span><div class="chips"><span class="chip mkt">Marketing · 3</span>
+<span class="chip fin">Financeiro · 4</span>
+<span class="chip ops">Operações · 5</span>
+<span class="chip other" title="Tasks sem label de área">Sem área · 15</span></div></div><div class="ms-chiprow"><span class="k">Tipo</span><div class="chips"><span class="tchip bug">Bug · 2</span>
+<span class="tchip melhoria">Melhoria · 3</span>
+<span class="tchip feature">Nova Funcionalidade · 7</span>
+<span class="tchip outros">Outros · 15</span></div></div></div><div class="ms-hot"><div class="col progress"><div class="col-head"><span class="dot" style="background:var(--st-progress)"></span>Em execução / revisão<span class="n">6</span></div><div class="task"><span class="id mono">DUX-579</span><span class="title">Contratação Sumsub</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-529</span><span class="title">Revisão dos termos de uso de aportes</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-524</span><span class="title">Criar painel de controle financeiro do Decentral / Hydration</span><span class="who">Lucas A. · em andamento</span></div><div class="task"><span class="id mono">DUX-521</span><span class="title">Idealizar reuniões (AMA/Live) para grupos e indicações</span><span class="who">JP · em review</span></div><details class="more"><summary>+2 mais</summary><div class="task"><span class="id mono">DUX-520</span><span class="title">Estruturar comunicação para clientes da plataforma legacy (V2 → V3)</span><span class="who">JP · em andamento</span></div><div class="task"><span class="id mono">DUX-519</span><span class="title">Atualizar site público da Decentral (usedecentral.com)</span><span class="who">JP · em review</span></div></details></div><div class="col qa"><div class="col-head"><span class="dot" style="background:var(--st-qa)"></span>Em teste<span class="n">9</span></div><div class="task"><span class="id mono">DUX-590</span><span class="title">Exibir data/hora da última atualização e da próxima execução nos dados financeiros atualizados por rotina (cron)</span><span class="who">Hyago · em teste</span></div><div class="task"><span class="id mono">DUX-551</span><span class="title">Criação de Board de Migração de V2 para V3</span><span class="who">Hyago · em teste</span></div><div class="task"><span class="id mono">DUX-528</span><span class="title">Rever experiência tela de transações para adicionar status, e botão retry de cada linha</span><span class="who">Hyago · em teste</span></div><div class="task"><span class="id mono">DUX-525</span><span class="title">Criar documentação/tutorial de como funciona a movimentação financeira</span><span class="who">Hyago · em teste</span></div><details class="more"><summary>+5 mais</summary><div class="task"><span class="id mono">DUX-515</span><span class="title">Corrigir falhas intermitentes na aprovação do depósito</span><span class="who">Hyago · em teste</span></div><div class="task"><span class="id mono">DUX-514</span><span class="title">Bloquear código de indicação próprio ou inválido</span><span class="who">Hyago · em teste</span></div><div class="task"><span class="id mono">DUX-513</span><span class="title">Relatório Fact Finance atualizado para o modelo V3</span><span class="who">Hyago · em teste</span></div><div class="task"><span class="id mono">DUX-512</span><span class="title">Dados de controle financeiro da V3 por chain e consolidado</span><span class="who">Hyago · em teste</span></div><div class="task"><span class="id mono">DUX-509</span><span class="title">Script de migração legada + ajustes na aplicação</span><span class="who">Hyago · em teste</span></div></details></div></div><div class="ms-cold"><details class="cold todo"><summary><span class="dot" style="background:var(--ink-faint)"></span>Faltam entregar<span class="n">6</span></summary><div class="cold-list"><div class="task"><span class="id mono">DUX-589</span><span class="title">Go-live Produção: Deploy dos contratos Deposit + Payout (Base, Polygon, ETH)</span><span class="who">Hyago · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-587</span><span class="title">Go-live Produção: Infra (environments, domínio prod, lockscreen e variáveis de ambiente)</span><span class="who">Hyago · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-586</span><span class="title">Go-live Produção: Banco de dados (migrations, chains, pools e admin)</span><span class="who">Hyago · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-585</span><span class="title">Go-live Produção: Safes multisig por chain (Deposit, Yield, Payout, Guardian)</span><span class="who">Hyago · Pronto p/ dev</span></div><div class="task"><span class="id mono">DUX-508</span><span class="title">Revisão geral de UI/UX da aplicação</span><span class="who">Lucas H. · Refinamento</span></div><div class="task"><span class="id mono">DUX-507</span><span class="title">Contrato novo Hydration</span><span class="who">Lucas A. · Backlog</span></div></div></details><details class="cold done"><summary><span class="dot" style="background:var(--st-done)"></span>Em produção<span class="n">5</span></summary><div class="cold-list"><div class="task"><span class="id mono">DUX-517</span><span class="title">Benchmark de Melhoria de Design e Experiência</span><span class="who">Lucas A. · 19/10</span></div><div class="task"><span class="id mono">DUX-518</span><span class="title">Issues Financeiro</span><span class="who">Lucas A. · 05/10</span></div><div class="task"><span class="id mono">DUX-516</span><span class="title">Issues MKT</span><span class="who">Hyago · 05/10</span></div><div class="task"><span class="id mono">DUX-510</span><span class="title">Preço definido para a saída via suporte</span><span class="who">Lucas A. · 05/10</span></div><div class="task"><span class="id mono">DUX-506</span><span class="title">Estimativa de esforço da migração legada (v2 → v3)</span><span class="who">Hyago · 05/10</span></div></div></details></div></div><details class="ms-outside"><summary>Fora de milestone · 5 tasks · 1 em execução · 0 em teste · 3 em produção · 1 no backlog/refino</summary><div class="task"><span class="id mono">DUX-526</span><span class="title">Formalizar acordo com LP para recompra de Principal</span><span class="who">Lucas A. · em andamento</span></div></details></div>
+<!-- LIVE:decentral:milestones:end -->
 
     <div class="blockers">
       <div class="blockers-head">Blockers</div>
       <!-- LIVE:decentral:blockers:start -->
-    <div class="blocker"><span class="blocker-tag interno">Interno</span><p>Contrato da pool Hydration (ciclo de 60 dias com votação) — decisão pendente com o Lucas.<span class="blocker-ref"><span class="mono">DUX-507</span> · Liberação V3 - Decentral</span></p></div>
-    <!-- LIVE:decentral:blockers:end -->
+<div class="blocker"><span class="blocker-tag interno">Interno</span><p>Contrato da pool Hydration (ciclo de 60 dias com votação) — decisão pendente com o Lucas.<span class="blocker-ref"><span class="mono">DUX-507</span> · Liberação V3 - Decentral</span></p></div>
+<!-- LIVE:decentral:blockers:end -->
     </div>
 
-    <div class="metrics-head">Principais métricas dos milestones</div>
-    <div class="distro" title="Distribuição das tasks dos milestones por etapa">
-      <!-- LIVE:decentral:distro-bars:start -->
-    <div style="width:19.0%; background:var(--ink-faint)"></div>
-<div style="width:9.5%; background:var(--ink-soft)"></div>
-<div style="width:9.5%; background:var(--st-priorized)"></div>
-<div style="width:19.0%; background:var(--st-progress-soft);outline:1px solid var(--ink-faint)"></div>
-<div style="width:23.8%; background:var(--st-progress)"></div>
-<div style="width:19.0%; background:var(--st-done)"></div>
-    <!-- LIVE:decentral:distro-bars:end -->
-    </div>
-    <div class="distro-legend">
-      <!-- LIVE:decentral:distro-legend:start -->
-    <span><span class="dot" style="background:var(--ink-faint)"></span>Backlog · 4</span>
-<span><span class="dot" style="background:var(--ink-soft)"></span>Refinamento · 2</span>
-<span><span class="dot" style="background:var(--st-priorized)"></span>Priorizado · 2</span>
-<span><span class="dot" style="background:var(--st-progress-soft);outline:1px solid var(--ink-faint)"></span>Pronto p/ dev · 4</span>
-<span><span class="dot" style="background:var(--st-progress)"></span>Em execução · 5</span>
-<span><span class="dot" style="background:var(--st-done)"></span>Produção · 4</span>
-    <!-- LIVE:decentral:distro-legend:end -->
-    </div>
-    <div class="areas">
-      <div class="areas-head">Área</div>
-      <div class="area-chips">
-        <!-- LIVE:decentral:areas:start -->
-    <span class="chip mkt">Marketing · 3</span>
-<span class="chip fin">Financeiro · 4</span>
-<span class="chip ops">Operações · 0</span>
-<span class="chip other" title="Tasks sem label de área">Sem área · 14</span>
-    <!-- LIVE:decentral:areas:end -->
-      </div>
-    </div>
-    <div class="types">
-      <div class="types-head">Tipo de task</div>
-      <div class="type-chips">
-        <!-- LIVE:decentral:types:start -->
-    <span class="tchip bug">Bug · 2</span>
-<span class="tchip melhoria">Melhoria · 2</span>
-<span class="tchip feature">Nova Funcionalidade · 2</span>
-<span class="tchip outros">Outros · 15</span>
-    <!-- LIVE:decentral:types:end -->
-      </div>
-    </div>
     <div class="next-ms">
       <div class="next-ms-head">Próximos milestones</div>
       <!-- LIVE:decentral:next-milestones:start -->
-    <div class="next-ms-empty">Nenhum milestone mapeado além dos que já estão em execução. Quando um novo milestone for criado no Linear, ele aparece aqui.</div>
-    <!-- LIVE:decentral:next-milestones:end -->
+<div class="next-ms-empty">Nenhum milestone mapeado além dos que já estão em execução. Quando um novo milestone for criado no Linear, ele aparece aqui.</div>
+<!-- LIVE:decentral:next-milestones:end -->
     </div>
   </div>
 
@@ -1394,6 +1379,8 @@
       <span class="pill build">Em construção</span>
     </div>
 
+    <div class="card-top">
+      <div class="card-top-l">
     <div class="people">
       <div><span class="k">Tech Lead</span><b>André</b></div>
       <div><span class="k">Business Owner</span><b>— —</b></div>
@@ -1405,56 +1392,31 @@
       </ol></div>
       <div class="goal-row"><span class="k">Próximo goal</span><p class="draft">A definir.</p></div>
     </div>
+      </div>
+      <div class="card-top-r">
+        <div class="upd-head">Última atualização do projeto</div>
+        <!-- LIVE:gestao-conhecimento:update:start -->
+<div class="empty">Nenhuma atualização publicada no Linear ainda.</div>
+<!-- LIVE:gestao-conhecimento:update:end -->
+      </div>
+    </div>
 
     <!-- LIVE:gestao-conhecimento:milestones:start -->
-    <div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms-empty">Nenhum milestone em execução no momento — veja os próximos mais abaixo.</div><div class="ms-outside-note">Fora de milestone · 1 tasks · 0 em execução · 0 em teste · 0 em produção · 1 no backlog/refino</div></div>
-    <!-- LIVE:gestao-conhecimento:milestones:end -->
+<div class="ms-wrap"><div class="ms-wrap-head">Milestones do projeto</div><div class="ms-empty">Nenhum milestone em execução no momento — veja os próximos mais abaixo.</div><div class="ms-outside-note">Fora de milestone · 1 tasks · 0 em execução · 0 em teste · 0 em produção · 1 no backlog/refino</div></div>
+<!-- LIVE:gestao-conhecimento:milestones:end -->
 
     <div class="blockers">
       <div class="blockers-head">Blockers</div>
       <!-- LIVE:gestao-conhecimento:blockers:start -->
-    <div class="empty">Nenhum blocker nos milestones no momento</div>
-    <!-- LIVE:gestao-conhecimento:blockers:end -->
+<div class="empty">Nenhum blocker nos milestones no momento</div>
+<!-- LIVE:gestao-conhecimento:blockers:end -->
     </div>
 
-    <div class="metrics-head">Principais métricas dos milestones</div>
-    <div class="distro" title="Distribuição das tasks por etapa">
-      <!-- LIVE:gestao-conhecimento:distro-bars:start -->
-    
-    <!-- LIVE:gestao-conhecimento:distro-bars:end -->
-    </div>
-    <div class="distro-legend">
-      <!-- LIVE:gestao-conhecimento:distro-legend:start -->
-    <span class="distro-empty">Ainda não há tasks em milestones</span>
-    <!-- LIVE:gestao-conhecimento:distro-legend:end -->
-    </div>
-    <div class="areas">
-      <div class="areas-head">Área</div>
-      <div class="area-chips">
-        <!-- LIVE:gestao-conhecimento:areas:start -->
-    <span class="chip mkt">Marketing · 0</span>
-<span class="chip fin">Financeiro · 0</span>
-<span class="chip ops">Operações · 0</span>
-<span class="chip other" title="Tasks sem label de área">Sem área · 0</span>
-    <!-- LIVE:gestao-conhecimento:areas:end -->
-      </div>
-    </div>
-    <div class="types">
-      <div class="types-head">Tipo de task</div>
-      <div class="type-chips">
-        <!-- LIVE:gestao-conhecimento:types:start -->
-    <span class="tchip bug">Bug · 0</span>
-<span class="tchip melhoria">Melhoria · 0</span>
-<span class="tchip feature">Nova Funcionalidade · 0</span>
-<span class="tchip outros">Outros · 0</span>
-    <!-- LIVE:gestao-conhecimento:types:end -->
-      </div>
-    </div>
     <div class="next-ms">
       <div class="next-ms-head">Próximos milestones</div>
       <!-- LIVE:gestao-conhecimento:next-milestones:start -->
-    <div class="next-ms-item"><div class="next-ms-name">Liberação do MCP</div><div class="next-ms-meta"><span>ainda sem tasks vinculadas</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div><div class="next-ms-item"><div class="next-ms-name">Sistematização do CGO</div><div class="next-ms-meta"><span>ainda sem tasks vinculadas</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div>
-    <!-- LIVE:gestao-conhecimento:next-milestones:end -->
+<div class="next-ms-item"><div class="next-ms-name">Liberação do MCP</div><div class="next-ms-meta"><span>ainda sem tasks vinculadas</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div><div class="next-ms-item"><div class="next-ms-name">Sistematização do CGO</div><div class="next-ms-meta"><span>ainda sem tasks vinculadas</span><span class="date">Sem meta definida</span></div><div class="next-ms-state">Aguardando início — nenhuma task em execução</div></div>
+<!-- LIVE:gestao-conhecimento:next-milestones:end -->
     </div>
   </div>
 </div>
