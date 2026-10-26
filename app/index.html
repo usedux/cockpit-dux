@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T12:43:43.512Z","sha":"9980934","message":"Levantamento: sub-aba \"Ferramentas do repositório\" (repositórios da organização usedux x ferramentas reportadas)","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T13:04:07.711Z","sha":"2a28091","message":"Roadmap enxuto + Detalhamento de produtos (acesso em dois níveis) + Metodologia de produto","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -932,7 +932,15 @@
   .rm-card .r p{margin:0; line-height:1.45;}
   .rm-card .r ul{margin:0; padding-left:16px; display:flex; flex-direction:column; gap:3px; line-height:1.4;}
   .rm-card .r.todo{background:var(--surface-muted); border-radius:8px; padding:8px 10px;}
-  @media (max-width:900px){ .rm-cards{grid-template-columns:1fr;} }
+  .rm-p-ch{--wc:var(--area-dev); --wcs:var(--area-dev-soft);}
+  .rm-p-int{--wc:var(--area-ops); --wcs:var(--area-ops-soft);}
+  .rm-p-inv{--wc:var(--area-jur); --wcs:var(--area-jur-soft);}
+  .rm-grp{margin-top:18px;}
+  .rm-grp-h{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; border-bottom:1px solid var(--line-strong); padding-bottom:5px;}
+  .rm-grp-h b{font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:14px; color:var(--ink);}
+  .rm-grp-h span{font-size:12px; color:var(--ink-faint);}
+  .rm-cards.rm-cards-auto{grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));}
+  @media (max-width:900px){ .rm-cards, .rm-cards.rm-cards-auto{grid-template-columns:1fr;} }
 
   /* ---------- Ferramentas do repositório ---------- */
   .rp-kpis{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin:4px 0 18px;}
@@ -1694,196 +1702,145 @@
     <span class="tools-group-sub">Referência: Q4 2026 (Hoje e Onda 1) e Q1 2027 (Onda 2); o resto fica mais adiante. Sem compromisso de data.</span>
     <button type="button" class="tools-action-btn primary rd-lock" id="rmDetailBtn" hidden title="Acesso restrito: você e quem o admin liberou"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Detalhamento de produtos</button>
   </div>
-  <div class="subline" style="margin-bottom:6px;">Quais são os produtos, para onde cada um vai e como se encaixam. A ideia central é separar <b>produto</b> (o que a DUX oferece) de <b>canal</b> (onde o cliente acessa).</div>
+  <div class="subline" style="margin-bottom:6px;">Quais são os produtos, como cada um evolui e a que cliente se destina. A ideia central é separar <b>produto</b> (o que a DUX oferece) de <b>canal</b> (onde o cliente acessa).</div>
 
-  <h3 class="rm-h3">1. Alvo: o canal separado do produto</h3>
-  <p class="rm-lead">Os produtos ficam iguais em qualquer canal. O Portal Anti é o balcão do cliente (hoje na web, depois também no app) e tudo cai na mesma esteira do Portal DUX interno.</p>
-  <figure class="rm-fig">
-    <div class="rm-scroll">
-    <svg class="rm-svg" viewBox="0 0 960 580" role="img" aria-label="Canais (Portal Anti e App Anti) oferecem os mesmos produtos, que caem na esteira do Portal DUX interno; Decentral troca fundos com o Portal DUX; Gestão de caixa é ferramenta interna separada">
-      <defs>
-        <marker id="rmArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 z" fill="currentColor"/></marker>
-      </defs>
-      <text class="lab" x="20" y="64">Canais</text>
-      <text class="lab" x="20" y="240">Produtos</text>
-      <text class="lab" x="20" y="404">Base</text>
-      <text class="lab" x="20" y="520">Apoio</text>
+  <h3 class="rm-h3">1. Evolução de cada produto</h3>
+  <p class="rm-lead">Leia cada linha da esquerda para a direita: o que é hoje e o que vem na sequência.</p>
+  <div class="rm-scroll">
+  <div class="rm-lanes" role="table" aria-label="Evolução por produto">
+    <div></div>
+    <div class="rm-qband cur" style="grid-column:span 2">Q4 2026 · visão atual</div>
+    <div class="rm-qband">Q1 2027</div>
+    <div class="rm-qband">Mais adiante</div>
+    <div></div>
+    <div class="rm-colhead rm-wave-now"><b>Hoje</b><span>como opera agora</span></div>
+    <div class="rm-colhead rm-wave-1"><b>Onda 1</b><span>automatizar e abrir o Portal Anti</span></div>
+    <div class="rm-colhead rm-wave-2"><b>Onda 2</b><span>conta e app</span></div>
+    <div class="rm-colhead rm-wave-vis"><b>Onda 3</b><span>mais adiante</span></div>
 
-      <!-- Canais -->
-      <g class="rm-wave-now"><rect class="node" x="110" y="20" width="380" height="80" rx="10"/>
-        <text class="t" x="126" y="46">Portal Anti · web</text>
-        <text class="s" x="126" y="66">Qualquer cliente com CNPJ</text>
-        <text class="s" x="126" y="84">Área admin libera quem acessa o Risco Sacado</text>
-        <rect class="tag" x="424" y="11" width="56" height="18" rx="9"/><text class="tag-t" x="452" y="24">Hoje</text></g>
-      <g class="rm-wave-2"><rect class="node dash" x="510" y="20" width="260" height="80" rx="10"/>
-        <text class="t" x="526" y="46">App Anti</text>
-        <text class="s" x="526" y="66">Novo canal do Portal Anti</text>
-        <text class="s" x="526" y="84">Os mesmos serviços, no celular</text>
-        <rect class="tag" x="704" y="11" width="56" height="18" rx="9"/><text class="tag-t" x="732" y="24">Onda 2</text></g>
-      <rect class="box dash" x="790" y="20" width="150" height="80" rx="10"/>
-      <text class="t" x="806" y="42">Time comercial</text>
-      <text class="s" x="806" y="60">Hoje oferece o</text>
-      <text class="s" x="806" y="75">Cedente; depois</text>
-      <text class="s" x="806" y="90">apoia o self-service</text>
+    <div class="rm-rowhead"><b>Cedente</b><span>quem antecipa os próprios recebíveis</span></div>
+    <div class="rm-cell rm-wave-now">Oferecido só pelo time comercial, que inclui os clientes à mão na esteira do Portal DUX</div>
+    <div class="rm-cell rm-wave-1">Fluxo automatizado, self-service no Portal Anti. Se não conseguir concluir, chama o comercial</div>
+    <div class="rm-cell rm-wave-2">Abre conta DUX e ganha condição especial de taxa. Também pelo app</div>
+    <div class="rm-cell empty rm-wave-vis">·</div>
+    <div class="sep"></div>
 
-      <!-- barramento canais -> produtos -->
-      <path class="ln" d="M300 100 V140"/>
-      <path class="ln dash" d="M640 100 V140"/>
-      <path class="ln dash" d="M865 100 V140"/>
-      <path class="ln" d="M190 140 H865"/>
-      <text class="note mid" x="470" y="133">mesmos produtos, em qualquer canal</text>
-      <path class="ln" d="M190 140 V178" marker-end="url(#rmArr)"/>
-      <path class="ln" d="M415 140 V178" marker-end="url(#rmArr)"/>
-      <path class="ln" d="M650 140 V178" marker-end="url(#rmArr)"/>
-      <path class="ln" d="M850 140 V178" marker-end="url(#rmArr)"/>
+    <div class="rm-rowhead"><b>Sacado</b><span>Risco Sacado, com fornecedor e parceiro</span></div>
+    <div class="rm-cell rm-wave-now">Ainda não opera. Piloto prestes a começar, oferecido pelo Portal Anti</div>
+    <div class="rm-cell rm-wave-1">O CNPJ pede pelo Portal Anti. Admin libera como parceiro ou fornecedor (o mesmo CNPJ pode ser os dois). O pedido entra sozinho na esteira</div>
+    <div class="rm-cell rm-wave-2">A conta recebe as garantias dos contratos e a DUX monitora vencimentos e pagamentos. Também pelo app</div>
+    <div class="rm-cell empty rm-wave-vis">·</div>
+    <div class="sep"></div>
 
-      <!-- Produtos -->
-      <g class="rm-wave-1"><rect class="node" x="110" y="180" width="160" height="110" rx="10"/>
-        <text class="t" x="124" y="208">Cedente</text>
-        <text class="s" x="124" y="228">Hoje: só pelo comercial</text>
-        <text class="s" x="124" y="246">Onda 1: self-service</text>
-        <text class="s" x="124" y="262">no Portal Anti</text>
-        <text class="s" x="124" y="279">Se travar: comercial</text>
-        <rect class="tag" x="202" y="171" width="58" height="18" rx="9"/><text class="tag-t" x="231" y="184">Onda 1</text></g>
-      <g class="rm-wave-now"><rect class="node" x="290" y="180" width="250" height="110" rx="10"/>
-        <text class="t" x="306" y="208">Sacado · Risco Sacado</text>
-        <rect class="chip" x="306" y="222" width="100" height="28" rx="14"/><text class="c" x="356" y="240">Fornecedor</text>
-        <rect class="chip" x="424" y="222" width="100" height="28" rx="14"/><text class="c" x="474" y="240">Parceiro</text>
-        <path class="ln" d="M410 236 H420" style="stroke-width:1.4"/>
-        <text class="note" x="306" y="270">Um CNPJ pode ocupar as duas cadeiras</text>
-        <text class="s" x="306" y="284">Piloto a iniciar</text>
-        <rect class="tag" x="472" y="171" width="58" height="18" rx="9"/><text class="tag-t" x="501" y="184">Piloto</text></g>
-      <g class="rm-wave-2"><rect class="node dash" x="560" y="180" width="180" height="110" rx="10"/>
-        <text class="t" x="574" y="208">Conta DUX</text>
-        <text class="s" x="574" y="228">Para cedente ou sacado</text>
-        <text class="s" x="574" y="245">Recebe as garantias</text>
-        <text class="s" x="574" y="262">DUX monitora prazos</text>
-        <text class="s" x="574" y="279">Taxa menor p/ quem abre</text>
-        <rect class="tag" x="676" y="171" width="56" height="18" rx="9"/><text class="tag-t" x="704" y="184">Onda 2</text></g>
-      <g class="rm-wave-vis"><rect class="node dash" x="760" y="180" width="180" height="110" rx="10"/>
-        <text class="t" x="774" y="208">Antecipação AdSense</text>
-        <text class="s" x="774" y="230">Criadores no YouTube</text>
-        <text class="s" x="774" y="247">depois TikTok e outras</text>
-        <text class="s" x="774" y="264">streamings</text>
-        <rect class="tag" x="872" y="171" width="58" height="18" rx="9"/><text class="tag-t" x="901" y="184">Onda 3</text></g>
+    <div class="rm-rowhead"><b>Abertura de conta</b><span>conta dentro da plataforma DUX</span></div>
+    <div class="rm-cell rm-wave-now">Primeira conta em construção</div>
+    <div class="rm-cell empty rm-wave-1">·</div>
+    <div class="rm-cell rm-wave-2">Conta para cedente ou sacado. Quem abre conta ganha condição especial de antecipação (taxa menor)</div>
+    <div class="rm-cell rm-wave-vis">Estrutura bancária mínima, por exemplo isenção de tarifa em X antecipações por mês</div>
+    <div class="sep"></div>
 
-      <!-- barramento produtos -> esteira -->
-      <path class="ln" d="M850 290 V320"/>
-      <path class="ln" d="M190 320 H850"/>
-      <text class="note mid" x="540" y="313">todo pedido passa pela esteira interna</text>
-      <path class="ln" d="M190 290 V320"/>
-      <path class="ln" d="M415 290 V320"/>
-      <path class="ln" d="M650 290 V320"/>
-      <path class="ln" d="M190 320 V348" marker-end="url(#rmArr)"/>
-      <path class="ln" d="M415 320 V348" marker-end="url(#rmArr)"/>
-      <path class="ln" d="M650 320 V348" marker-end="url(#rmArr)"/>
+    <div class="rm-rowhead"><b>App Anti</b><span>canal do Portal Anti</span></div>
+    <div class="rm-cell rm-wave-now">Aplicativo atual (Anti Banking), separado do Portal Anti</div>
+    <div class="rm-cell empty rm-wave-1">·</div>
+    <div class="rm-cell rm-wave-2">Remodelado para oferecer Sacado, Cedente e abertura de conta, com os serviços que já existem no anti-web</div>
+    <div class="rm-cell rm-wave-vis">Com conta aberta, passa a ter a estrutura bancária mínima</div>
+    <div class="sep"></div>
 
-      <!-- Base -->
-      <g class="rm-wave-now"><rect class="node" x="110" y="350" width="580" height="100" rx="10"/>
-        <text class="t" x="126" y="378">Portal DUX · interno</text>
-        <text class="s" x="126" y="398">Esteira que aprova cadastros e novos pedidos</text>
-        <text class="s" x="126" y="415">Onda 1: Risco Sacado entra sozinho; pagamento e cobrança passam a rodar aqui</text>
-        <text class="s" x="126" y="432">Onda 3: um card para acompanhar a Antecipação AdSense</text>
-        <rect class="tag" x="624" y="341" width="56" height="18" rx="9"/><text class="tag-t" x="652" y="354">Hoje</text></g>
-      <g class="rm-wave-1"><rect class="node" x="770" y="350" width="170" height="100" rx="10"/>
-        <text class="t" x="784" y="378">Decentral</text>
-        <text class="s" x="784" y="398">Para investidores</text>
-        <text class="s" x="784" y="415">Acompanhamento diário</text>
-        <text class="s" x="784" y="432">Valor disponível por fundo</text>
-        <rect class="tag" x="872" y="341" width="58" height="18" rx="9"/><text class="tag-t" x="901" y="354">Onda 1</text></g>
-      <path class="ln" d="M692 400 H768" marker-start="url(#rmArr)" marker-end="url(#rmArr)"/>
-      <text class="note mid" x="730" y="392">fundos</text>
-      <text class="note mid" x="730" y="418">retorno</text>
+    <div class="rm-rowhead"><b>Portal DUX interno</b><span>esteira da equipe DUX</span></div>
+    <div class="rm-cell rm-wave-now">Aprova cadastros e novos pedidos. O comercial inclui à mão os clientes do cedente</div>
+    <div class="rm-cell rm-wave-1">O Risco Sacado entra sozinho. Pagamento e cobrança passam a rodar aqui</div>
+    <div class="rm-cell empty rm-wave-2">·</div>
+    <div class="rm-cell rm-wave-vis">Um card para acompanhar a Antecipação AdSense, sem precisar de outra esteira</div>
+    <div class="sep"></div>
 
-      <!-- Apoio -->
-      <g class="rm-wave-2"><rect class="node dash" x="110" y="480" width="580" height="80" rx="10"/>
-        <text class="t" x="126" y="508">Gestão de caixa · ferramenta interna</text>
-        <text class="s" x="126" y="528">Hoje é conciliada à mão. Vira ferramenta separada, sem depender de planilhas</text>
-        <text class="s" x="126" y="545">Fica sob o guarda-chuva do projeto Gestão de Conhecimento</text>
-        <rect class="tag" x="624" y="471" width="56" height="18" rx="9"/><text class="tag-t" x="652" y="484">Onda 2</text></g>
-    </svg>
-    </div>
-    <figcaption>Os investidores do Decentral financiam as operações que passam pela esteira do Portal DUX interno, que devolve o valor disponível e o andamento, dia a dia. O time comercial deixa de ser a ponte e vira apoio. A Gestão de caixa é uma ferramenta interna à parte.</figcaption>
-    <div class="rm-legend" aria-label="Legenda">
-      <span><span class="rm-pill rm-wave-now">Hoje</span> existe ou está em piloto</span>
-      <span><span class="rm-pill rm-wave-1">Onda 1</span> próxima evolução (visão Q4)</span>
-      <span><span class="rm-pill rm-wave-2 dashed">Onda 2</span> depois (visão Q1)</span>
-      <span><span class="rm-pill rm-wave-vis dashed">Onda 3</span> mais adiante</span>
-    </div>
-  </figure>
+    <div class="rm-rowhead"><b>Gestão de caixa</b><span>ferramenta interna</span></div>
+    <div class="rm-cell rm-wave-now">Conciliada à mão, em planilhas</div>
+    <div class="rm-cell empty rm-wave-1">·</div>
+    <div class="rm-cell rm-wave-2">Vira ferramenta separada, sem depender das tabelas. Fica sob o projeto Gestão de Conhecimento</div>
+    <div class="rm-cell empty rm-wave-vis">·</div>
+    <div class="sep"></div>
 
-  <h3 class="rm-h3">2. Cliente e estratégia de cada produto</h3>
-  <p class="rm-lead">Quem a DUX atende com cada produto e para onde a estratégia aponta.</p>
-  <figure class="rm-fig">
-    <div class="rm-scroll">
-    <svg class="rm-svg" viewBox="0 0 960 330" role="img" aria-label="Cedente atende muitos clientes de ticket baixo e pode ganhar uma trilha de ticket alto com conta escrow; o Risco Sacado atende poucos parceiros de ticket alto; novas frentes ainda estão em exploração">
-      <defs>
-        <marker id="rmArr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 z" fill="currentColor"/></marker>
-      </defs>
-      <path class="ax" d="M70 20 V280 H935"/>
-      <text class="axl" transform="rotate(-90 36 150)" x="36" y="150" text-anchor="middle">nº de clientes</text>
-      <text class="axl" x="70" y="300">ticket baixo</text>
-      <text class="axl" x="935" y="300" text-anchor="end">ticket alto</text>
-      <text class="axl" x="502" y="318" text-anchor="middle">ticket da operação</text>
+    <div class="rm-rowhead"><b>Decentral</b><span>produto separado, para investidores</span></div>
+    <div class="rm-cell rm-wave-now">V3 em migração</div>
+    <div class="rm-cell rm-wave-1">Mais previsibilidade e acompanhamento diário da operação</div>
+    <div class="rm-cell rm-wave-2">Visão do valor disponível por fundo e operação, como já existe no Portal DUX interno</div>
+    <div class="rm-cell empty rm-wave-vis">·</div>
+    <div class="sep"></div>
 
-      <g class="rm-p-ced"><ellipse class="node" cx="215" cy="90" rx="135" ry="52"/>
-        <text class="t mid" x="215" y="86">Cedente · varejo</text>
-        <text class="s mid" x="215" y="106">influenciadores pequenos</text></g>
-      <path class="ln" d="M335 116 L425 148" marker-end="url(#rmArr2)"/>
-      <text class="note" x="318" y="158">trilha por ticket</text>
-      <g class="rm-p-ced"><ellipse class="node dash" cx="525" cy="172" rx="110" ry="44"/>
-        <text class="t mid" x="525" y="168">Cedente · ticket alto</text>
-        <text class="s mid" x="525" y="188">com conta escrow</text></g>
-      <g class="rm-p-sac"><ellipse class="node" cx="800" cy="232" rx="118" ry="42"/>
-        <text class="t mid" x="800" y="228">Risco Sacado</text>
-        <text class="s mid" x="800" y="248">grandes parceiros</text></g>
-      <g class="rm-p-nov"><ellipse class="node dash" cx="330" cy="236" rx="105" ry="34"/>
-        <text class="t mid" x="330" y="233">Novas frentes</text>
-        <text class="s mid" x="330" y="250">a explorar · ex.: AdSense</text></g>
-    </svg>
-    </div>
-    <figcaption>O Cedente é um produto popular, de volume; o Risco Sacado é de atacado. Ticket mais alto sobe o risco de calote, então pede mais segurança (conta escrow), que também custa mais.</figcaption>
-  </figure>
-
-  <div class="rm-cards">
-    <div class="rm-card rm-p-ced">
-      <h4>Risco Cedente</h4>
-      <span class="prof">Varejo · muitos clientes, ticket baixo</span>
-      <div class="r"><b>Cliente</b><p>Influenciadores e criadores pequenos.</p></div>
-      <div class="r"><b>Hoje</b><p>Ticket muito baixo não compensa: conta escrow e manutenção têm custo fixo. Precisa de um ticket mínimo.</p></div>
-      <div class="r"><b>Estratégia</b><ul>
-        <li>Porta de entrada para novos influenciadores (a demanda apareceu na feira Opus).</li>
-        <li>Ganhar no volume, com operação mais barata e sem abrir precedente de risco.</li>
-        <li>Duas trilhas: ticket baixo com operação enxuta; ticket alto com conta escrow (mais custo, mais segurança).</li>
-      </ul></div>
-      <div class="r todo"><b>Levantar</b><ul>
-        <li>Ticket mínimo viável (ex.: R$ 1.000).</li>
-        <li>Quantas operações rodam hoje com o mecanismo mais seguro (escrow).</li>
-      </ul></div>
-    </div>
-    <div class="rm-card rm-p-sac">
-      <h4>Risco Sacado</h4>
-      <span class="prof">Atacado · poucos parceiros, ticket alto</span>
-      <div class="r"><b>Cliente</b><p>Grandes parceiros e empresas. Hoje, mercado publicitário (Mind e Print).</p></div>
-      <div class="r"><b>Estratégia</b><p>Levar o produto a outros segmentos da economia criativa:</p><ul>
-        <li>Produtores de show, que pagam vários profissionais em cascata, em 15 ou 30 dias.</li>
-        <li>Bilheteria, que só recebe depois do fechamento.</li>
-        <li>Outros prestadores de serviço do setor.</li>
-      </ul></div>
-      <div class="r todo"><b>Levantar</b><ul>
-        <li>Quais segmentos priorizar primeiro.</li>
-      </ul></div>
-    </div>
-    <div class="rm-card rm-p-nov">
-      <h4>Novas frentes de negócio</h4>
-      <span class="prof">A explorar</span>
-      <div class="r"><b>Ideia</b><p>Outras fontes de receita como garantia da operação.</p></div>
-      <div class="r"><b>Primeiro exemplo</b><p>Antecipação AdSense: a receita do YouTube como garantia. Entra na Onda 3 do roadmap.</p></div>
-      <div class="r todo"><b>Levantar</b><ul>
-        <li>Que outras fontes de receita servem de garantia.</li>
-      </ul></div>
-    </div>
+    <div class="rm-rowhead"><b>Antecipação AdSense</b><span>produto novo</span></div>
+    <div class="rm-cell rm-wave-now">Estudo de viabilidade e piloto, com criadores fortes no YouTube</div>
+    <div class="rm-cell empty rm-wave-1">·</div>
+    <div class="rm-cell rm-wave-2">Produtização</div>
+    <div class="rm-cell rm-wave-vis">Depois do YouTube: TikTok e outras plataformas de streaming</div>
   </div>
+  </div>
+
+  <h3 class="rm-h3">2. Estratégia de produto</h3>
+  <p class="rm-lead">O que cada produto é, o objetivo dele e o cliente que queremos atingir. Eles são complementares: os de antecipação trazem o cliente, a conta e o app o fidelizam, a base interna sustenta a operação e os investidores financiam.</p>
+    <div class="rm-grp"><div class="rm-grp-h"><b>Antecipação de recebíveis</b><span>os produtos de crédito: varejo, atacado e uma frente nova</span></div><div class="rm-cards rm-cards-auto">
+      <div class="rm-card rm-p-ced">
+        <h4>Risco Cedente</h4>
+        <span class="prof">Varejo · volume, ticket baixo</span>
+        <div class="r"><b>O que é</b><p>Antecipação para quem vende e recebe depois: o próprio cedente antecipa os seus recebíveis.</p></div>
+        <div class="r"><b>Objetivo</b><p>Ser a porta de entrada de novos clientes, ganhando no volume com uma operação enxuta e sem abrir precedente de risco. Para tickets maiores, uma trilha com conta escrow (mais custo e mais segurança). A definir: ticket mínimo viável (ex.: R$ 1.000).</p></div>
+        <div class="r"><b>Cliente que queremos atingir</b><p>Influenciadores e criadores pequenos, muitos clientes de ticket baixo (demanda vista na feira Opus).</p></div>
+      </div>
+      <div class="rm-card rm-p-sac">
+        <h4>Risco Sacado</h4>
+        <span class="prof">Atacado · poucos parceiros, ticket alto</span>
+        <div class="r"><b>O que é</b><p>O parceiro (sacado) leva os seus fornecedores ao produto, que antecipam o que têm a receber. O mesmo CNPJ pode ser parceiro e fornecedor.</p></div>
+        <div class="r"><b>Objetivo</b><p>Sair do mercado publicitário e chegar a outros segmentos da economia criativa: produtores de show que pagam em cascata, em 15 ou 30 dias, e bilheteria, que só recebe após o fechamento.</p></div>
+        <div class="r"><b>Cliente que queremos atingir</b><p>Grandes parceiros e empresas, de ticket alto. Hoje, mercado publicitário (Mind e Print).</p></div>
+      </div>
+      <div class="rm-card rm-p-nov">
+        <h4>Antecipação AdSense</h4>
+        <span class="prof">Nova frente · piloto</span>
+        <div class="r"><b>O que é</b><p>Antecipação usando a receita do YouTube (AdSense) como garantia da operação.</p></div>
+        <div class="r"><b>Objetivo</b><p>Validar a viabilidade com um piloto agora e produtizar no Q1. Depois, abrir para TikTok e outras plataformas de streaming. A levantar: que outras fontes de receita servem de garantia.</p></div>
+        <div class="r"><b>Cliente que queremos atingir</b><p>Criadores fortes no YouTube, que têm receita recorrente da plataforma.</p></div>
+      </div>
+    </div></div>
+    <div class="rm-grp"><div class="rm-grp-h"><b>Conta e canais do cliente</b><span>onde o cliente acessa e o que fideliza</span></div><div class="rm-cards rm-cards-auto">
+      <div class="rm-card rm-p-ch">
+        <h4>Abertura de conta</h4>
+        <span class="prof">Conta DUX</span>
+        <div class="r"><b>O que é</b><p>Conta dentro da plataforma DUX, para cedente ou sacado. Recebe as garantias dos contratos e a DUX monitora vencimentos e pagamentos.</p></div>
+        <div class="r"><b>Objetivo</b><p>Dar mais segurança à operação e fidelizar: quem abre conta ganha condição especial de antecipação (taxa menor). No futuro, estrutura bancária mínima.</p></div>
+        <div class="r"><b>Cliente que queremos atingir</b><p>Cedentes e sacados que já operam com a DUX.</p></div>
+      </div>
+      <div class="rm-card rm-p-ch">
+        <h4>App Anti</h4>
+        <span class="prof">Canal móvel do Portal Anti</span>
+        <div class="r"><b>O que é</b><p>Aplicativo do cliente. Hoje é o Anti Banking, separado do Portal Anti; vira o canal móvel do mesmo balcão.</p></div>
+        <div class="r"><b>Objetivo</b><p>Oferecer Sacado, Cedente e abertura de conta no celular, com os serviços que já existem no Portal Anti.</p></div>
+        <div class="r"><b>Cliente que queremos atingir</b><p>Clientes do Portal Anti, sobretudo a base de varejo (cedente).</p></div>
+      </div>
+    </div></div>
+    <div class="rm-grp"><div class="rm-grp-h"><b>Base interna</b><span>o que sustenta a operação, sem aparecer para o cliente</span></div><div class="rm-cards rm-cards-auto">
+      <div class="rm-card rm-p-int">
+        <h4>Portal DUX interno</h4>
+        <span class="prof">Esteira da equipe</span>
+        <div class="r"><b>O que é</b><p>Onde a equipe DUX aprova cadastros e novos pedidos. Hoje o comercial inclui os clientes à mão; pagamento e cobrança passam a rodar aqui.</p></div>
+        <div class="r"><b>Objetivo</b><p>Ser a esteira única de todos os produtos: o que entra por qualquer canal cai no mesmo lugar, com menos trabalho manual.</p></div>
+        <div class="r"><b>Cliente que queremos atingir</b><p>Time DUX (comercial, operação e financeiro).</p></div>
+      </div>
+      <div class="rm-card rm-p-int">
+        <h4>Gestão de caixa</h4>
+        <span class="prof">Ferramenta interna</span>
+        <div class="r"><b>O que é</b><p>Conciliação do caixa, hoje feita à mão em planilhas.</p></div>
+        <div class="r"><b>Objetivo</b><p>Virar uma ferramenta separada, sem depender das tabelas, sob o projeto Gestão de Conhecimento.</p></div>
+        <div class="r"><b>Cliente que queremos atingir</b><p>Time interno de financeiro e operação.</p></div>
+      </div>
+    </div></div>
+    <div class="rm-grp"><div class="rm-grp-h"><b>Investidores</b><span>quem financia a operação</span></div><div class="rm-cards rm-cards-auto">
+      <div class="rm-card rm-p-inv">
+        <h4>Decentral</h4>
+        <span class="prof">Produto separado</span>
+        <div class="r"><b>O que é</b><p>Produto para investidores, com troca de fundos com o Portal DUX interno. V3 em migração.</p></div>
+        <div class="r"><b>Objetivo</b><p>Dar previsibilidade e acompanhamento diário da operação, com a visão do valor disponível por fundo e operação.</p></div>
+        <div class="r"><b>Cliente que queremos atingir</b><p>Investidores.</p></div>
+      </div>
+    </div></div>
 
   <p class="rm-foot">Montado a partir do planejamento do Lucas, com foco no curto prazo. Os quarters são só uma referência de visão, sem compromisso de prazo de desenvolvimento.</p>
 

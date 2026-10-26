@@ -53,76 +53,121 @@
     <figcaption>Linha tracejada é ponte manual. App, Gestão de caixa e Decentral não conversam com o resto; o que anda depende do comercial.</figcaption>
   </figure>
 
-  <h3 class="rm-h3">2. Evolução de cada produto</h3>
-  <p class="rm-lead">Leia cada linha da esquerda para a direita: o que é hoje e o que vem na sequência.</p>
-  <div class="rm-scroll">
-  <div class="rm-lanes" role="table" aria-label="Evolução por produto">
-    <div></div>
-    <div class="rm-qband cur" style="grid-column:span 2">Q4 2026 · visão atual</div>
-    <div class="rm-qband">Q1 2027</div>
-    <div class="rm-qband">Mais adiante</div>
-    <div></div>
-    <div class="rm-colhead rm-wave-now"><b>Hoje</b><span>como opera agora</span></div>
-    <div class="rm-colhead rm-wave-1"><b>Onda 1</b><span>automatizar e abrir o Portal Anti</span></div>
-    <div class="rm-colhead rm-wave-2"><b>Onda 2</b><span>conta e app</span></div>
-    <div class="rm-colhead rm-wave-vis"><b>Onda 3</b><span>mais adiante</span></div>
+  <h3 class="rm-h3">2. Alvo: o canal separado do produto</h3>
+  <p class="rm-lead">Os produtos ficam iguais em qualquer canal. O Portal Anti é o balcão do cliente (hoje na web, depois também no app) e tudo cai na mesma esteira do Portal DUX interno.</p>
+  <figure class="rm-fig">
+    <div class="rm-scroll">
+    <svg class="rm-svg" viewBox="0 0 960 580" role="img" aria-label="Canais (Portal Anti e App Anti) oferecem os mesmos produtos, que caem na esteira do Portal DUX interno; Decentral troca fundos com o Portal DUX; Gestão de caixa é ferramenta interna separada">
+      <defs>
+        <marker id="rmArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 z" fill="currentColor"/></marker>
+      </defs>
+      <text class="lab" x="20" y="64">Canais</text>
+      <text class="lab" x="20" y="240">Produtos</text>
+      <text class="lab" x="20" y="404">Base</text>
+      <text class="lab" x="20" y="520">Apoio</text>
 
-    <div class="rm-rowhead"><b>Cedente</b><span>quem antecipa os próprios recebíveis</span></div>
-    <div class="rm-cell rm-wave-now">Oferecido só pelo time comercial, que inclui os clientes à mão na esteira do Portal DUX</div>
-    <div class="rm-cell rm-wave-1">Fluxo automatizado, self-service no Portal Anti. Se não conseguir concluir, chama o comercial</div>
-    <div class="rm-cell rm-wave-2">Abre conta DUX e ganha condição especial de taxa. Também pelo app</div>
-    <div class="rm-cell empty rm-wave-vis">·</div>
-    <div class="sep"></div>
+      <!-- Canais -->
+      <g class="rm-wave-now"><rect class="node" x="110" y="20" width="380" height="80" rx="10"/>
+        <text class="t" x="126" y="46">Portal Anti · web</text>
+        <text class="s" x="126" y="66">Qualquer cliente com CNPJ</text>
+        <text class="s" x="126" y="84">Área admin libera quem acessa o Risco Sacado</text>
+        <rect class="tag" x="424" y="11" width="56" height="18" rx="9"/><text class="tag-t" x="452" y="24">Hoje</text></g>
+      <g class="rm-wave-2"><rect class="node dash" x="510" y="20" width="260" height="80" rx="10"/>
+        <text class="t" x="526" y="46">App Anti</text>
+        <text class="s" x="526" y="66">Novo canal do Portal Anti</text>
+        <text class="s" x="526" y="84">Os mesmos serviços, no celular</text>
+        <rect class="tag" x="704" y="11" width="56" height="18" rx="9"/><text class="tag-t" x="732" y="24">Onda 2</text></g>
+      <rect class="box dash" x="790" y="20" width="150" height="80" rx="10"/>
+      <text class="t" x="806" y="42">Time comercial</text>
+      <text class="s" x="806" y="60">Hoje oferece o</text>
+      <text class="s" x="806" y="75">Cedente; depois</text>
+      <text class="s" x="806" y="90">apoia o self-service</text>
 
-    <div class="rm-rowhead"><b>Sacado</b><span>Risco Sacado, com fornecedor e parceiro</span></div>
-    <div class="rm-cell rm-wave-now">Ainda não opera. Piloto prestes a começar, oferecido pelo Portal Anti</div>
-    <div class="rm-cell rm-wave-1">O CNPJ pede pelo Portal Anti. Admin libera como parceiro ou fornecedor (o mesmo CNPJ pode ser os dois). O pedido entra sozinho na esteira</div>
-    <div class="rm-cell rm-wave-2">A conta recebe as garantias dos contratos e a DUX monitora vencimentos e pagamentos. Também pelo app</div>
-    <div class="rm-cell empty rm-wave-vis">·</div>
-    <div class="sep"></div>
+      <!-- barramento canais -> produtos -->
+      <path class="ln" d="M300 100 V140"/>
+      <path class="ln dash" d="M640 100 V140"/>
+      <path class="ln dash" d="M865 100 V140"/>
+      <path class="ln" d="M190 140 H865"/>
+      <text class="note mid" x="470" y="133">mesmos produtos, em qualquer canal</text>
+      <path class="ln" d="M190 140 V178" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M415 140 V178" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M650 140 V178" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M850 140 V178" marker-end="url(#rmArr)"/>
 
-    <div class="rm-rowhead"><b>Abertura de conta</b><span>conta dentro da plataforma DUX</span></div>
-    <div class="rm-cell rm-wave-now">Primeira conta em construção</div>
-    <div class="rm-cell empty rm-wave-1">·</div>
-    <div class="rm-cell rm-wave-2">Conta para cedente ou sacado. Quem abre conta ganha condição especial de antecipação (taxa menor)</div>
-    <div class="rm-cell rm-wave-vis">Estrutura bancária mínima, por exemplo isenção de tarifa em X antecipações por mês</div>
-    <div class="sep"></div>
+      <!-- Produtos -->
+      <g class="rm-wave-1"><rect class="node" x="110" y="180" width="160" height="110" rx="10"/>
+        <text class="t" x="124" y="208">Cedente</text>
+        <text class="s" x="124" y="228">Hoje: só pelo comercial</text>
+        <text class="s" x="124" y="246">Onda 1: self-service</text>
+        <text class="s" x="124" y="262">no Portal Anti</text>
+        <text class="s" x="124" y="279">Se travar: comercial</text>
+        <rect class="tag" x="202" y="171" width="58" height="18" rx="9"/><text class="tag-t" x="231" y="184">Onda 1</text></g>
+      <g class="rm-wave-now"><rect class="node" x="290" y="180" width="250" height="110" rx="10"/>
+        <text class="t" x="306" y="208">Sacado · Risco Sacado</text>
+        <rect class="chip" x="306" y="222" width="100" height="28" rx="14"/><text class="c" x="356" y="240">Fornecedor</text>
+        <rect class="chip" x="424" y="222" width="100" height="28" rx="14"/><text class="c" x="474" y="240">Parceiro</text>
+        <path class="ln" d="M410 236 H420" style="stroke-width:1.4"/>
+        <text class="note" x="306" y="270">Um CNPJ pode ocupar as duas cadeiras</text>
+        <text class="s" x="306" y="284">Piloto a iniciar</text>
+        <rect class="tag" x="472" y="171" width="58" height="18" rx="9"/><text class="tag-t" x="501" y="184">Piloto</text></g>
+      <g class="rm-wave-2"><rect class="node dash" x="560" y="180" width="180" height="110" rx="10"/>
+        <text class="t" x="574" y="208">Conta DUX</text>
+        <text class="s" x="574" y="228">Para cedente ou sacado</text>
+        <text class="s" x="574" y="245">Recebe as garantias</text>
+        <text class="s" x="574" y="262">DUX monitora prazos</text>
+        <text class="s" x="574" y="279">Taxa menor p/ quem abre</text>
+        <rect class="tag" x="676" y="171" width="56" height="18" rx="9"/><text class="tag-t" x="704" y="184">Onda 2</text></g>
+      <g class="rm-wave-vis"><rect class="node dash" x="760" y="180" width="180" height="110" rx="10"/>
+        <text class="t" x="774" y="208">Antecipação AdSense</text>
+        <text class="s" x="774" y="230">Criadores no YouTube</text>
+        <text class="s" x="774" y="247">depois TikTok e outras</text>
+        <text class="s" x="774" y="264">streamings</text>
+        <rect class="tag" x="872" y="171" width="58" height="18" rx="9"/><text class="tag-t" x="901" y="184">Onda 3</text></g>
 
-    <div class="rm-rowhead"><b>App Anti</b><span>canal do Portal Anti</span></div>
-    <div class="rm-cell rm-wave-now">Aplicativo atual (Anti Banking), separado do Portal Anti</div>
-    <div class="rm-cell empty rm-wave-1">·</div>
-    <div class="rm-cell rm-wave-2">Remodelado para oferecer Sacado, Cedente e abertura de conta, com os serviços que já existem no anti-web</div>
-    <div class="rm-cell rm-wave-vis">Com conta aberta, passa a ter a estrutura bancária mínima</div>
-    <div class="sep"></div>
+      <!-- barramento produtos -> esteira -->
+      <path class="ln" d="M850 290 V320"/>
+      <path class="ln" d="M190 320 H850"/>
+      <text class="note mid" x="540" y="313">todo pedido passa pela esteira interna</text>
+      <path class="ln" d="M190 290 V320"/>
+      <path class="ln" d="M415 290 V320"/>
+      <path class="ln" d="M650 290 V320"/>
+      <path class="ln" d="M190 320 V348" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M415 320 V348" marker-end="url(#rmArr)"/>
+      <path class="ln" d="M650 320 V348" marker-end="url(#rmArr)"/>
 
-    <div class="rm-rowhead"><b>Portal DUX interno</b><span>esteira da equipe DUX</span></div>
-    <div class="rm-cell rm-wave-now">Aprova cadastros e novos pedidos. O comercial inclui à mão os clientes do cedente</div>
-    <div class="rm-cell rm-wave-1">O Risco Sacado entra sozinho. Pagamento e cobrança passam a rodar aqui</div>
-    <div class="rm-cell empty rm-wave-2">·</div>
-    <div class="rm-cell rm-wave-vis">Um card para acompanhar a Antecipação AdSense, sem precisar de outra esteira</div>
-    <div class="sep"></div>
+      <!-- Base -->
+      <g class="rm-wave-now"><rect class="node" x="110" y="350" width="580" height="100" rx="10"/>
+        <text class="t" x="126" y="378">Portal DUX · interno</text>
+        <text class="s" x="126" y="398">Esteira que aprova cadastros e novos pedidos</text>
+        <text class="s" x="126" y="415">Onda 1: Risco Sacado entra sozinho; pagamento e cobrança passam a rodar aqui</text>
+        <text class="s" x="126" y="432">Onda 3: um card para acompanhar a Antecipação AdSense</text>
+        <rect class="tag" x="624" y="341" width="56" height="18" rx="9"/><text class="tag-t" x="652" y="354">Hoje</text></g>
+      <g class="rm-wave-1"><rect class="node" x="770" y="350" width="170" height="100" rx="10"/>
+        <text class="t" x="784" y="378">Decentral</text>
+        <text class="s" x="784" y="398">Para investidores</text>
+        <text class="s" x="784" y="415">Acompanhamento diário</text>
+        <text class="s" x="784" y="432">Valor disponível por fundo</text>
+        <rect class="tag" x="872" y="341" width="58" height="18" rx="9"/><text class="tag-t" x="901" y="354">Onda 1</text></g>
+      <path class="ln" d="M692 400 H768" marker-start="url(#rmArr)" marker-end="url(#rmArr)"/>
+      <text class="note mid" x="730" y="392">fundos</text>
+      <text class="note mid" x="730" y="418">retorno</text>
 
-    <div class="rm-rowhead"><b>Gestão de caixa</b><span>ferramenta interna</span></div>
-    <div class="rm-cell rm-wave-now">Conciliada à mão, em planilhas</div>
-    <div class="rm-cell empty rm-wave-1">·</div>
-    <div class="rm-cell rm-wave-2">Vira ferramenta separada, sem depender das tabelas. Fica sob o projeto Gestão de Conhecimento</div>
-    <div class="rm-cell empty rm-wave-vis">·</div>
-    <div class="sep"></div>
-
-    <div class="rm-rowhead"><b>Decentral</b><span>produto separado, para investidores</span></div>
-    <div class="rm-cell rm-wave-now">V3 em migração</div>
-    <div class="rm-cell rm-wave-1">Mais previsibilidade e acompanhamento diário da operação</div>
-    <div class="rm-cell rm-wave-2">Visão do valor disponível por fundo e operação, como já existe no Portal DUX interno</div>
-    <div class="rm-cell empty rm-wave-vis">·</div>
-    <div class="sep"></div>
-
-    <div class="rm-rowhead"><b>Antecipação AdSense</b><span>produto novo</span></div>
-    <div class="rm-cell empty rm-wave-now">·</div>
-    <div class="rm-cell empty rm-wave-1">·</div>
-    <div class="rm-cell empty rm-wave-2">·</div>
-    <div class="rm-cell rm-wave-vis">Criadores fortes no YouTube; depois TikTok e outras plataformas de streaming</div>
-  </div>
-  </div>
+      <!-- Apoio -->
+      <g class="rm-wave-2"><rect class="node dash" x="110" y="480" width="580" height="80" rx="10"/>
+        <text class="t" x="126" y="508">Gestão de caixa · ferramenta interna</text>
+        <text class="s" x="126" y="528">Hoje é conciliada à mão. Vira ferramenta separada, sem depender de planilhas</text>
+        <text class="s" x="126" y="545">Fica sob o guarda-chuva do projeto Gestão de Conhecimento</text>
+        <rect class="tag" x="624" y="471" width="56" height="18" rx="9"/><text class="tag-t" x="652" y="484">Onda 2</text></g>
+    </svg>
+    </div>
+    <figcaption>Os investidores do Decentral financiam as operações que passam pela esteira do Portal DUX interno, que devolve o valor disponível e o andamento, dia a dia. O time comercial deixa de ser a ponte e vira apoio. A Gestão de caixa é uma ferramenta interna à parte.</figcaption>
+    <div class="rm-legend" aria-label="Legenda">
+      <span><span class="rm-pill rm-wave-now">Hoje</span> existe ou está em piloto</span>
+      <span><span class="rm-pill rm-wave-1">Onda 1</span> próxima evolução (visão Q4)</span>
+      <span><span class="rm-pill rm-wave-2 dashed">Onda 2</span> depois (visão Q1)</span>
+      <span><span class="rm-pill rm-wave-vis dashed">Onda 3</span> mais adiante</span>
+    </div>
+  </figure>
 
   <h3 class="rm-h3">3. Onde cada produto é oferecido</h3>
   <p class="rm-lead">A mesma lista de produtos, cruzada com os canais. O Sacado nasce no Portal Anti; o Cedente passa a ir para lá na Onda 1; o app vem na Onda 2. O Portal DUX interno é onde a equipe trata cada pedido.</p>

@@ -37,11 +37,13 @@ async function open(opts, hash = "") {
   assert.match(page.url(), /#projetos$/);
   await page.click('.tab-btn[data-page="roadmap"]');
   assert.equal(await page.locator("#page-roadmap").isVisible(), true);
-  // página principal enxuta: só o Alvo e Cliente/estratégia; o resto fica no Detalhamento (acesso restrito)
-  assert.equal(await page.locator("#page-roadmap figure.rm-fig").count(), 2);
-  assert.equal(await page.locator("#page-roadmap .rm-card").count(), 3);
-  assert.equal(await page.locator("#page-roadmap .rm-lanes").count(), 0);
+  // página principal: 1. Evolução de cada produto (tabela) e 2. Estratégia de produto (8 cards); o resto fica no Detalhamento
+  assert.equal(await page.locator("#page-roadmap .rm-lanes .rm-rowhead").count(), 8);
+  assert.equal(await page.locator("#page-roadmap .rm-card").count(), 8);
+  assert.equal(await page.locator("#page-roadmap figure.rm-fig").count(), 0);
   assert.equal(await page.locator("#page-roadmap .rm-matrix").count(), 0);
+  assert.match(await page.locator("#page-roadmap .rm-lanes").innerText(), /Estudo de viabilidade e piloto[\s\S]*Produtização/);
+  assert.deepEqual(await page.$$eval("#page-roadmap .rm-h3", (els) => els.map((e) => e.textContent)), ["1. Evolução de cada produto", "2. Estratégia de produto"]);
   assert.equal(await page.locator("#rmDetailBtn").isVisible(), true); // admin
   assert.doesNotMatch(page.url(), /#/);
   await page.locator("#page-roadmap").screenshot({ path: `${out}/roadmap-light.png` });

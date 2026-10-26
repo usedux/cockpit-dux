@@ -26,7 +26,7 @@ assert.deepEqual(anaId, []);
   assert.equal((await call(env.base, "/api/db?c=access", { cookie: ana })).status, 403);
   assert.equal((await call(env.base, "/api/db", { cookie: ana, method: "POST", body: { op: "set", c: "access", id: "u_x", data: { detail: true } } })).status, 403);
   const page = await (await call(env.base, "/", { cookie: ana })).text();
-  assert.doesNotMatch(page, /Hoje: plataformas soltas|Evolução de cada produto|Onde cada produto é oferecido/);
+  assert.doesNotMatch(page, /Hoje: plataformas soltas|Onde cada produto é oferecido|Alvo: o canal separado/);
   const ok = await call(env.base, "/api/roadmap-detail", { cookie: admin });
   assert.equal(ok.status, 200);
   const body = await ok.json();
@@ -77,7 +77,7 @@ async function open(cookie, hash = "", opts = { viewport: { width: 1280, height:
   assert.match(page.url(), /#detalhamento$/);
   assert.equal(await page.locator(".tab-btn.active").getAttribute("data-page"), "roadmap");
   assert.equal(await page.locator("#rdPanelProdutos figure.rm-fig").count() >= 1, true);
-  assert.equal(await page.locator("#rdPanelProdutos .rm-lanes .rm-rowhead").count(), 8);
+  assert.equal(await page.locator("#rdPanelProdutos .rm-lanes").count(), 0); // a Evolução agora está na página principal
   assert.equal(await page.locator("#rdPanelProdutos .rm-matrix .mp").count(), 6);
   await page.locator("#page-roadmap-detail").screenshot({ path: `${out}/detalhamento-produtos.png` });
   await page.click('.rd-tab[data-rd="metodologia"]');
