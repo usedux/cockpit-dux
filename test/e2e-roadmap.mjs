@@ -42,7 +42,14 @@ async function open(opts, hash = "") {
   assert.equal(await page.locator("#page-roadmap .rm-card").count(), 8);
   assert.equal(await page.locator("#page-roadmap figure.rm-fig").count(), 0);
   assert.equal(await page.locator("#page-roadmap .rm-matrix").count(), 0);
-  assert.match(await page.locator("#page-roadmap .rm-lanes").innerText(), /Estudo de viabilidade e piloto[\s\S]*Produtização/);
+  const lanes = await page.locator("#page-roadmap .rm-lanes").innerText();
+  // AdSense: estudo hoje → piloto do NWB no Q4 (Onda 1) → produtização (Onda 2)
+  assert.match(lanes, /Estudo de viabilidade[\s\S]*Piloto do NWB, para destravar um negócio atual[\s\S]*Produtização/);
+  // Gestão de caixa entra no Q4 (Onda 1) e a célula da Onda 2 fica vazia; Abertura de conta no Q1 = modelagem de negócio
+  const row = async (name) => page.locator("#page-roadmap .rm-lanes .rm-rowhead", { hasText: name }).evaluate((h) => [1, 2, 3, 4].map((n) => h.parentElement.children[[...h.parentElement.children].indexOf(h) + n].textContent.trim()));
+  const caixa = await row("Gestão de caixa");
+  assert.match(caixa[1], /Vira ferramenta separada/); assert.equal(caixa[2], "·");
+  assert.match((await row("Abertura de conta"))[2], /Modelagem de negócio/);
   assert.deepEqual(await page.$$eval("#page-roadmap .rm-h3", (els) => els.map((e) => e.textContent)), ["1. Evolução de cada produto", "2. Estratégia de produto"]);
   assert.equal(await page.locator("#rmDetailBtn").isVisible(), true); // admin
   assert.doesNotMatch(page.url(), /#/);
