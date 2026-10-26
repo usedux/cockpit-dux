@@ -5,7 +5,8 @@ import { requireSession } from "../lib/auth.js";
 import { col } from "../lib/store.js";
 
 const SHARED = new Set(["reports", "innovations"]);
-const ADMIN_ONLY = new Set(["upstream"]);
+// "access" = quem o admin liberou para o Detalhamento de produtos (lib/access.js); só o admin lê e grava.
+const ADMIN_ONLY = new Set(["upstream", "access"]);
 const ID_RE = /^[A-Za-z0-9_\-.:]{1,80}$/;
 const PROTECTED = ["submittedById", "submittedAt", "reportadoPor", "editedAt", "editedById"];
 

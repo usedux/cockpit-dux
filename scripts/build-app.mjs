@@ -54,6 +54,11 @@ export function transform(fragment, { appUrl = "https://cockpit-dux.vercel.app",
   s = s.replace(/Entre no claude\.ai com sua conta @wearedux\.com e abra o cockpit de novo\./g, "Recarregue a página e entre de novo com sua conta @wearedux.com.");
   s = s.replace(/Abra este cockpit publicado em claude\.ai, com uma conta da organização DUX, para ver/g, "Entre com sua conta @wearedux.com para ver");
 
+  // Detalhamento de produtos: o conteúdo NÃO vai no index.html (que qualquer @wearedux.com recebe). Sai num arquivo
+  // separado, servido só por /api/roadmap-detail para o admin e para quem ele liberou.
+  let detail = "";
+  must("rmDetailSource", /<template id="rmDetailSource">([\s\S]*?)<\/template>/, (_m, inner) => { detail = inner.trim(); return '<template id="rmDetailSource"></template>'; });
+
   const html = `<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -70,15 +75,16 @@ ${s}
 </body>
 </html>
 `;
-  return { html, icon, title };
+  return { html, icon, title, detail };
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const src = readFileSync(join(root, "src", "cockpit.html"), "utf8");
-  const { html, icon } = transform(src, { appUrl: process.env.APP_URL || "https://cockpit-dux.vercel.app" });
+  const { html, icon, detail } = transform(src, { appUrl: process.env.APP_URL || "https://cockpit-dux.vercel.app" });
   mkdirSync(join(root, "app"), { recursive: true });
   mkdirSync(join(root, "public"), { recursive: true });
   writeFileSync(join(root, "app", "index.html"), html);
+  writeFileSync(join(root, "app", "roadmap-detail.html"), detail);
   const m = /href="data:image\/svg\+xml,([^"]+)"/.exec(icon);
   if (m) writeFileSync(join(root, "public", "favicon.svg"), decodeURIComponent(m[1]));
   console.log(`app/index.html gerado (${(html.length / 1024).toFixed(0)} KB)`);

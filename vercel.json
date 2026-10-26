@@ -20,6 +20,9 @@
     "api/page.js": {
       "includeFiles": "app/**"
     },
+    "api/roadmap-detail.js": {
+      "includeFiles": "app/**"
+    },
     "api/linear-webhook.js": {
       "maxDuration": 60
     },
