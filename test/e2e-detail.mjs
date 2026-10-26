@@ -26,7 +26,7 @@ assert.deepEqual(anaId, []);
   assert.equal((await call(env.base, "/api/db?c=access", { cookie: ana })).status, 403);
   assert.equal((await call(env.base, "/api/db", { cookie: ana, method: "POST", body: { op: "set", c: "access", id: "u_x", data: { detail: true } } })).status, 403);
   const page = await (await call(env.base, "/", { cookie: ana })).text();
-  assert.doesNotMatch(page, /Hoje: plataformas soltas|Onde cada produto é oferecido|Alvo: o canal separado/);
+  assert.doesNotMatch(page, /Hoje: plataformas soltas|Onde cada produto é oferecido|Alvo: o canal separado|As três camadas|Week Delivery/);
   const ok = await call(env.base, "/api/roadmap-detail", { cookie: admin });
   assert.equal(ok.status, 200);
   const body = await ok.json();
@@ -39,7 +39,7 @@ assert.deepEqual(anaId, []);
 // 2) O build nunca deixa o detalhamento dentro do index.html
 {
   const { html, detail } = transform(readFileSync(new URL("../src/cockpit.html", import.meta.url), "utf8"));
-  assert.doesNotMatch(html, /Hoje: plataformas soltas|class="rm-matrix"/);
+  assert.doesNotMatch(html, /Hoje: plataformas soltas|class="rm-matrix"|As três camadas|Week Delivery/);
   assert.match(detail, /class="rm-matrix"/);
 }
 
@@ -76,6 +76,16 @@ async function open(cookie, hash = "", opts = { viewport: { width: 1280, height:
   await page.waitForSelector("#page-roadmap-detail:not([hidden])");
   assert.match(page.url(), /#detalhamento$/);
   assert.equal(await page.locator(".tab-btn.active").getAttribute("data-page"), "roadmap");
+  // abre na Visão geral (resumo metodológico em três camadas)
+  assert.equal(await page.locator("#rdPanelVisao").isVisible(), true);
+  const vg = await page.locator("#rdPanelVisao").innerText();
+  assert.match(vg, /Estratégica[\s\S]*Tática[\s\S]*Operacional/);
+  assert.match(vg, /Business Owner/);
+  assert.match(vg, /OKRs/);
+  assert.equal(await page.locator("#rdPanelVisao .vg-table tbody tr").count(), 4);
+  await page.locator("#page-roadmap-detail").screenshot({ path: `${out}/detalhamento-visao.png` });
+  await page.click('.rd-tab[data-rd="produtos"]');
+  assert.equal(await page.locator("#rdPanelProdutos").isVisible(), true);
   assert.equal(await page.locator("#rdPanelProdutos figure.rm-fig").count() >= 1, true);
   assert.equal(await page.locator("#rdPanelProdutos .rm-lanes").count(), 0); // a Evolução agora está na página principal
   assert.equal(await page.locator("#rdPanelProdutos .rm-matrix .mp").count(), 6);

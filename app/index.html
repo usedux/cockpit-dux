@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T13:06:09.348Z","sha":"f3c8c98","message":"Roadmap: Evolução de cada produto vira o item 1; novo bloco Estratégia de produto","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T13:20:50.478Z","sha":"9d55928","message":"Painel de Projetos: um projeto por linha","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -942,12 +942,28 @@
   .rm-p-ch{--wc:var(--area-dev); --wcs:var(--area-dev-soft);}
   .rm-p-int{--wc:var(--area-ops); --wcs:var(--area-ops-soft);}
   .rm-p-inv{--wc:var(--area-jur); --wcs:var(--area-jur-soft);}
+  .ly-est{--wc:var(--area-mkt); --wcs:var(--area-mkt-soft);}
+  .ly-tat{--wc:var(--area-com); --wcs:var(--area-com-soft);}
+  .ly-op{--wc:var(--area-ops); --wcs:var(--area-ops-soft);}
+  .vg-table{width:100%; border-collapse:collapse; font-size:13px; background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; min-width:520px;}
+  .vg-table th{text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-muted); padding:9px 12px; border-bottom:1px solid var(--line);}
+  .vg-table td{padding:9px 12px; border-bottom:1px solid var(--line); color:var(--ink);}
+  .vg-table tr:last-child td{border-bottom:0;}
+  .vg-sub{font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin:16px 0 6px;}
+  .vg-chips{display:flex; flex-wrap:wrap; gap:6px;}
+  .vg-chips span{font-size:12.5px; font-weight:600; color:var(--ink); background:var(--surface); border:1px solid var(--line-strong); border-radius:999px; padding:4px 11px;}
+  .vg-chips small{font-weight:500; color:var(--ink-faint); margin-left:4px;}
+  .vg-flow{display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:12px;}
+  .vg-flow span{border-radius:8px; padding:6px 9px; font-weight:600; border:1px solid var(--line-strong); background:var(--surface-muted); color:var(--ink);}
+  .vg-flow .dev{border-color:var(--blk-ext);} .vg-flow .qa{border-color:var(--st-qa);} .vg-flow .prod{border-color:var(--st-done);}
+  .vg-flow i{align-self:center; font-style:normal; color:var(--ink-faint);}
   .rm-grp{margin-top:18px;}
   .rm-grp-h{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; border-bottom:1px solid var(--line-strong); padding-bottom:5px;}
   .rm-grp-h b{font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:14px; color:var(--ink);}
   .rm-grp-h span{font-size:12px; color:var(--ink-faint);}
   .rm-cards.rm-cards-auto{grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));}
-  @media (max-width:900px){ .rm-cards, .rm-cards.rm-cards-auto{grid-template-columns:1fr;} }
+  .rm-cards.rm-cards-wide{grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));}
+  @media (max-width:900px){ .rm-cards, .rm-cards.rm-cards-auto, .rm-cards.rm-cards-wide{grid-template-columns:1fr;} }
 
   /* ---------- Ferramentas do repositório ---------- */
   .rp-kpis{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin:4px 0 18px;}
@@ -1864,11 +1880,13 @@
   </div>
   <div class="rd-bar">
     <div class="rd-tabs" role="tablist" aria-label="Seções do detalhamento">
-      <button type="button" class="rd-tab active" role="tab" data-rd="produtos" aria-selected="true">Produtos</button>
+      <button type="button" class="rd-tab active" role="tab" data-rd="visao" aria-selected="true">Visão geral</button>
+      <button type="button" class="rd-tab" role="tab" data-rd="produtos" aria-selected="false">Produtos</button>
       <button type="button" class="rd-tab" role="tab" data-rd="metodologia" aria-selected="false">Metodologia de produto</button>
     </div>
   </div>
-  <div id="rdPanelProdutos"><div class="reported-empty">Carregando…</div></div>
+  <div id="rdPanelVisao"><div class="reported-empty">Carregando…</div></div>
+  <div id="rdPanelProdutos" hidden><div class="reported-empty">Carregando…</div></div>
   <div id="rdPanelMetodologia" hidden><div class="reported-empty">Carregando…</div></div>
 
 </div>
@@ -4092,7 +4110,11 @@
     function applyDetail(html, data){
       detailData = data || detailData || {};
       if (!detailLoaded) {
-        $('rdPanelProdutos').innerHTML = html;
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        var pv = tmp.querySelector('[data-rd-panel="visao"]'), pp = tmp.querySelector('[data-rd-panel="produtos"]');
+        $('rdPanelVisao').innerHTML = pv ? pv.innerHTML : '';
+        $('rdPanelProdutos').innerHTML = pp ? pp.innerHTML : (pv ? '' : html);
         detailLoaded = true;
       }
       detailAllowed = true;
@@ -4134,6 +4156,7 @@
         Array.prototype.forEach.call(document.querySelectorAll('.rd-tab'), function(x){
           var on = x === tb; x.classList.toggle('active', on); x.setAttribute('aria-selected', on ? 'true' : 'false');
         });
+        $('rdPanelVisao').hidden = which !== 'visao';
         $('rdPanelProdutos').hidden = which !== 'produtos';
         $('rdPanelMetodologia').hidden = which !== 'metodologia';
       });

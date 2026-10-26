@@ -1,4 +1,197 @@
-<h3 class="rm-h3">1. Hoje: plataformas soltas, ligadas à mão</h3>
+<section data-rd-panel="visao">
+  <p class="rm-lead" style="margin-top:4px;">Resumo da metodologia desenhada no Miro: como a DUX organiza a evolução dos produtos em três camadas, quem faz o quê em cada projeto e quais objetivos cada camada persegue.</p>
+
+  <h3 class="rm-h3">1. As três camadas</h3>
+  <p class="rm-lead">Cada camada tem um dono e um foco. A direção desce da estratégia para a execução; as entregas e os números sobem no sentido contrário.</p>
+  <figure class="rm-fig">
+    <div class="rm-scroll">
+    <svg class="rm-svg" viewBox="0 0 960 350" role="img" aria-label="Pirâmide de três camadas: estratégica (Head de Operações), tática (Product Manager e Tech Manager) e operacional (Tech Lead e Business Owner de cada projeto), com os quatro projetos na base; setas mostram a direção descendo e as entregas subindo">
+      <defs>
+        <marker id="rmArr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 z" fill="currentColor"/></marker>
+      </defs>
+      <g class="ly-est"><rect class="node" x="170" y="16" width="460" height="84" rx="14"/>
+        <text class="t mid" x="400" y="52">Estratégica</text>
+        <text class="s mid" x="400" y="74">Head de Operações · OKRs, KPIs e para onde vamos</text></g>
+      <g class="ly-tat"><rect class="node" x="95" y="112" width="610" height="84" rx="14"/>
+        <text class="t mid" x="400" y="148">Tática</text>
+        <text class="s mid" x="400" y="170">Product Manager + Tech Manager · produtos, ritos e padrões</text></g>
+      <g class="ly-op"><rect class="node" x="20" y="208" width="760" height="84" rx="14"/>
+        <text class="t mid" x="400" y="244">Operacional</text>
+        <text class="s mid" x="400" y="266">Tech Lead + Business Owner de cada projeto · execução do backlog</text></g>
+
+      <g>
+        <rect class="chip" x="60" y="306" width="150" height="30" rx="15"/><text class="c" x="135" y="326">Anti Banking</text>
+        <rect class="chip" x="232" y="306" width="150" height="30" rx="15"/><text class="c" x="307" y="326">Anti Cedente</text>
+        <rect class="chip" x="404" y="306" width="150" height="30" rx="15"/><text class="c" x="479" y="326">Anti Sacado</text>
+        <rect class="chip" x="576" y="306" width="150" height="30" rx="15"/><text class="c" x="651" y="326">Decentral</text>
+      </g>
+
+      <path class="ln" d="M845 44 V282" marker-end="url(#rmArr3)"/>
+      <path class="ln" d="M915 282 V44" marker-end="url(#rmArr3)"/>
+      <text class="note" x="830" y="30">direção</text>
+      <text class="note" x="830" y="298">prioridades</text>
+      <text class="note" x="900" y="30">entregas</text>
+      <text class="note" x="900" y="298">e números</text>
+    </svg>
+    </div>
+    <figcaption>Os projetos ficam na base: cada um tem seu Tech Lead e seu Business Owner, e o Product Manager e o Tech Manager acompanham todos.</figcaption>
+  </figure>
+
+  <div class="rm-cards" style="margin-top:14px;">
+    <div class="rm-card ly-est">
+      <h4>Estratégica</h4>
+      <span class="prof">Head de Operações</span>
+      <div class="r"><b>Foco</b><p>Direção da área e indicadores ligados direto ao negócio e à performance dos produtos.</p></div>
+      <div class="r"><b>O que faz</b><ul>
+        <li>Estratégia de novas iniciativas e novas parcerias.</li>
+        <li>Alocação de recursos, pessoas e foco das áreas conforme o momento da empresa.</li>
+        <li>Definição e acompanhamento dos OKRs e KPIs.</li>
+        <li>Referência para priorizar novas iniciativas.</li>
+      </ul></div>
+    </div>
+    <div class="rm-card ly-tat">
+      <h4>Tática</h4>
+      <span class="prof">Product Manager · Tech Manager</span>
+      <div class="r"><b>Foco</b><p>Acompanhar o dia a dia dos produtos, garantir que os núcleos de desenvolvimento e as demandas estão andando, a priorização correta, o rito de entregas e o alinhamento entre as áreas.</p></div>
+      <div class="r"><b>O que faz</b><ul>
+        <li>Visão de todos os projetos e do momento de cada um.</li>
+        <li>Amadurece as iniciativas antes da esteira e produtiza o que é novo.</li>
+        <li>Prioridades e backlog de cada projeto, ritos e cerimônias de ciclo.</li>
+        <li>Jornada, QA, checklist de lançamento e métricas de produto, tech e negócio.</li>
+        <li>Ambientes, padrões de integração, ferramentas de acompanhamento e saúde das aplicações.</li>
+      </ul></div>
+    </div>
+    <div class="rm-card ly-op">
+      <h4>Operacional</h4>
+      <span class="prof">Tech Lead · Business Owner</span>
+      <div class="r"><b>Foco</b><p>Dia a dia, entregas, execução do backlog e organização do que está na versão de testes.</p></div>
+      <div class="r"><b>O que faz</b><ul>
+        <li>Tech Lead: definição técnica do projeto, organiza as versões de teste e produção e aprova os PRs de outros desenvolvedores.</li>
+        <li>Business Owner: define as regras de negócio (valores, taxas, caminhos contábeis) e gera a documentação de negócio que serve de referência para o desenvolvimento.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <h3 class="rm-h3">2. Papéis</h3>
+  <p class="rm-lead">Cinco papéis desenhados. Tech Lead e Business Owner repetem em cada projeto; os outros três olham todos ao mesmo tempo.</p>
+  <div class="rm-cards rm-cards-auto rm-cards-wide">
+    <div class="rm-card ly-est">
+      <h4>Head de Operações</h4>
+      <span class="prof">Estratégica</span>
+      <div class="r"><p>Responsável pelos indicadores de negócio e pela comunicação com a camada executiva. Define a estratégia e a direção da área e a priorização de novas iniciativas.</p></div>
+    </div>
+    <div class="rm-card ly-tat">
+      <h4>Product Manager</h4>
+      <span class="prof">Tática</span>
+      <div class="r"><p>Responsável pela experiência: harmonia entre os produtos, fluxos e experiência do cliente, visão cross produtos e alinhamento com stakeholders. Reporta para as camadas superiores e garante a organização dos boards e dos ritos, sem conflito com o que já roda. É o facilitador.</p></div>
+    </div>
+    <div class="rm-card ly-tat">
+      <h4>Tech Manager</h4>
+      <span class="prof">Tática</span>
+      <div class="r"><p>Responsável técnico pela visão cross produtos: ambientes de desenvolvimento, padrões de integração e de desenvolvimento, ferramentas, novas implementações e viabilidade técnica. Referência técnica para as demais áreas que desenvolvem produtos.</p></div>
+    </div>
+    <div class="rm-card ly-op">
+      <h4>Tech Lead</h4>
+      <span class="prof">Operacional · um por projeto</span>
+      <div class="r"><p>Responsável pelo desenvolvimento técnico. Não precisa ser o único a desenvolver, mas responde pelo que entra no projeto e por garantir que não conflita com outras funcionalidades.</p></div>
+    </div>
+    <div class="rm-card ly-op">
+      <h4>Business Owner</h4>
+      <span class="prof">Operacional · um por projeto</span>
+      <div class="r"><p>Referência de negócio do que está sendo implementado: define as regras de negócio do produto junto aos demais stakeholders.</p></div>
+    </div>
+  </div>
+
+  <h3 class="rm-h3">3. Quem está em cada projeto</h3>
+  <p class="rm-lead">Como foi imaginado no Miro. Em todos os projetos: Product Manager Lucas Henning, Tech Manager André e Head de Operações Lucas A.</p>
+  <div class="rm-scroll">
+  <table class="vg-table">
+    <thead><tr><th>Projeto</th><th>Canal</th><th>Tech Lead</th><th>Business Owner</th></tr></thead>
+    <tbody>
+      <tr><td><b>Anti Banking</b></td><td>App</td><td>André</td><td>Lucas H.</td></tr>
+      <tr><td><b>Anti Cedente</b></td><td>Web</td><td>Zaidan</td><td>Thiago, passando para João Pena</td></tr>
+      <tr><td><b>Anti Sacado</b></td><td>Web</td><td>Zaidan</td><td>Thiago, passando para Felipe</td></tr>
+      <tr><td><b>Decentral</b></td><td>Web3</td><td>Hyago</td><td>Lucas A.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="vg-sub">Stakeholders acompanhados pelo framework</div>
+  <div class="vg-chips">
+    <span>Financeiro <small>Fred, Tiburcio</small></span>
+    <span>Comercial <small>Luma, Luis</small></span>
+    <span>Suporte</span>
+    <span>Legal</span>
+    <span>MKT</span>
+    <span>RH</span>
+    <span>Clientes</span>
+  </div>
+
+  <h3 class="rm-h3">4. Ritos e versões</h3>
+  <p class="rm-lead">Um ciclo semanal por projeto, fechado por uma entrega conjunta de todos os projetos.</p>
+  <div class="rm-cards rm-cards-auto">
+    <div class="rm-card ly-tat">
+      <h4>Week Planning / Review</h4>
+      <span class="prof">Por projeto · 1h</span>
+      <div class="r"><b>Como é</b><ul>
+        <li>30 min revisando o que foi entregue na última semana.</li>
+        <li>30 min organizando o backlog e as próximas demandas.</li>
+      </ul></div>
+      <div class="r"><b>Quem participa</b><p>PM, Tech Lead e Business Owner; Head de Operações é opcional.</p></div>
+    </div>
+    <div class="rm-card ly-tat">
+      <h4>Week Delivery</h4>
+      <span class="prof">Todos os projetos · 1h</span>
+      <div class="r"><b>Como é</b><ul>
+        <li>20 min por projeto, com Tech Lead e Business Owner: o que entra em QA para os stakeholders testarem e o que já foi testado e vai para produção.</li>
+        <li>Demandas.</li>
+      </ul></div>
+      <div class="r"><b>Quem participa</b><p>Todos os envolvidos nos projetos.</p></div>
+    </div>
+    <div class="rm-card ly-op">
+      <h4>Versões do projeto</h4>
+      <span class="prof">Local → QA → Produção</span>
+      <div class="vg-flow"><span class="dev">DEV · local</span><i>→</i><span class="qa">QA · até 1 semana</span><i>→</i><span class="prod">PROD · clientes</span></div>
+      <div class="r"><p>No QA os stakeholders testam e validam o funcionamento. Uma versão reúne melhorias e funcionalidades novas; bugs simples, que não mudam o fluxo, podem subir como hotfix.</p></div>
+    </div>
+  </div>
+
+  <h3 class="rm-h3">5. Objetivo de cada camada</h3>
+  <p class="rm-lead">O que cada camada persegue neste momento.</p>
+  <div class="rm-cards">
+    <div class="rm-card ly-est">
+      <h4>Estratégica</h4>
+      <span class="prof">Para onde vamos</span>
+      <div class="r"><ul>
+        <li>Definir os OKRs da empresa.</li>
+        <li>Enxergar onde há mais oportunidade.</li>
+        <li>Fixar os números e indicadores a buscar no próximo quarter.</li>
+      </ul></div>
+    </div>
+    <div class="rm-card ly-tat">
+      <h4>Tática</h4>
+      <span class="prof">Área de produtos</span>
+      <div class="r"><ul>
+        <li>Organizar a execução.</li>
+        <li>Organizar a visão de produtos.</li>
+        <li>Definir como os produtos se conectam e a que público cada um se destina.</li>
+        <li>Centralizar a documentação e as informações que já existem de cada produto em execução.</li>
+      </ul></div>
+    </div>
+    <div class="rm-card ly-op">
+      <h4>Operacional</h4>
+      <span class="prof">Como construímos</span>
+      <div class="r"><ul>
+        <li>Evoluir o DevOps dos produtos que já estão rodando.</li>
+        <li>Padronizar e dar visibilidade ao que está sendo construído, com uma ferramenta interna.</li>
+        <li>Compartilhar dados conectados à base de dados, e não só planilhas inseridas à mão.</li>
+        <li>Tirar os produtos importantes do ambiente local e centralizá-los na Vercel, com o código disponível para apuração no GitHub.</li>
+      </ul></div>
+    </div>
+  </div>
+  <p class="rm-foot">Os detalhamentos do upstream e do downstream entram em seguida, na aba Metodologia de produto.</p>
+</section>
+<section data-rd-panel="produtos">
+  <h3 class="rm-h3">1. Hoje: plataformas soltas, ligadas à mão</h3>
   <p class="rm-lead">O Cedente só é oferecido pelo time comercial, que inclui à mão os clientes na esteira do Portal DUX. O Risco Sacado ainda não opera: o piloto está para começar no Portal Anti.</p>
   <figure class="rm-fig">
     <div class="rm-scroll">
@@ -231,3 +424,5 @@
   </div>
 
   <p class="rm-foot">Montado a partir do planejamento do Lucas, com foco no curto prazo. O Portal Anti já está preparado para hospedar o Risco Sacado; falta a área admin que define quais CNPJs entram, como parceiro ou fornecedor. Os quarters são só uma referência de visão, sem compromisso de prazo de desenvolvimento.</p>
+
+</section>
