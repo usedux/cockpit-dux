@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-10-26T18:44:05.023Z","sha":"4a21b67","message":"Painel de Projetos: visão macro do milestone, execução/teste em destaque e última atualização do Linear","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-11-16T11:55:22.145Z","sha":"47fb93c","message":"Calendário de Produtos: nova aba com período tracejado e checkpoints por produto","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -923,6 +923,46 @@
   .check-grid label{font-weight:500; display:inline-flex; gap:6px; align-items:center; margin:0; font-size:12.5px;}
   .tools-action-btn:disabled{opacity:.6; cursor:not-allowed;}
 
+  /* ---------- Calendário de Produtos ---------- */
+  .cal-now{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; margin:14px 0 4px;}
+  .cal-card{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--cc); border-radius:12px; padding:14px 16px; min-width:0;}
+  .cal-card h3{margin:0; font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:16px; font-weight:700; color:var(--ink);}
+  .cal-card .cal-sub{font-size:12.5px; color:var(--ink-soft); margin:2px 0 10px;}
+  .cal-state{display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--ink);}
+  .cal-state b{font-family:"Roboto Mono",ui-monospace,monospace; font-size:13px;}
+  .cal-prog{height:8px; border-radius:99px; background:var(--surface-muted); margin:8px 0 10px; overflow:hidden;}
+  .cal-prog i{display:block; height:100%; background:var(--cc); border-radius:99px;}
+  .cal-meta{margin:0; font-size:12.5px; color:var(--ink-soft);}
+  .cal-meta b{color:var(--ink);}
+  .cal-bar{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:22px 0 10px;}
+  .cal-bar .cal-title{font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:16px; font-weight:700; min-width:190px; text-align:center;}
+  .cal-scroll{overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:12px;}
+  .cal-grid{display:grid; min-width:1180px; position:relative;}
+  .cal-mh{grid-row:1; padding:8px 10px 6px; font:700 12px "Roboto Mono",ui-monospace,monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1px solid var(--line); border-left:1px solid var(--line-strong);}
+  .cal-dh{grid-row:2; text-align:center; font-size:10.5px; line-height:1.15; padding:4px 0 6px; color:var(--ink-faint); border-bottom:1px solid var(--line-strong);}
+  .cal-dh b{display:inline-block; min-width:20px; padding:1px 0; border-radius:99px; font-family:"Roboto Mono",ui-monospace,monospace; font-size:11.5px; color:var(--ink);}
+  .cal-dh.wk{background:var(--surface-muted);}
+  .cal-dh.today b{background:var(--accent); color:#000;}
+  .cal-corner{grid-row:1 / span 2; grid-column:1; border-bottom:1px solid var(--line-strong); padding:10px 12px; font-size:12px; color:var(--ink-faint); display:flex; align-items:flex-end;}
+  .cal-name{grid-column:1; padding:10px 12px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; justify-content:center; min-width:0;}
+  .cal-name b{font-size:14px; color:var(--ink);} .cal-name span{font-size:12px; color:var(--ink-soft);}
+  .cal-cell{border-bottom:1px solid var(--line); border-left:1px solid var(--line);}
+  .cal-cell.wk{background:var(--surface-muted);}
+  .cal-cell.today{background:var(--accent-soft); box-shadow:inset 2px 0 0 var(--accent), inset -2px 0 0 var(--accent);}
+  .cal-cell.first{border-left:1px solid var(--line-strong);}
+  .cal-span{align-self:center; position:relative; z-index:2; margin:0 2px; height:26px; box-sizing:border-box; border:2px dashed var(--cc); background:var(--ccs); border-radius:8px; font-size:12px; font-weight:700; color:var(--ink); padding:0 8px; display:flex; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transform:translateY(-8px);}
+  .cal-span.cl{border-top-left-radius:0; border-bottom-left-radius:0; margin-left:0; border-left-style:solid;}
+  .cal-span.cr{border-top-right-radius:0; border-bottom-right-radius:0; margin-right:0; border-right-style:solid;}
+  .cal-ck{align-self:end; justify-self:center; position:relative; z-index:3; margin-bottom:5px; display:flex; flex-direction:column; align-items:center; min-width:0; width:100%;}
+  .cal-ck i{display:block; width:12px; height:12px; background:var(--cc); border:2px solid var(--surface); box-shadow:0 0 0 1.5px var(--cc); transform:rotate(45deg);}
+  .cal-ck span{position:absolute; left:50%; bottom:-1px; transform:translate(10px,0); font-size:11px; font-weight:700; color:var(--ink); white-space:nowrap; background:var(--surface); padding:0 4px; border-radius:4px; line-height:1.3;}
+  .cal-ck.left span{transform:translate(calc(-100% - 10px),0);}
+  .cal-legend{display:flex; gap:18px; flex-wrap:wrap; margin:12px 2px 0; font-size:12.5px; color:var(--ink-soft); align-items:center;}
+  .cal-legend .lg-dash{display:inline-block; width:30px; height:12px; border:2px dashed var(--ink-soft); border-radius:5px; vertical-align:-2px; margin-right:6px;}
+  .cal-legend .lg-dia{display:inline-block; width:10px; height:10px; background:var(--ink-soft); transform:rotate(45deg); margin:0 8px 0 3px;}
+  .cal-legend .lg-hoje{display:inline-block; width:14px; height:14px; background:var(--accent-soft); border:2px solid var(--accent); border-radius:3px; vertical-align:-3px; margin-right:6px;}
+  .cal-note{margin:10px 2px 0; font-size:12.5px; color:var(--ink-faint);}
+
   /* ---------- Roadmap de Produtos ---------- */
   .rm-wave-now{--wc:var(--st-done); --wcs:var(--st-done-soft);}
   .rm-wave-1{--wc:var(--st-progress); --wcs:var(--st-progress-soft);}
@@ -1702,6 +1742,14 @@
     <span class="tools-group-sub">Referência: Q4 2026 (Hoje e Onda 1) e Q1 2027 (Onda 2); o resto fica mais adiante. Sem compromisso de data.</span>
     <button type="button" class="tools-action-btn primary rd-lock" id="rmDetailBtn" hidden title="Acesso restrito: você e quem o admin liberou"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Detalhamento de produtos</button>
   </div>
+  <div class="subtabs-row">
+    <div class="subtabs" role="tablist" aria-label="Seções do Roadmap de Produtos">
+      <button type="button" class="subtab-btn rm-sub-btn active" role="tab" data-rmsub="roadmap" aria-selected="true">Roadmap</button>
+      <button type="button" class="subtab-btn rm-sub-btn" role="tab" data-rmsub="calendar" aria-selected="false">Calendário</button>
+    </div>
+  </div>
+
+  <div id="rmPanelRoadmap" role="tabpanel">
   <div class="subline" style="margin-bottom:6px;">Quais são os produtos, como cada um evolui e a que cliente se destina. A ideia central é separar <b>produto</b> (o que a DUX oferece) de <b>canal</b> (onde o cliente acessa).</div>
 
   <h3 class="rm-h3">1. Evolução de cada produto</h3>
@@ -1843,6 +1891,27 @@
     </div></div>
 
   <p class="rm-foot">Montado a partir do planejamento do Lucas, com foco no curto prazo. Os quarters são só uma referência de visão, sem compromisso de prazo de desenvolvimento.</p>
+  </div>
+
+  <div id="rmPanelCalendar" role="tabpanel" hidden>
+  <div class="subline" style="margin-bottom:6px;"><b>Em que momento estamos de cada produto.</b> Cada produto aparece com o período que está rodando agora e o próximo marco de decisão. As datas vêm dos combinados do time e mudam quando o time mudar o combinado.</div>
+
+  <div class="cal-now" id="calNow"></div>
+
+  <div class="cal-bar">
+    <button type="button" class="tools-action-btn" id="calPrev" aria-label="Mês anterior">←</button>
+    <div class="cal-title" id="calTitle" aria-live="polite"></div>
+    <button type="button" class="tools-action-btn" id="calNext" aria-label="Próximo mês">→</button>
+    <button type="button" class="tools-action-btn" id="calToday">Hoje</button>
+  </div>
+  <div class="cal-scroll"><div class="cal-grid" id="calGrid" role="group" aria-label="Calendário de produtos"></div></div>
+  <div class="cal-legend" aria-label="Legenda">
+    <span><i class="lg-dash"></i>Período em andamento</span>
+    <span><i class="lg-dia"></i>Checkpoint</span>
+    <span><i class="lg-hoje"></i>Hoje</span>
+  </div>
+  <p class="cal-note">O calendário mostra dois meses por vez. Use as setas para andar um mês.</p>
+  </div>
 
 </div>
 
@@ -2246,6 +2315,132 @@
 </script>
 
 <script>
+  // Calendário de Produtos: dados dos combinados do time (datas AAAA-MM-DD, fim inclusivo) e desenho mensal.
+  (function(){
+    var PRODUCTS = [
+      { id:'sacado', name:'Risco Sacado', sub:'Piloto na plataforma', cc:'var(--st-progress)', ccs:'var(--st-progress-soft)',
+        goal:'Meta: 20 operações usando a plataforma em 15 dias, antes de expandir o uso.',
+        period:{ label:'Piloto: 20 operações em 15 dias', start:'2026-11-16', end:'2026-11-30' },
+        checkpoints:[ { date:'2026-12-01', label:'Revisar meta de 20 operações', side:'right' } ] },
+      { id:'decentral', name:'Decentral', sub:'Lançamento da V3', cc:'var(--st-priorized)', ccs:'var(--st-priorized-soft)',
+        goal:'V3 liberada para os clientes começarem a migração, com início das reuniões. Duração de 3 semanas.',
+        period:{ label:'V3: migração e reuniões (3 semanas)', start:'2026-11-16', end:'2026-12-06' },
+        checkpoints:[ { date:'2026-12-07', label:'Fim das 3 semanas', side:'right' } ] }
+    ];
+    var MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+    var DIAS = ['D','S','T','Q','Q','S','S'];
+    var DAY = 86400000;
+    function $(id){ return document.getElementById(id); }
+    function ymd(str){ var p = str.split('-'); return Date.UTC(+p[0], +p[1]-1, +p[2]); }
+    function todayBRT(){
+      var parts = new Intl.DateTimeFormat('en-CA', { timeZone:'America/Sao_Paulo', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date());
+      var g = {}; parts.forEach(function(p){ g[p.type] = p.value; });
+      return Date.UTC(+g.year, +g.month-1, +g.day);
+    }
+    function fmt(ms){ var d = new Date(ms); return ('0'+d.getUTCDate()).slice(-2) + '/' + ('0'+(d.getUTCMonth()+1)).slice(-2); }
+    function plural(n, one, many){ return n + ' ' + (n === 1 ? one : many); }
+    function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+    var today = todayBRT();
+    var t0 = new Date(today);
+    var view = { y: t0.getUTCFullYear(), m: t0.getUTCMonth() }; // primeiro dos dois meses mostrados
+
+    function status(p){
+      var s = ymd(p.period.start), e = ymd(p.period.end);
+      var total = Math.round((e - s) / DAY) + 1;
+      var next = null;
+      p.checkpoints.forEach(function(c){ var d = ymd(c.date); if (d >= today && (!next || d < ymd(next.date))) next = c; });
+      var out = { total:total, next:next };
+      if (today < s) { var f = Math.round((s - today) / DAY); out.kind = 'future'; out.text = 'Começa em ' + plural(f, 'dia', 'dias') + ' (' + fmt(s) + ')'; out.pct = 0; }
+      else if (today > e) { out.kind = 'done'; out.text = 'Período encerrado em ' + fmt(e); out.pct = 100; }
+      else { var n = Math.round((today - s) / DAY) + 1; out.kind = 'now'; out.n = n; out.text = 'Em andamento · dia ' + n + ' de ' + total; out.left = total - n; out.pct = Math.round(n / total * 100); }
+      return out;
+    }
+
+    function renderNow(){
+      $('calNow').innerHTML = PRODUCTS.map(function(p){
+        var st = status(p);
+        var nx = st.next ? '<b>Próximo checkpoint:</b> ' + fmt(ymd(st.next.date)) + ', ' + esc(st.next.label) + '.' : '<b>Sem checkpoint pela frente.</b>';
+        return '<article class="cal-card" style="--cc:' + p.cc + '">' +
+          '<h3>' + esc(p.name) + '</h3><div class="cal-sub">' + esc(p.sub) + '</div>' +
+          '<div class="cal-state"><b>' + esc(st.text) + '</b><span>' + (st.kind === 'now' ? (st.left === 0 ? 'último dia' : 'faltam ' + plural(st.left, 'dia', 'dias')) : '') + '</span></div>' +
+          '<div class="cal-prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + st.pct + '" aria-label="Progresso do período"><i style="width:' + st.pct + '%"></i></div>' +
+          '<p class="cal-meta">' + esc(p.goal) + '</p><p class="cal-meta" style="margin-top:6px;">' + nx + '</p></article>';
+      }).join('');
+    }
+
+    function renderGrid(){
+      var first = Date.UTC(view.y, view.m, 1);
+      var last = Date.UTC(view.y, view.m + 2, 0); // último dia do segundo mês
+      var n = Math.round((last - first) / DAY) + 1;
+      var m2 = new Date(Date.UTC(view.y, view.m + 1, 1));
+      $('calTitle').textContent = MESES[view.m].charAt(0).toUpperCase() + MESES[view.m].slice(1) + ' e ' + MESES[m2.getUTCMonth()] + ' de ' + (m2.getUTCFullYear() === view.y ? view.y : view.y + '–' + m2.getUTCFullYear());
+      var days = [], i, d;
+      for (i = 0; i < n; i++) days.push(first + i * DAY);
+      var g = $('calGrid');
+      g.style.gridTemplateColumns = '190px repeat(' + n + ', minmax(0, 1fr))';
+      var h = '<div class="cal-corner">Produto</div>';
+      // faixas dos meses
+      var c = 2;
+      [0, 1].forEach(function(k){
+        var ms = Date.UTC(view.y, view.m + k, 1), me = Date.UTC(view.y, view.m + k + 1, 0);
+        var len = Math.round((me - ms) / DAY) + 1, md = new Date(ms);
+        h += '<div class="cal-mh" style="grid-column:' + c + ' / span ' + len + '">' + MESES[md.getUTCMonth()] + ' ' + md.getUTCFullYear() + '</div>';
+        c += len;
+      });
+      days.forEach(function(ms, idx){
+        d = new Date(ms); var wd = d.getUTCDay();
+        h += '<div class="cal-dh' + (wd === 0 || wd === 6 ? ' wk' : '') + (ms === today ? ' today' : '') + '" style="grid-row:2;grid-column:' + (idx + 2) + '" aria-label="' + d.getUTCDate() + ' de ' + MESES[d.getUTCMonth()] + '">' + DIAS[wd] + '<br><b>' + d.getUTCDate() + '</b></div>';
+      });
+      PRODUCTS.forEach(function(p, r){
+        var row = r + 3;
+        h += '<div class="cal-name" style="grid-row:' + row + '"><b>' + esc(p.name) + '</b><span>' + esc(p.sub) + '</span></div>';
+        days.forEach(function(ms, idx){
+          var wd = new Date(ms).getUTCDay();
+          h += '<div class="cal-cell' + (wd === 0 || wd === 6 ? ' wk' : '') + (ms === today ? ' today' : '') + (idx === 0 ? ' first' : '') + '" style="grid-row:' + row + ';grid-column:' + (idx + 2) + ';min-height:74px"></div>';
+        });
+        var s = ymd(p.period.start), e = ymd(p.period.end);
+        if (e >= first && s <= last) {
+          var cs = Math.max(s, first), ce = Math.min(e, last);
+          var c0 = Math.round((cs - first) / DAY) + 2, c1 = Math.round((ce - first) / DAY) + 2;
+          h += '<div class="cal-span' + (s < first ? ' cl' : '') + (e > last ? ' cr' : '') + '" style="--cc:' + p.cc + ';--ccs:' + p.ccs + ';grid-row:' + row + ';grid-column:' + c0 + ' / ' + (c1 + 1) + '" title="' + esc(p.name + ': ' + p.period.label + ', ' + fmt(s) + ' a ' + fmt(e)) + '">' + (s < first ? '◀ ' : '') + esc(p.period.label) + (e > last ? ' ▶' : '') + '</div>';
+        }
+        p.checkpoints.forEach(function(ck){
+          var cd = ymd(ck.date);
+          if (cd < first || cd > last) return;
+          var col = Math.round((cd - first) / DAY) + 2;
+          h += '<div class="cal-ck' + (ck.side === 'left' ? ' left' : '') + '" style="--cc:' + p.cc + ';grid-row:' + row + ';grid-column:' + col + '" title="' + esc(p.name + ' · ' + fmt(cd) + ': ' + ck.label) + '"><i></i><span>' + fmt(cd) + ' · ' + esc(ck.label) + '</span></div>';
+        });
+      });
+      g.innerHTML = h;
+    }
+
+    function render(){ renderNow(); renderGrid(); }
+    function step(k){ var d = new Date(Date.UTC(view.y, view.m + k, 1)); view = { y:d.getUTCFullYear(), m:d.getUTCMonth() }; renderGrid(); }
+    $('calPrev').addEventListener('click', function(){ step(-1); });
+    $('calNext').addEventListener('click', function(){ step(1); });
+    $('calToday').addEventListener('click', function(){ var d = new Date(today); view = { y:d.getUTCFullYear(), m:d.getUTCMonth() }; renderGrid(); });
+    render();
+  })();
+</script>
+
+<script>
+  // Sub-abas do Roadmap de Produtos (Roadmap / Calendário). Link direto: #calendario.
+  (function(){
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.rm-sub-btn'));
+    var panels = { roadmap: document.getElementById('rmPanelRoadmap'), calendar: document.getElementById('rmPanelCalendar') };
+    function show(key, setHash){
+      if (!panels[key]) key = 'roadmap';
+      btns.forEach(function(b){ var on = b.getAttribute('data-rmsub') === key; b.classList.toggle('active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      Object.keys(panels).forEach(function(k){ panels[k].hidden = (k !== key); });
+      if (setHash && window.__cockpitSetHash) window.__cockpitSetHash(key === 'calendar' ? 'calendario' : '');
+    }
+    btns.forEach(function(b){ b.addEventListener('click', function(){ show(b.getAttribute('data-rmsub'), true); }); });
+    window.__cockpitShowRmSub = function(k){ show(k, false); };
+  })();
+</script>
+
+<script>
   (function(){
     var tabBtns = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
     var pages = {
@@ -2380,7 +2575,7 @@
 <script>
   // Sub-abas do Levantamento (Portal DUX / Ferramentas reportadas / Inovações reportadas) + detalhe das ferramentas fixas (Próximos passos e Core).
   (function(){
-    var btns = Array.prototype.slice.call(document.querySelectorAll('.subtab-btn'));
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.subtab-btn:not(.rm-sub-btn)'));
     var panels = {
       portal: document.getElementById('subpanel-portal'),
       ferramentas: document.getElementById('subpanel-ferramentas'),
@@ -4165,7 +4360,8 @@
       if (!hash) return;
       var goesToTools = ['tools', 'ferramentas', 'levantamento', 'reportar-ferramenta', 'reportar-inovacao', 'inovacao'];
       if (goesToTools.indexOf(hash) !== -1 && window.__cockpitShowPage) window.__cockpitShowPage('tools');
-      if ((hash === 'roadmap' || hash === 'roadmap-de-produtos') && window.__cockpitShowPage) window.__cockpitShowPage('roadmap');
+      if ((hash === 'roadmap' || hash === 'roadmap-de-produtos') && window.__cockpitShowPage) { window.__cockpitShowPage('roadmap'); if (window.__cockpitShowRmSub) window.__cockpitShowRmSub('roadmap'); }
+      if ((hash === 'calendario' || hash === 'calendario-de-produtos') && window.__cockpitShowPage) { window.__cockpitShowPage('roadmap'); if (window.__cockpitShowRmSub) window.__cockpitShowRmSub('calendar'); }
       if (hash === 'detalhamento' || hash === 'detalhamento-de-produtos') { if (detailAllowed) openDetail(); else wantDetail = true; }
       if ((hash === 'projetos' || hash === 'painel') && window.__cockpitShowPage) window.__cockpitShowPage('projects');
       if (hash === 'reportar-ferramenta') openModal('reportToolModalOverlay');
