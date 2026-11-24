@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Cockpit de Projetos DUX</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 role=%22img%22 aria-label=%22Cockpit DUX%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%229%22 fill=%22%23F8AB1A%22/%3E%3Cpath d=%22M16.5 17a7.5 7.5 0 0 1 15.0 0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.1%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M28.53 12.47L27.18 13.82M24.00 10.60L24.00 12.50M19.47 12.47L20.82 13.82%22 stroke=%22%23000%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 17L25.80 14.86%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M27.25 13.13L24.61 13.86L26.99 15.85z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%220.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%222%22 fill=%22%23000%22/%3E%3Crect x=%228%22 y=%2220.5%22 width=%2232%22 height=%224%22 rx=%222%22 fill=%22%23000%22/%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2211%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2227%22 y=%2230.5%22 width=%2210%22 height=%2210%22 rx=%223%22/%3E%3Crect x=%2213.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3Crect x=%2229.5%22 y=%2226.7%22 width=%225%22 height=%223%22 rx=%221.2%22/%3E%3C/g%3E%3C/svg%3E">
-<script>window.__DEPLOY__ = {"builtAt":"2026-11-16T11:55:22.145Z","sha":"47fb93c","message":"Calendário de Produtos: nova aba com período tracejado e checkpoints por produto","env":"local"};</script>
+<script>window.__DEPLOY__ = {"builtAt":"2026-11-24T20:46:55.773Z","sha":"f9da64b","message":"Roadmap de Produtos: sub-aba Calendário com período tracejado e checkpoints por produto","env":"local"};</script>
 <script src="/shim.js"></script>
 </head>
 <body>
@@ -924,44 +924,72 @@
   .tools-action-btn:disabled{opacity:.6; cursor:not-allowed;}
 
   /* ---------- Calendário de Produtos ---------- */
-  .cal-now{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; margin:14px 0 4px;}
-  .cal-card{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--cc); border-radius:12px; padding:14px 16px; min-width:0;}
+  .cal-h-on{--hc:var(--st-done); --hcs:var(--st-done-soft);}
+  .cal-h-risk{--hc:var(--st-qa); --hcs:var(--st-qa-soft);}
+  .cal-h-off{--hc:var(--blk-ext); --hcs:var(--blk-ext-soft);}
+  .cal-h-done{--hc:var(--blk-int); --hcs:var(--blk-int-soft);}
+  .cal-h-none{--hc:var(--st-build); --hcs:var(--st-build-soft);}
+  .cal-now{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; margin:14px 0 4px; align-items:start;}
+  details.cal-card{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--cc); border-radius:12px; min-width:0;}
+  details.cal-card>summary{list-style:none; cursor:pointer; padding:14px 16px; display:block; border-radius:12px;}
+  details.cal-card>summary::-webkit-details-marker{display:none;}
+  details.cal-card>summary:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
+  .cal-top{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
   .cal-card h3{margin:0; font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:16px; font-weight:700; color:var(--ink);}
   .cal-card .cal-sub{font-size:12.5px; color:var(--ink-soft); margin:2px 0 10px;}
+  .cal-more{font-size:12px; color:var(--ink-faint); white-space:nowrap; font-weight:600;}
+  .cal-more::after{content:" ▾";}
+  details[open] .cal-more::after{content:" ▴";}
   .cal-state{display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--ink);}
   .cal-state b{font-family:"Roboto Mono",ui-monospace,monospace; font-size:13px;}
   .cal-prog{height:8px; border-radius:99px; background:var(--surface-muted); margin:8px 0 10px; overflow:hidden;}
   .cal-prog i{display:block; height:100%; background:var(--cc); border-radius:99px;}
   .cal-meta{margin:0; font-size:12.5px; color:var(--ink-soft);}
   .cal-meta b{color:var(--ink);}
-  .cal-bar{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:22px 0 10px;}
-  .cal-bar .cal-title{font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:16px; font-weight:700; min-width:190px; text-align:center;}
+  .cal-exp{padding:0 16px 14px; border-top:1px solid var(--line); margin-top:-2px;}
+  .cal-exp h4{margin:12px 0 6px; font:700 11px "Roboto Mono",ui-monospace,monospace; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-faint);}
+  .cal-ms{list-style:none; margin:0; padding:0; display:grid; gap:8px;}
+  .cal-ms li{display:grid; grid-template-columns:auto 1fr auto; gap:4px 10px; align-items:center; font-size:13px; color:var(--ink);}
+  .cal-ms .nm{min-width:0;} .cal-ms .dt{font:600 12px "Roboto Mono",ui-monospace,monospace; color:var(--ink-soft); white-space:nowrap;}
+  .cal-ms .pg{grid-column:2 / -1; height:5px; border-radius:99px; background:var(--surface-muted); overflow:hidden;}
+  .cal-ms .pg i{display:block; height:100%; background:var(--hc);}
+  .cal-chip{display:inline-flex; align-items:center; gap:6px; font:700 11px "Roboto Mono",ui-monospace,monospace; letter-spacing:.03em; padding:3px 8px; border-radius:99px; background:var(--hcs); color:var(--ink); border:1px solid var(--hc); white-space:nowrap;}
+  .cal-chip::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--hc);}
+  .cal-link{display:inline-block; margin-top:10px; font-size:12.5px; color:var(--ink); font-weight:600;}
+  .cal-box{margin-top:22px;}
+  .cal-bar{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 10px;}
+  .cal-bar .cal-title{font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif; font-size:17px; font-weight:700; min-width:170px; text-align:center;}
+  .cal-bar .sp{flex:1;}
   .cal-scroll{overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:12px;}
-  .cal-grid{display:grid; min-width:1180px; position:relative;}
-  .cal-mh{grid-row:1; padding:8px 10px 6px; font:700 12px "Roboto Mono",ui-monospace,monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1px solid var(--line); border-left:1px solid var(--line-strong);}
-  .cal-dh{grid-row:2; text-align:center; font-size:10.5px; line-height:1.15; padding:4px 0 6px; color:var(--ink-faint); border-bottom:1px solid var(--line-strong);}
-  .cal-dh b{display:inline-block; min-width:20px; padding:1px 0; border-radius:99px; font-family:"Roboto Mono",ui-monospace,monospace; font-size:11.5px; color:var(--ink);}
-  .cal-dh.wk{background:var(--surface-muted);}
-  .cal-dh.today b{background:var(--accent); color:#000;}
-  .cal-corner{grid-row:1 / span 2; grid-column:1; border-bottom:1px solid var(--line-strong); padding:10px 12px; font-size:12px; color:var(--ink-faint); display:flex; align-items:flex-end;}
-  .cal-name{grid-column:1; padding:10px 12px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; justify-content:center; min-width:0;}
-  .cal-name b{font-size:14px; color:var(--ink);} .cal-name span{font-size:12px; color:var(--ink-soft);}
-  .cal-cell{border-bottom:1px solid var(--line); border-left:1px solid var(--line);}
-  .cal-cell.wk{background:var(--surface-muted);}
-  .cal-cell.today{background:var(--accent-soft); box-shadow:inset 2px 0 0 var(--accent), inset -2px 0 0 var(--accent);}
-  .cal-cell.first{border-left:1px solid var(--line-strong);}
-  .cal-span{align-self:center; position:relative; z-index:2; margin:0 2px; height:26px; box-sizing:border-box; border:2px dashed var(--cc); background:var(--ccs); border-radius:8px; font-size:12px; font-weight:700; color:var(--ink); padding:0 8px; display:flex; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transform:translateY(-8px);}
-  .cal-span.cl{border-top-left-radius:0; border-bottom-left-radius:0; margin-left:0; border-left-style:solid;}
-  .cal-span.cr{border-top-right-radius:0; border-bottom-right-radius:0; margin-right:0; border-right-style:solid;}
-  .cal-ck{align-self:end; justify-self:center; position:relative; z-index:3; margin-bottom:5px; display:flex; flex-direction:column; align-items:center; min-width:0; width:100%;}
-  .cal-ck i{display:block; width:12px; height:12px; background:var(--cc); border:2px solid var(--surface); box-shadow:0 0 0 1.5px var(--cc); transform:rotate(45deg);}
-  .cal-ck span{position:absolute; left:50%; bottom:-1px; transform:translate(10px,0); font-size:11px; font-weight:700; color:var(--ink); white-space:nowrap; background:var(--surface); padding:0 4px; border-radius:4px; line-height:1.3;}
-  .cal-ck.left span{transform:translate(calc(-100% - 10px),0);}
-  .cal-legend{display:flex; gap:18px; flex-wrap:wrap; margin:12px 2px 0; font-size:12.5px; color:var(--ink-soft); align-items:center;}
+  .cal-month{min-width:820px;}
+  .cal-dow{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); border-bottom:1px solid var(--line-strong);}
+  .cal-dow div{padding:8px 10px; font:700 11px "Roboto Mono",ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);}
+  .cal-wk{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); column-gap:0; position:relative; border-bottom:1px solid var(--line);}
+  .cal-wk:last-child{border-bottom:0;}
+  .cal-day{grid-column:var(--col); grid-row:1 / -1; min-height:var(--wkmin,104px); padding:5px 8px; border-left:1px solid var(--line); box-sizing:border-box;}
+  .cal-day:first-of-type{border-left:0;}
+  .cal-day.wk{background:var(--surface-muted);}
+  .cal-day.out{opacity:.55;}
+  .cal-day.today{background:var(--accent-soft); box-shadow:inset 0 3px 0 var(--accent);}
+  .cal-day b{display:inline-block; min-width:22px; padding:1px 5px; border-radius:99px; text-align:center; font:600 12px "Roboto Mono",ui-monospace,monospace; color:var(--ink-soft);}
+  .cal-day.today b{background:var(--accent); color:#000;}
+  .cal-day.first b{color:var(--ink);}
+  .cal-bar-ev{position:relative; z-index:2; margin:2px 3px; height:24px; box-sizing:border-box; border:2px dashed var(--cc); background:var(--ccs); border-radius:8px; font-size:12px; font-weight:700; color:var(--ink); padding:0 8px; display:flex; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .cal-bar-ev.cl{border-top-left-radius:0; border-bottom-left-radius:0; margin-left:0; border-left-style:solid;}
+  .cal-bar-ev.cr{border-top-right-radius:0; border-bottom-right-radius:0; margin-right:0; border-right-style:solid;}
+  .cal-ev{position:relative; z-index:3; margin:2px 3px; min-height:24px; box-sizing:border-box; border-radius:6px; border-left:4px solid var(--hc); background:var(--hcs); color:var(--ink); font-size:12px; font-weight:600; padding:3px 6px; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; line-height:1.3;}
+  .cal-ev small{display:block; font:700 10px "Roboto Mono",ui-monospace,monospace; letter-spacing:.04em; color:var(--hc); text-transform:uppercase;}
+  .cal-legend{display:flex; gap:8px 18px; flex-wrap:wrap; margin:12px 2px 0; font-size:12.5px; color:var(--ink-soft); align-items:center;}
   .cal-legend .lg-dash{display:inline-block; width:30px; height:12px; border:2px dashed var(--ink-soft); border-radius:5px; vertical-align:-2px; margin-right:6px;}
-  .cal-legend .lg-dia{display:inline-block; width:10px; height:10px; background:var(--ink-soft); transform:rotate(45deg); margin:0 8px 0 3px;}
   .cal-legend .lg-hoje{display:inline-block; width:14px; height:14px; background:var(--accent-soft); border:2px solid var(--accent); border-radius:3px; vertical-align:-3px; margin-right:6px;}
-  .cal-note{margin:10px 2px 0; font-size:12.5px; color:var(--ink-faint);}
+  .cal-note{margin:10px 2px 0; font-size:12.5px; color:var(--ink-faint); max-width:900px;}
+  /* Expandido: ocupa a tela toda */
+  body.cal-lock{overflow:hidden;}
+  .cal-box.expanded{position:fixed; inset:0; z-index:200; margin:0; background:var(--bg); overflow:auto; padding:max(16px, env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) 24px max(20px, env(safe-area-inset-left, 0px));}
+  .cal-box.expanded .cal-month{--wkmin:150px;}
+  .cal-box.expanded .cal-ev, .cal-box.expanded .cal-bar-ev{white-space:normal; height:auto; min-height:26px; font-size:13px;}
+  .cal-box.expanded .cal-bar-ev{padding:4px 8px;}
+  @media (max-width:640px){ .cal-bar .cal-title{min-width:0; flex:1 1 100%; order:-1; text-align:left;} }
 
   /* ---------- Roadmap de Produtos ---------- */
   .rm-wave-now{--wc:var(--st-done); --wcs:var(--st-done-soft);}
@@ -1894,23 +1922,30 @@
   </div>
 
   <div id="rmPanelCalendar" role="tabpanel" hidden>
-  <div class="subline" style="margin-bottom:6px;"><b>Em que momento estamos de cada produto.</b> Cada produto aparece com o período que está rodando agora e o próximo marco de decisão. As datas vêm dos combinados do time e mudam quando o time mudar o combinado.</div>
+  <div class="subline" style="margin-bottom:6px;"><b>Em que momento estamos de cada produto.</b> Cada produto mostra o período em andamento e os marcos do Linear, coloridos pela saúde (On track, At risk, Off track). Clique no produto para abrir os marcos.</div>
 
   <div class="cal-now" id="calNow"></div>
 
-  <div class="cal-bar">
-    <button type="button" class="tools-action-btn" id="calPrev" aria-label="Mês anterior">←</button>
-    <div class="cal-title" id="calTitle" aria-live="polite"></div>
-    <button type="button" class="tools-action-btn" id="calNext" aria-label="Próximo mês">→</button>
-    <button type="button" class="tools-action-btn" id="calToday">Hoje</button>
-  </div>
-  <div class="cal-scroll"><div class="cal-grid" id="calGrid" role="group" aria-label="Calendário de produtos"></div></div>
-  <div class="cal-legend" aria-label="Legenda">
-    <span><i class="lg-dash"></i>Período em andamento</span>
-    <span><i class="lg-dia"></i>Checkpoint</span>
-    <span><i class="lg-hoje"></i>Hoje</span>
-  </div>
-  <p class="cal-note">O calendário mostra dois meses por vez. Use as setas para andar um mês.</p>
+  <section class="cal-box" id="calBox" aria-label="Calendário mensal de produtos">
+    <div class="cal-bar">
+      <button type="button" class="tools-action-btn" id="calPrev" aria-label="Mês anterior">←</button>
+      <div class="cal-title" id="calTitle" aria-live="polite"></div>
+      <button type="button" class="tools-action-btn" id="calNext" aria-label="Próximo mês">→</button>
+      <button type="button" class="tools-action-btn" id="calToday">Hoje</button>
+      <span class="sp"></span>
+      <button type="button" class="tools-action-btn" id="calExpand" aria-pressed="false">Expandir</button>
+    </div>
+    <div class="cal-scroll"><div class="cal-month" id="calMonth" role="group" aria-label="Mês"></div></div>
+    <div class="cal-legend" aria-label="Legenda">
+      <span class="cal-chip cal-h-on">On track</span>
+      <span class="cal-chip cal-h-risk">At risk</span>
+      <span class="cal-chip cal-h-off">Off track</span>
+      <span class="cal-chip cal-h-done">Completed</span>
+      <span><i class="lg-dash"></i>Período em andamento</span>
+      <span><i class="lg-hoje"></i>Hoje</span>
+    </div>
+    <p class="cal-note" id="calNote"></p>
+  </section>
   </div>
 
 </div>
@@ -2315,20 +2350,33 @@
 </script>
 
 <script>
-  // Calendário de Produtos: dados dos combinados do time (datas AAAA-MM-DD, fim inclusivo) e desenho mensal.
+  // Calendário de Produtos: visão mensal, períodos tracejados e marcos do Linear coloridos pela saúde (On track / At risk / Off track).
   (function(){
+    // Foto do Linear em 24/11/2026 (projetos "PORTAL ANTI - WEB Sacado" e "WEB Decentral"). Datas AAAA-MM-DD, fim inclusivo.
+    var AS_OF = '2026-11-24';
     var PRODUCTS = [
       { id:'sacado', name:'Risco Sacado', sub:'Piloto na plataforma', cc:'var(--st-progress)', ccs:'var(--st-progress-soft)',
-        goal:'Meta: 20 operações usando a plataforma em 15 dias, antes de expandir o uso.',
+        url:'https://linear.app/wearedux/project/portal-anti-web-sacado-e8791924463f',
+        goal:'Meta: validar as primeiras 20 operações na plataforma em até 15 dias, antes de expandir o uso.',
+        linear:{ health:'on', date:'2026-11-16' },
         period:{ label:'Piloto: 20 operações em 15 dias', start:'2026-11-16', end:'2026-11-30' },
-        checkpoints:[ { date:'2026-12-01', label:'Revisar meta de 20 operações', side:'right' } ] },
+        milestones:[
+          { name:'Piloto Risco Sacado- Cliente 1', date:'2026-09-28', progress:81, note:'Marco de lançamento do piloto; a meta original passou antes do início do piloto, em 16/11.' },
+          { name:'Validar as primeiras 20 operações na plataforma', date:'2026-11-30', progress:0 },
+          { name:'Plano de expansão', date:'2026-12-01', progress:0 } ] },
       { id:'decentral', name:'Decentral', sub:'Lançamento da V3', cc:'var(--st-priorized)', ccs:'var(--st-priorized-soft)',
+        url:'https://linear.app/wearedux/project/web-decentral-e321451152df',
         goal:'V3 liberada para os clientes começarem a migração, com início das reuniões. Duração de 3 semanas.',
+        linear:{ health:'on', date:'2026-11-18' },
         period:{ label:'V3: migração e reuniões (3 semanas)', start:'2026-11-16', end:'2026-12-06' },
-        checkpoints:[ { date:'2026-12-07', label:'Fim das 3 semanas', side:'right' } ] }
+        milestones:[
+          { name:'Lançamento privado', date:'2026-11-15', progress:55 },
+          { name:'Lançamento público', date:'2026-11-30', progress:0 },
+          { name:'Liberação V3 - Decentral', date:null, progress:93, note:'Sem data-alvo no Linear.' } ] }
     ];
+    var HLABEL = { on:'On track', risk:'At risk', off:'Off track', done:'Completed', none:'Sem data' };
     var MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-    var DIAS = ['D','S','T','Q','Q','S','S'];
+    var DOW = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
     var DAY = 86400000;
     function $(id){ return document.getElementById(id); }
     function ymd(str){ var p = str.split('-'); return Date.UTC(+p[0], +p[1]-1, +p[2]); }
@@ -2340,86 +2388,106 @@
     function fmt(ms){ var d = new Date(ms); return ('0'+d.getUTCDate()).slice(-2) + '/' + ('0'+(d.getUTCMonth()+1)).slice(-2); }
     function plural(n, one, many){ return n + ' ' + (n === 1 ? one : many); }
     function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-
     var today = todayBRT();
     var t0 = new Date(today);
-    var view = { y: t0.getUTCFullYear(), m: t0.getUTCMonth() }; // primeiro dos dois meses mostrados
+    var view = { y: t0.getUTCFullYear(), m: t0.getUTCMonth() };
+
+    // Saúde do marco: Completed = 100%; Off track = a data-alvo passou sem concluir; At risk = faltam 7 dias ou menos
+    // e o progresso está abaixo de 50%; On track = o resto. Sem data-alvo, fica "Sem data".
+    function health(m){
+      if (m.health) return m.health;
+      if (m.progress >= 100) return 'done';
+      if (!m.date) return 'none';
+      var d = ymd(m.date);
+      if (d < today) return 'off';
+      if ((d - today) / DAY <= 7 && m.progress < 50) return 'risk';
+      return 'on';
+    }
+    function chip(h){ return '<span class="cal-chip cal-h-' + h + '">' + HLABEL[h] + '</span>'; }
 
     function status(p){
-      var s = ymd(p.period.start), e = ymd(p.period.end);
-      var total = Math.round((e - s) / DAY) + 1;
-      var next = null;
-      p.checkpoints.forEach(function(c){ var d = ymd(c.date); if (d >= today && (!next || d < ymd(next.date))) next = c; });
-      var out = { total:total, next:next };
-      if (today < s) { var f = Math.round((s - today) / DAY); out.kind = 'future'; out.text = 'Começa em ' + plural(f, 'dia', 'dias') + ' (' + fmt(s) + ')'; out.pct = 0; }
+      var s = ymd(p.period.start), e = ymd(p.period.end), total = Math.round((e - s) / DAY) + 1, out = { total: total };
+      if (today < s) { out.kind = 'future'; out.text = 'Começa em ' + plural(Math.round((s - today) / DAY), 'dia', 'dias') + ' (' + fmt(s) + ')'; out.pct = 0; }
       else if (today > e) { out.kind = 'done'; out.text = 'Período encerrado em ' + fmt(e); out.pct = 100; }
-      else { var n = Math.round((today - s) / DAY) + 1; out.kind = 'now'; out.n = n; out.text = 'Em andamento · dia ' + n + ' de ' + total; out.left = total - n; out.pct = Math.round(n / total * 100); }
+      else { var n = Math.round((today - s) / DAY) + 1; out.kind = 'now'; out.text = 'Em andamento · dia ' + n + ' de ' + total; out.left = total - n; out.pct = Math.round(n / total * 100); }
+      var next = null;
+      p.milestones.forEach(function(m){ if (!m.date || m.progress >= 100) return; var d = ymd(m.date); if (d >= today && (!next || d < ymd(next.date))) next = m; });
+      out.next = next;
       return out;
     }
 
     function renderNow(){
       $('calNow').innerHTML = PRODUCTS.map(function(p){
         var st = status(p);
-        var nx = st.next ? '<b>Próximo checkpoint:</b> ' + fmt(ymd(st.next.date)) + ', ' + esc(st.next.label) + '.' : '<b>Sem checkpoint pela frente.</b>';
-        return '<article class="cal-card" style="--cc:' + p.cc + '">' +
-          '<h3>' + esc(p.name) + '</h3><div class="cal-sub">' + esc(p.sub) + '</div>' +
+        var nx = st.next ? '<b>Próximo marco:</b> ' + fmt(ymd(st.next.date)) + ', ' + esc(st.next.name) + ' ' + chip(health(st.next)) : '<b>Sem marco pela frente.</b>';
+        var lin = p.linear ? '<p class="cal-meta" style="margin-top:6px;"><b>Última atualização no Linear:</b> ' + chip(p.linear.health) + ' em ' + fmt(ymd(p.linear.date)) + '</p>' : '';
+        var ms = p.milestones.map(function(m){
+          var h = health(m);
+          return '<li class="cal-h-' + h + '"><span>' + chip(h) + '</span><span class="nm">' + esc(m.name) + (m.note ? '<br><span class="cal-meta">' + esc(m.note) + '</span>' : '') + '</span><span class="dt">' + (m.date ? fmt(ymd(m.date)) : '—') + ' · ' + m.progress + '%</span><span class="pg"><i style="width:' + Math.min(100, m.progress) + '%"></i></span></li>';
+        }).join('');
+        return '<details class="cal-card" style="--cc:' + p.cc + '"><summary><div class="cal-top"><div><h3>' + esc(p.name) + '</h3><div class="cal-sub">' + esc(p.sub) + '</div></div><span class="cal-more">Marcos</span></div>' +
           '<div class="cal-state"><b>' + esc(st.text) + '</b><span>' + (st.kind === 'now' ? (st.left === 0 ? 'último dia' : 'faltam ' + plural(st.left, 'dia', 'dias')) : '') + '</span></div>' +
           '<div class="cal-prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + st.pct + '" aria-label="Progresso do período"><i style="width:' + st.pct + '%"></i></div>' +
-          '<p class="cal-meta">' + esc(p.goal) + '</p><p class="cal-meta" style="margin-top:6px;">' + nx + '</p></article>';
+          '<p class="cal-meta">' + esc(p.goal) + '</p><p class="cal-meta" style="margin-top:6px;">' + nx + '</p></summary>' +
+          '<div class="cal-exp">' + lin + '<h4>Marcos no Linear</h4><ul class="cal-ms">' + ms + '</ul><a class="cal-link" href="' + p.url + '" target="_blank" rel="noopener">Abrir o projeto no Linear ↗</a></div></details>';
       }).join('');
     }
 
-    function renderGrid(){
-      var first = Date.UTC(view.y, view.m, 1);
-      var last = Date.UTC(view.y, view.m + 2, 0); // último dia do segundo mês
-      var n = Math.round((last - first) / DAY) + 1;
-      var m2 = new Date(Date.UTC(view.y, view.m + 1, 1));
-      $('calTitle').textContent = MESES[view.m].charAt(0).toUpperCase() + MESES[view.m].slice(1) + ' e ' + MESES[m2.getUTCMonth()] + ' de ' + (m2.getUTCFullYear() === view.y ? view.y : view.y + '–' + m2.getUTCFullYear());
-      var days = [], i, d;
-      for (i = 0; i < n; i++) days.push(first + i * DAY);
-      var g = $('calGrid');
-      g.style.gridTemplateColumns = '190px repeat(' + n + ', minmax(0, 1fr))';
-      var h = '<div class="cal-corner">Produto</div>';
-      // faixas dos meses
-      var c = 2;
-      [0, 1].forEach(function(k){
-        var ms = Date.UTC(view.y, view.m + k, 1), me = Date.UTC(view.y, view.m + k + 1, 0);
-        var len = Math.round((me - ms) / DAY) + 1, md = new Date(ms);
-        h += '<div class="cal-mh" style="grid-column:' + c + ' / span ' + len + '">' + MESES[md.getUTCMonth()] + ' ' + md.getUTCFullYear() + '</div>';
-        c += len;
-      });
-      days.forEach(function(ms, idx){
-        d = new Date(ms); var wd = d.getUTCDay();
-        h += '<div class="cal-dh' + (wd === 0 || wd === 6 ? ' wk' : '') + (ms === today ? ' today' : '') + '" style="grid-row:2;grid-column:' + (idx + 2) + '" aria-label="' + d.getUTCDate() + ' de ' + MESES[d.getUTCMonth()] + '">' + DIAS[wd] + '<br><b>' + d.getUTCDate() + '</b></div>';
-      });
-      PRODUCTS.forEach(function(p, r){
-        var row = r + 3;
-        h += '<div class="cal-name" style="grid-row:' + row + '"><b>' + esc(p.name) + '</b><span>' + esc(p.sub) + '</span></div>';
-        days.forEach(function(ms, idx){
-          var wd = new Date(ms).getUTCDay();
-          h += '<div class="cal-cell' + (wd === 0 || wd === 6 ? ' wk' : '') + (ms === today ? ' today' : '') + (idx === 0 ? ' first' : '') + '" style="grid-row:' + row + ';grid-column:' + (idx + 2) + ';min-height:74px"></div>';
+    function renderMonth(){
+      var first = Date.UTC(view.y, view.m, 1), last = Date.UTC(view.y, view.m + 1, 0);
+      var gridStart = first - new Date(first).getUTCDay() * DAY;
+      var weeks = Math.ceil((Math.round((last - gridStart) / DAY) + 1) / 7);
+      $('calTitle').textContent = MESES[view.m].charAt(0).toUpperCase() + MESES[view.m].slice(1) + ' de ' + view.y;
+      var h = '<div class="cal-dow">' + DOW.map(function(d){ return '<div>' + d + '</div>'; }).join('') + '</div>';
+      for (var w = 0; w < weeks; w++){
+        var ws = gridStart + w * 7 * DAY, we = ws + 6 * DAY, items = [];
+        PRODUCTS.forEach(function(p){
+          var s = ymd(p.period.start), e = ymd(p.period.end);
+          if (e >= ws && s <= we) items.push({ t:'bar', c0:Math.round((Math.max(s, ws) - ws) / DAY), c1:Math.round((Math.min(e, we) - ws) / DAY), p:p, cl:s < ws, cr:e > we });
+          p.milestones.forEach(function(m){
+            if (!m.date) return; var d = ymd(m.date);
+            if (d >= ws && d <= we) { var c = Math.round((d - ws) / DAY); items.push({ t:'ms', c0:c, c1:c, p:p, m:m }); }
+          });
         });
-        var s = ymd(p.period.start), e = ymd(p.period.end);
-        if (e >= first && s <= last) {
-          var cs = Math.max(s, first), ce = Math.min(e, last);
-          var c0 = Math.round((cs - first) / DAY) + 2, c1 = Math.round((ce - first) / DAY) + 2;
-          h += '<div class="cal-span' + (s < first ? ' cl' : '') + (e > last ? ' cr' : '') + '" style="--cc:' + p.cc + ';--ccs:' + p.ccs + ';grid-row:' + row + ';grid-column:' + c0 + ' / ' + (c1 + 1) + '" title="' + esc(p.name + ': ' + p.period.label + ', ' + fmt(s) + ' a ' + fmt(e)) + '">' + (s < first ? '◀ ' : '') + esc(p.period.label) + (e > last ? ' ▶' : '') + '</div>';
+        items.sort(function(a, b){ return (a.t === b.t ? 0 : (a.t === 'bar' ? -1 : 1)) || a.c0 - b.c0; });
+        var lanes = [];
+        items.forEach(function(it){
+          var l = 0; while (lanes[l] !== undefined && lanes[l] >= it.c0) l++;
+          lanes[l] = it.c1; it.lane = l;
+        });
+        var n = lanes.length;
+        h += '<div class="cal-wk" style="grid-template-rows:28px repeat(' + Math.max(n, 1) + ', auto) 6px">';
+        for (var c = 0; c < 7; c++){
+          var ms = ws + c * DAY, d = new Date(ms), inM = d.getUTCMonth() === view.m, wd = d.getUTCDay();
+          h += '<div class="cal-day' + (wd === 0 || wd === 6 ? ' wk' : '') + (inM ? '' : ' out') + (ms === today ? ' today' : '') + (d.getUTCDate() === 1 ? ' first' : '') + '" style="--col:' + (c + 1) + '"><b aria-label="' + d.getUTCDate() + ' de ' + MESES[d.getUTCMonth()] + '">' + (d.getUTCDate() === 1 ? d.getUTCDate() + ' ' + MESES[d.getUTCMonth()].slice(0, 3) : d.getUTCDate()) + '</b></div>';
         }
-        p.checkpoints.forEach(function(ck){
-          var cd = ymd(ck.date);
-          if (cd < first || cd > last) return;
-          var col = Math.round((cd - first) / DAY) + 2;
-          h += '<div class="cal-ck' + (ck.side === 'left' ? ' left' : '') + '" style="--cc:' + p.cc + ';grid-row:' + row + ';grid-column:' + col + '" title="' + esc(p.name + ' · ' + fmt(cd) + ': ' + ck.label) + '"><i></i><span>' + fmt(cd) + ' · ' + esc(ck.label) + '</span></div>';
+        items.forEach(function(it){
+          var pos = 'grid-row:' + (it.lane + 2) + ';grid-column:' + (it.c0 + 1) + ' / ' + (it.c1 + 2);
+          if (it.t === 'bar') {
+            h += '<div class="cal-bar-ev' + (it.cl ? ' cl' : '') + (it.cr ? ' cr' : '') + '" style="--cc:' + it.p.cc + ';--ccs:' + it.p.ccs + ';' + pos + '" title="' + esc(it.p.name + ': ' + it.p.period.label + ', ' + fmt(ymd(it.p.period.start)) + ' a ' + fmt(ymd(it.p.period.end))) + '">' + (it.cl ? '◀ ' : '') + esc(it.p.name + ' · ' + it.p.period.label) + (it.cr ? ' ▶' : '') + '</div>';
+          } else {
+            var hh = health(it.m);
+            h += '<div class="cal-ev cal-h-' + hh + '" style="' + pos + '" title="' + esc(it.p.name + ' · ' + fmt(ymd(it.m.date)) + ': ' + it.m.name + ' (' + HLABEL[hh] + ', ' + it.m.progress + '%)') + '"><small>' + HLABEL[hh] + '</small>' + esc(it.m.name) + '</div>';
+          }
         });
-      });
-      g.innerHTML = h;
+        h += '</div>';
+      }
+      $('calMonth').innerHTML = h;
     }
 
-    function render(){ renderNow(); renderGrid(); }
-    function step(k){ var d = new Date(Date.UTC(view.y, view.m + k, 1)); view = { y:d.getUTCFullYear(), m:d.getUTCMonth() }; renderGrid(); }
+    function render(){ renderNow(); renderMonth(); $('calNote').textContent = 'Os marcos vêm do Linear (foto de ' + fmt(ymd(AS_OF)) + '). A saúde é calculada pela data-alvo e pelo progresso: Off track = a data passou sem concluir; At risk = faltam 7 dias ou menos e o progresso está abaixo de 50%; On track = o restante.'; }
+    function step(k){ var d = new Date(Date.UTC(view.y, view.m + k, 1)); view = { y:d.getUTCFullYear(), m:d.getUTCMonth() }; renderMonth(); }
     $('calPrev').addEventListener('click', function(){ step(-1); });
     $('calNext').addEventListener('click', function(){ step(1); });
-    $('calToday').addEventListener('click', function(){ var d = new Date(today); view = { y:d.getUTCFullYear(), m:d.getUTCMonth() }; renderGrid(); });
+    $('calToday').addEventListener('click', function(){ var d = new Date(today); view = { y:d.getUTCFullYear(), m:d.getUTCMonth() }; renderMonth(); });
+    function setExpanded(on){
+      var box = $('calBox'), btn = $('calExpand');
+      box.classList.toggle('expanded', on); document.body.classList.toggle('cal-lock', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.textContent = on ? 'Recolher' : 'Expandir';
+      if (on) box.scrollTop = 0;
+    }
+    $('calExpand').addEventListener('click', function(){ setExpanded(!$('calBox').classList.contains('expanded')); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && $('calBox').classList.contains('expanded')) setExpanded(false); });
     render();
   })();
 </script>
